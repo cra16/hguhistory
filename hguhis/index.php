@@ -1,6 +1,7 @@
 <?php
 /**
  * test111234 Test Edit. This should be ignored.
+ * That is right. This line also should be ignored.
  * @file  index.php
  * @author NHN (developers@xpressengine.com)
  * @brief Start page

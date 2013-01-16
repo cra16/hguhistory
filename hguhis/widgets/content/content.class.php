@@ -1,5 +1,6 @@
 <?php
     /**
+     * Test. This line should be seen.
      * @class content
      * @author NHN (developers@xpressengine.com)
      * @brief widget to display content

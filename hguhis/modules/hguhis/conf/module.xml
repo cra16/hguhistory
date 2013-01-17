@@ -4,7 +4,10 @@
     <permissions>
     </permissions>
     <actions>
+        <action name="dispHguhisAdminModuleList" type="view" standalone="true" admin_index="true" />
+        <action name="dispHguhisAdminModuleInsert" type="view" standalone="true" />
         
+        <action name="procHguhisAdminModuleInsert" type="controller" standalone="true" />
     </actions>
 	<menus>
 	</menus>

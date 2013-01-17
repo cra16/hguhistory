@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--//
+	@table hguhis_trace
+	description: 문서의 history를 기록하는 테이블이다.
+	하나의 문서 (document_srl) 에 여러번의 수정이 있을 경우 수정본이 생겨 최신버전이 아닌 문서들을 trace_srl에 추적한다.
+ -->
+<table name="hguhis_trace">
+    <!--// document_srl: 문서 번호 -->
+    <column name="document_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+    
+    <!--// trace_srl: 이전 버전의 문서들 -->
+    <column name="trace_srl" type="number" size="11" notnull="notnull" index="idx_author_srl" />
+    
+    <!--// version: 버전들. 버전은 1, 2, 3, 4... 식으로 올라가며 최신버전 일수록 높다. -->
+    <column name="version" type="number" size="11" notnull="notnull" default="1" />
+    
+    <!--// reg_date: 등록 날짜. -->
+    <column name="reg_date" type="date" index="idx_start_date" />
+</table>

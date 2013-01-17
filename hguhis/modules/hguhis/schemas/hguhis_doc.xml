@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--//
+	@table hguhis_doc
+	@description 문서에 추가적인 정보를 같이 저장한다. extra_info를 사용해도 되지만 DB read 속도 향상을 위해서 테이블 생성함.
+	각각의 문서는 사건이나 행사, 사물에 대한 정보를 저장하는 목적이다.
+ -->
+<table name="hguhis_doc">
+    <!--// module_srl: 모듈 번호. 이 문서가 어느 게시판에 위치하는지 알려준다. -->
+    <column name="module_srl" type="number" size="11" notnull="notnull" index="idx_module_srl" />
+    
+    <!--// document_srl: 문서 번호. documents 테이블의 document_srl과 연결시킨다. -->
+    <column name="document_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+    
+    <!--// author_srl: 누가 이 문서를 작성했는가... member 테이블의 member_srl과 연결시킨다. -->
+    <column name="author_srl" type="number" size="11" notnull="notnull" index="idx_author_srl" />
+    
+    <!--// start_date: 이 사건이 언제 시작했는지 기록한다. -->
+    <column name="start_date" type="date" index="idx_start_date" />
+    
+    <!--// end_date: 이 사건의 종료일이 언제인지 기록한다. 사건의 시작일과 종료일은 없어도 된다. -->
+    <column name="end_date" type="date" index="idx_end_date" />
+    
+    <!--// doc_status: 이 문서의 상태. ??? -->
+    <column name="doc_status" type="varchar" size="1" />
+    
+    <!--// version: 이 문서의 버전. 1, 2, 3, 4, ... 식으로 올라간다. 최근에 작성한 문서일 수록 버전이 높다. -->
+    <column name="version" type="number" size="11" default="1" />
+</table>

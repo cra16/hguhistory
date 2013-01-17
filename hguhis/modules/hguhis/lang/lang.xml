@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lang>
+	<item name="hguhis">
+		<value xml:lang="ko"><![CDATA[한동 역사 기록원]]></value>
+		<value xml:lang="en"><![CDATA[Handong Record Institute]]></value>
+	</item>	
+	<item name="cmd_manage_menu">
+		<value xml:lang="ko"><![CDATA[메뉴관리]]></value>
+		<value xml:lang="en"><![CDATA[Manage Menus]]></value>
+	</item>
+	<item name="list_target_item">
+		<value xml:lang="ko"><![CDATA[대상 항목]]></value>
+		<value xml:lang="en"><![CDATA[Target Item]]></value>
+	</item>
+	<item name="thisissecret">
+		<value xml:lang="ko"><![CDATA[비밀글입니다.]]></value>
+		<value xml:lang="en"><![CDATA[This is a secret article.]]></value>
+	</item>
+	<item name="summary">
+		<value xml:lang="ko"><![CDATA[요약]]></value>
+		<value xml:lang="en"><![CDATA[Summary]]></value>
+	</item>
+	<item name="thumbnail">
+		<value xml:lang="ko"><![CDATA[섬네일]]></value>
+		<value xml:lang="en"><![CDATA[Thumbnail]]></value>
+	</item>
+	<item name="last_post">
+		<value xml:lang="ko"><![CDATA[최종 글]]></value>
+		<value xml:lang="en"><![CDATA[Last post]]></value>
+	</item>
+	<item name="search_result">
+		<value xml:lang="ko"><![CDATA[검색결과]]></value>
+		<value xml:lang="en"><![CDATA[Search Result]]></value>
+	</item>
+	<item name="secret">
+		<value xml:lang="ko"><![CDATA[비밀글 기능]]></value>
+		<value xml:lang="en"><![CDATA[Secret]]></value>
+	</item>
+	<item name="admin_mail">
+		<value xml:lang="ko"><![CDATA[관리자 메일]]></value>
+		<value xml:lang="en"><![CDATA[Administrator's Mail]]></value>
+	</item>
+	<item name="cmd_hguhis_list">
+		<value xml:lang="ko"><![CDATA[기록 목록]]></value>
+		<value xml:lang="en"><![CDATA[Records List]]></value>
+	</item>
+	<item name="cmd_module_config">
+		<value xml:lang="ko"><![CDATA[기록 공통 설정]]></value>
+		<value xml:lang="en"><![CDATA[Common Records Setting]]></value>
+	</item>
+	<item name="cmd_view_info">
+		<value xml:lang="ko"><![CDATA[기록 정보]]></value>
+		<value xml:lang="en"><![CDATA[Record Info]]></value>
+	</item>
+	<item name="cmd_list_setting">
+		<value xml:lang="ko"><![CDATA[목록설정]]></value>
+		<value xml:lang="en"><![CDATA[List Setting]]></value>
+	</item>
+	<item name="cmd_create_hguhis">
+		<value xml:lang="ko"><![CDATA[기록 등록]]></value>
+		<value xml:lang="en"><![CDATA[Create a new record]]></value>
+	</item>
+	<item name="cmd_manage_selected_hguhis">
+		<value xml:lang="ko"><![CDATA[선택한 기록 관리]]></value>
+		<value xml:lang="en"><![CDATA[Manage Selected records]]></value>
+	</item>
+	
+</lang>

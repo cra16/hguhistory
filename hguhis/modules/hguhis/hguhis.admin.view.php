@@ -17,7 +17,7 @@ class hguhisAdminView extends hguhis {
 	 * @author 인호
 	 */
 	function dispHguhisAdminModuleList() {
-		
+		echo "test";
 	}
 	
 	/**

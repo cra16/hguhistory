@@ -68,15 +68,7 @@ class hguhisAdminView extends hguhis {
 
 		// 관리자 목록(mid) 보기 템플릿 지정(tpl/index.html)
 		$this->setTemplateFile('module_list');
-	}
-
-	/**
-	 * @brief 선택된 모듈의 정보 출력은 곧바로 정보 입력으로 변경한다
-	 **/
-	function dispHguhisAdminModuleInfo() {
-		$this->dispHguhisAdminModuleInsert();
-	}
-	
+	}	
 	
 	/**
 	 * @function dispHguhisAdminModuleInsert
@@ -105,6 +97,14 @@ class hguhisAdminView extends hguhis {
 		$this->setTemplateFile('module_insert');
 
 	}   
+	
+	/**
+	 * @brief 선택된 모듈의 정보 출력은 곧바로 정보 입력으로 변경한다
+	 **/
+	function dispHguhisAdminModuleInfo() {
+		$this->dispHguhisAdminModuleInsert();
+	}
+        
         /**
          * @brief 모듈 삭제 화면 출력
          **/
@@ -147,8 +147,5 @@ class hguhisAdminView extends hguhis {
 
             $this->setTemplateFile('skin_info');
         }
-	
-
-}
+	}
 ?>
-

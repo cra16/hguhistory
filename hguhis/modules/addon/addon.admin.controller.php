@@ -2,7 +2,7 @@
     require_once(_XE_PATH_.'modules/addon/addon.controller.php');
 
     /**
-     * Admin controller class of addon modules
+     * Admin controller class of addon modulesjjj
      * @author NHN (developers@xpressengine.com)
      **/
     class addonAdminController extends addonController {

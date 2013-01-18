@@ -1,11 +1,7 @@
 <?php
     require_once(_XE_PATH_.'modules/addon/addon.controller.php');
 
-    /** 테스트 해 봅니다.
-     * 이 코드가 추가되었음.
-     * ㅁㄴㅇㄹㅁㄴㄹㅁㄴㅇㄴㅁㅇ
-     * 해보기.
-     * 현
+    /**
      * Admin controller class of addon modules
      * @author NHN (developers@xpressengine.com)
      **/

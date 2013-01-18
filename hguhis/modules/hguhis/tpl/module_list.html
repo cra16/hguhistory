@@ -53,9 +53,9 @@
         <td><a href="{getUrl('','mid',$val->mid)}" title="{htmlspecialchars($lang->cmd_view)}">{$val->browser_title}</a></td>
         <td class="nowrap">{zdate($val->regdate,"Y-m-d")}</td>
         <td class="nowrap">
-            <a href="{getUrl('act','dispHguhisAdminInfoBook','module_srl',$val->module_srl)}" class="buttonSet buttonSetting"><span>{$lang->cmd_setup}</span></a> 
+            <a href="{getUrl('act','dispHguhisAdminInfo','module_srl',$val->module_srl)}" class="buttonSet buttonSetting"><span>{$lang->cmd_setup}</span></a> 
         </td>
-		<td><a href="{getUrl('act','dispHguhisAdminDeleteBook','module_srl', $val->module_srl)}" class="buttonSet buttonDelete" title="{$lang->cmd_delete}"><span>{$lang->cmd_delete}</span></a></td>
+		<td><a href="{getUrl('act','dispHguhisAdminDelete','module_srl', $val->module_srl)}" class="buttonSet buttonDelete" title="{$lang->cmd_delete}"><span>{$lang->cmd_delete}</span></a></td>
     </tr>
     <!--@end-->
 </tbody>
@@ -64,7 +64,7 @@
 <!-- 모듈 생성 버튼 -->
 <div class="clear">
     <div class="fr">
-		<a href="{getUrl('act','dispHguhisAdminInsertBook')}" class="button black strong"><span>{$lang->cmd_make}</span></a>
+		<a href="{getUrl('act','dispHguhisAdminModuleInsert')}" class="button black strong"><span>{$lang->cmd_make}</span></a>
 	</div>
 </div>
 

@@ -3,7 +3,6 @@
      * test.....정인호
      * Admin model class of addon module
      * @author NHN (developers@xpressengine.com)
-     * ;미낭럼니;ㅏㅇ
      **/
     class addonAdminModel extends addon {
 

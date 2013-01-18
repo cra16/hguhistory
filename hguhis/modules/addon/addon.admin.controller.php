@@ -4,9 +4,6 @@
     /** 테스트 해 봅니다.
      * 이 코드가 추가되었음.
      * ㅁㄴㅇㄹㅁㄴㄹㅁㄴㅇㄴㅁㅇ
-<<<<<<< HEAD
-=======
->>>>>>> refs/remotes/origin/hguhis
      * Admin controller class of addon modules
      * @author NHN (developers@xpressengine.com)
      **/

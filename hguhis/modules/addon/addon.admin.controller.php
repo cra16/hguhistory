@@ -3,7 +3,7 @@ require_once(_XE_PATH_.'modules/addon/addon.controller.php');
 // Conflicting...
 
 /**
- * Admin controller class of addon modulesjjj
+ * Admin controller class of addon modules
  * @author NHN (developers@xpressengine.com)
 **/
 class addonAdminController extends addonController {

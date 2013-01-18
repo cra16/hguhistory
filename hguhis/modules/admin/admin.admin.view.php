@@ -1,5 +1,5 @@
 <?php
-	/** 테스트테스트 ㄷㄱㅂㅅㅂㅈㅅㅂㄷ
+	/**
 	 * adminAdminView class
 	 * Admin view class of admin module
 	 *

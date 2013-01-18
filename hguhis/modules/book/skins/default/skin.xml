@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="ko">Book Default Skin</title>
+    <description xml:lang="ko">
+        XE스쿨 BOOK 모듈만들기 예제 
+    </description>
+    <version>0.1</version>
+    <date>2011-10-01</date>
+    <author email_address="" link="http://www.xeschool.com">
+        <name xml:lang="ko">XE스쿨</name>
+    </author>
+    <license>GPL</license>
+</skin>
+

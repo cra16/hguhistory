@@ -1,0 +1,27 @@
+<!--#include("_header.html")-->
+ 
+<h2>{$lang->confirm_delete}</h2>
+ 
+<form action="./" method="get" onsubmit="return procFilter(this, content_delete)">
+<input type="hidden" name="book_srl" value="{$book_srl}" />
+ 
+<table border="0" class="bookTable">
+    <tr>
+        <th>{$lang->book_no}</th>
+        <td>{$book_srl}</td>
+    </tr>
+    <tr>
+        <th>{$lang->book_title}</th>
+        <td>{$book_title}</td>
+    </tr>
+    <tr>
+        <th colspan="2" class="button">
+            <span class="button"><input type="button" value="{$lang->cmd_back}" onclick="history.back(); return false;" /></span>
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_delete}" /></span>
+        </th>
+    </tr>
+</table>
+ 
+</form>
+ 
+<!--#include("_footer.html")-->

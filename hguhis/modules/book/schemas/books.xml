@@ -1,0 +1,9 @@
+<table name="books">
+	<column name="book_srl" type="number" size="11" notnull="notnull" auto_increment="auto_increment" primary_key="primary_key" />
+	<column name="mudule_srl" type="number" size="11" default="0" notnull="notnull" index="idx_module_srl" />
+	<column name="book_title" type="varchar" size="40" />
+	<column name="book_author" type="varchar" size="40" />
+	<column name="book_publisher" type="varchar" size="40" />
+	<column name="book_price" type="number" size="11" />
+	<column name="regdate" type="date" notnull="notnull" />
+</table>

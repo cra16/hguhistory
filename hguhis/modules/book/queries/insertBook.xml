@@ -1,0 +1,13 @@
+<query id="insertBook" action="insert">
+    <tables>
+        <table name="books" />
+    </tables>
+    <columns>
+        <column name="module_srl" var="module_srl" notnull="notnull" />
+        <column name="book_title" var="book_title" />
+        <column name="book_author" var="book_author" />
+        <column name="book_publisher" var="book_publisher" />
+        <column name="book_price" var="book_price" />
+        <column name="regdate" var="regdate" />
+    </columns>
+</query>

@@ -6,9 +6,13 @@
     <actions>
         <action name="dispHguhisAdminModuleList" type="view" standalone="true" admin_index="true" />
         <action name="dispHguhisAdminModuleInsert" type="view" standalone="true" />
+        <action name="dispHguhisAdminModuleDelete" type="view" standalone="true"/>
+        <action name="dispHguhisAdminModuleInfo" type="view" standalone="true"/>
+        <action name="dispHguhisAdminGrantInfo" type="view" standalone="true"/>
+        <action name="dispHguhisAdminSkinInfo" type="view" standalone="true"/>
         
         <action name="procHguhisAdminModuleInsert" type="controller" standalone="true" />
-        
+        <action name="procHguhisAdminModuleDelete" type="controller" standalone="true" />
         <action name="dispHguhisFrontPage" type="view" standalone="true" index="true" />
     </actions>
 	<menus>

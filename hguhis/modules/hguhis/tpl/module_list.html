@@ -35,7 +35,7 @@
     </tr>
 </thead>
 <tbody>
-    <!--@foreach($book_list as $no => $val)-->
+    <!--@foreach($hguhis_list as $no => $val)-->
     <tr class="row{$cycle_idx}">
         <td class="center number">{$no}</td>
         <td>
@@ -53,9 +53,9 @@
         <td><a href="{getUrl('','mid',$val->mid)}" title="{htmlspecialchars($lang->cmd_view)}">{$val->browser_title}</a></td>
         <td class="nowrap">{zdate($val->regdate,"Y-m-d")}</td>
         <td class="nowrap">
-            <a href="{getUrl('act','dispHguhisAdminInfo','module_srl',$val->module_srl)}" class="buttonSet buttonSetting"><span>{$lang->cmd_setup}</span></a> 
+            <a href="{getUrl('act','dispHguhisAdminModuleInfo','module_srl',$val->module_srl)}" class="buttonSet buttonSetting"><span>{$lang->cmd_setup}</span></a> 
         </td>
-		<td><a href="{getUrl('act','dispHguhisAdminDelete','module_srl', $val->module_srl)}" class="buttonSet buttonDelete" title="{$lang->cmd_delete}"><span>{$lang->cmd_delete}</span></a></td>
+		<td><a href="{getUrl('act','dispHguhisAdminModuleDelete','module_srl', $val->module_srl)}" class="buttonSet buttonDelete" title="{$lang->cmd_delete}"><span>{$lang->cmd_delete}</span></a></td>
     </tr>
     <!--@end-->
 </tbody>

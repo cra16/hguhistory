@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<filter name="admin_delete" module="hguhis" act="procHguhisAdminModuleDelete">
+    <form>
+        <node target="module_srl" required="true" />
+    </form>
+    <response callback_func="completeHguhisAdminModuleDelete">
+        <tag name="error" />
+        <tag name="message" />
+        <tag name="page" />
+    </response>
+</filter>

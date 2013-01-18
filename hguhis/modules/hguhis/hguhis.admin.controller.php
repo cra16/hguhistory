@@ -53,5 +53,23 @@ class hguhisAdminController extends hguhis {
 		$this->add('module_srl',$output->get('module_srl'));
 		$this->setMessage($msg_code);
 	}
+	
+        /**
+         * @brief 모듈 삭제
+         **/
+        function procHguhisAdminModuleDelete() {
+
+			// 삭제를 요청하는 module_srl 확인
+            $module_srl = Context::get('module_srl');
+
+            // 원본을 찾아 삭제
+            $oModuleController = &getController('module');
+            $output = $oModuleController->deleteModule($module_srl);
+            if(!$output->toBool()) return $output;
+
+            $this->add('module','hguhis');
+            $this->add('page',Context::get('page'));
+            $this->setMessage('success_deleted');
+        }
 }
 ?>

@@ -253,4 +253,3 @@ class hguhisAdminView extends hguhis {
 
 }
 ?>
->>>>>>> refs/remotes/origin/hguhis

@@ -1,0 +1,48 @@
+<!--#include("_header.html")-->
+ 
+<h2>Book View : {$book_info->book_title}</h2>
+ 
+<!-- 도서 정보 -->
+<table border="0" class="bookTable">
+    <tr>
+        <th>BOOK</th>
+        <th>{$lang->book_infomation}</th>
+    </tr>
+    <tr>
+        <th>{$lang->category}</th>
+        <td>{$module_info->browser_title}</td>
+    </tr>
+    <tr>
+        <th>{$lang->book_no}</th>
+        <td>{$book_info->book_srl}</td>
+    </tr>
+    <tr>
+        <th>{$lang->book_title}</th>
+        <td>{$book_info->book_title}</td>
+    </tr>
+    <tr>
+        <th>{$lang->book_author}</th>
+        <td>{$book_info->book_author}</td>
+    </tr>
+    <tr>
+        <th>{$lang->book_publisher}</th>
+        <td>{$book_info->book_publisher}</td>
+    </tr>
+    <tr>
+        <th>{$lang->book_price}</th>
+        <td>{$book_info->book_price}</td>
+    </tr>
+    <tr>
+        <th>{$lang->book_insert_date}</th>
+        <td>{zdate($book_info->regdate,"Y-m-d")}</td>
+    </tr>
+</table>
+ 
+<!-- 버튼 -->
+<div class="btn">
+    <span class="button"><input type="button" value="{$lang->cmd_back}" onclick="history.back(); return false;" /></span> 
+    <a href="{getUrl('act','dispBookContentWrite','book_srl',$book_info->book_srl)}" class="button red" title="{$lang->cmd_modify}"><span>{$lang->cmd_modify}</span></a>
+    <a href="{getUrl('act','dispBookContentDelete','book_srl',$book_info->book_srl,'book_title',$book_info->book_title)}" class="button black" title="{$lang->cmd_delete}"><span>{$lang->cmd_delete}</span></a>
+</div>
+ 
+<!--#include("_footer.html")-->

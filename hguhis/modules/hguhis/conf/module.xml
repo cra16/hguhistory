@@ -8,6 +8,8 @@
         <action name="dispHguhisAdminModuleInsert" type="view" standalone="true" />
         
         <action name="procHguhisAdminModuleInsert" type="controller" standalone="true" />
+        
+        <action name="dispHguhisFrontPage" type="view" standalone="true" index="true" />
     </actions>
 	<menus>
 	</menus>

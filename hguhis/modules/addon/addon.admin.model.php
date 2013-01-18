@@ -1,6 +1,6 @@
 <?php
     /**
-     * test.....
+     * test.....MagaretChoi
      * Admin model class of addon module
      * @author NHN (developers@xpressengine.com)
      **/

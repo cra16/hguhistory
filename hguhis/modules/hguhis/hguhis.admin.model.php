@@ -13,10 +13,5 @@
         function init() {
         }
 
-		function getHguhisAdminList($args){
-            $output = executeQueryArray('hguhis.getHguhisAdminList', $args);
-			return $output;
-		}
-
    }
 ?>

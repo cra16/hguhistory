@@ -56,12 +56,8 @@ class hguhisAdminView extends hguhis {
 		// new object - hguhis admin model
 		$oHguhisAdminModel = &getAdminModel('hguhis');
 
-		debugPrint($oHguhisAdminModel);
-
 		// get list of hguhis admin module_srl
-		$output = $oHguhisAdminModel->getHguhisAdminList($args);
-
-		debugPrint($output);
+		$output = executeQueryArray('hguhis.getHguhisAdminList', $args);
 
 		// 템플릿에 전해주기 위해 set함
 		Context::set('total_count', $output->total_count);

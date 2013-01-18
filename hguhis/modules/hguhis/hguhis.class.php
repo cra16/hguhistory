@@ -2,7 +2,7 @@
 /**
  * @class  hguhis
  * @author CRA (cra.handong@gamil.com)
- * high class of the hguhis module
+ * high class of the hguhis module 수정 확인용
  **/
 class hguhis extends ModuleObject {
 	/**

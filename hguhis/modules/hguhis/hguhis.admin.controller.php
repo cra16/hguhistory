@@ -18,6 +18,7 @@ class hguhisAdminController extends hguhis {
 	 * @author 지희
 	 */
 	function procHguhisAdminModuleInsert() {
+		
 		// module 모듈의 model/controller 객체 생성
 		$oModuleController = &getController('module');
 		$oModuleModel = &getModel('module');

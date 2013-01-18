@@ -80,6 +80,23 @@ class hguhisAdminView extends hguhis {
 	 * @author 현희
 	 */
 	function dispHguhisAdminModuleInsert() {
+		
+		// 스킨 목록을 구해옴
+		$oModuleModel = &getModel('module');
+		$skin_list = $oModuleModel->getSkins($this->module_path);
+		Context::set('skin_list',$skin_list);
+	
+		// 레이아웃 목록을 구해옴
+		$oLayoutMode = &getModel('layout');
+		$layout_list = $oLayoutMode->getLayoutList();
+		Context::set('layout_list', $layout_list);
+
+		// 템플릿 페스 지정
+		$template_path = sprintf("%stpl/",$this->module_path);
+		$this->setTemplatePath($template_path);
+
+		// 템플릿 파일 지정
+		$this->setTemplateFile('module_insert');
 
 	}
 

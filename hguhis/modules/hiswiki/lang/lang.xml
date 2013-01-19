@@ -41,8 +41,8 @@
 		<value xml:lang="en"><![CDATA[Administrator's Mail]]></value>
 	</item>
 	<item name="cmd_hiswiki_list">
-		<value xml:lang="ko"><![CDATA[기록 목록]]></value>
-		<value xml:lang="en"><![CDATA[Records List]]></value>
+		<value xml:lang="ko"><![CDATA[Wiki 목록]]></value>
+		<value xml:lang="en"><![CDATA[Wiki List]]></value>
 	</item>
 	<item name="cmd_module_config">
 		<value xml:lang="ko"><![CDATA[기록 공통 설정]]></value>

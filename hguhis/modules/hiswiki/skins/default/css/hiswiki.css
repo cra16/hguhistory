@@ -1,7 +1,44 @@
 @CHARSET "UTF-8";
-.floatLeft{
-	float:left;
+
+#front_page div {
+	border: 1px solid black;
+	float: left;
 }
-.textCenter{
-	text-align:center;
+
+#front_page {
+	width: 100%;
+	float: 1eft;
+}
+
+#front_page .search_box {
+	top: 84px;
+	width: 100%;
+	z-index: 160;
+	cell-padding: 10;
+	height: 100px;
+	text-align: right;
+	valign: middle;
+}
+
+#front_page .block {
+	overflow: hidden;
+	width: 100%;
+	float: left;
+}
+
+#front_page .button_ara {
+	text-align: right;
+}
+
+#front_page .lists .list {
+	width: 49%;
+	height: 200px;
+	margin: 0px;
+	verflow: hidden;
+	border-width: 0px 1px 1px 0px;
+	border-style: solid;
+	border-color: rgb(195, 195, 195);
+	background-image: none;
+	background-color: transparent;
+	float: left;
 }

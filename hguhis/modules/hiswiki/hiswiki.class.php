@@ -6,7 +6,7 @@
  **/
 class hiswiki extends ModuleObject {
 	
-	var $search_option = array('title','content','title_content','tag')
+	var $search_option = array('title','content','title_content','tag');
 	
 	/**
 	 * Implement if additional tasks are necessary when installing

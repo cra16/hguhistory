@@ -104,6 +104,5 @@ class hiswikiView extends hiswiki {
 		// setup the tmeplate file
 		$this->setTemplateFile('list');
 	}
-
 }
 ?>

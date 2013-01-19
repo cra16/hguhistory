@@ -1,0 +1,39 @@
+<!--hyunhee-->
+<load target="css/hiswiki.css" />
+
+{@
+
+$oHiswikiAdminModel = &getAdminModel('hiswiki');
+$main_view = $oHiswikiadminModel->getMainTable('대문');
+$newest_update = $oHiswikiAdminModel->getTable('최신업데이트');
+$most_hit = $oHiswikiAdminModel->getTable('조회수');
+$request_list = $oHiswikiAdminModel->getTable('요청리스트');
+$favorite_page = $oHiswikiAdminModel->getTable('총학권한_관심글');
+}
+
+<div>
+  <div>
+		<div class="floatLeft">
+		{@
+		$oHiswikiAdminModel = &getAdminModel('hiswiki');
+		$category_view = $oHiswikiAdminModel->getCategoryTable('category');
+		}
+				{$category_view}
+		</div>
+		<div class="floatLeft">
+				{$main_view}
+		</div>
+			<div class="floatLeft">
+						{$newest_update}
+			</div>
+			<div class="floatLeft">
+						{$most_hit}
+			</div>
+			<div class="floatLeft">
+						{$request_list}
+			</div>
+			<div class="floatLeft">
+						{$favorite_page}
+			</div>
+	</div>
+</div>

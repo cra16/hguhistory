@@ -87,7 +87,7 @@
 		 * 4: output DB query history
 		 * </pre>
 		 */
-		define('__DEBUG__', 0);
+		define('__DEBUG__', 1);
 	}
 
     if(!defined('__DEBUG_OUTPUT__'))
@@ -114,7 +114,7 @@
 		 * 1: Allow only specified IP addresses
 		 * </pre>
 		 */
-		define('__DEBUG_PROTECT__', 1);
+		define('__DEBUG_PROTECT__', 0);
 	}
 
     if(!defined('__DEBUG_PROTECT_IP__'))

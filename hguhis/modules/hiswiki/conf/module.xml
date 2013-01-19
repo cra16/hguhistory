@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
-    <grants />
+    <grants>
+		<grant name="view" default="guest">
+			<title xml:lang="ko">글 보고 읽기 권한</title>
+		</grant>
+		<grant name="write" default="guest">
+			<title xml:lang="ko">주제 등록 권한</title>
+		</grant>
+		<grant name="request" default="guest">
+			<title xml:lang="ko">주제 요청 권한</title>
+		</grant>
+    </grants>
     <permissions>
     </permissions>
     <actions>
@@ -10,6 +20,7 @@
         <action name="dispHiswikiAdminModuleInfo" type="view" standalone="true"/>
         <action name="dispHiswikiAdminGrantInfo" type="view" standalone="true"/>
         <action name="dispHiswikiAdminSkinInfo" type="view" standalone="true"/>
+        <action name="dispHiswikiAdminGrantInfo" type="view" standalone="true" />
         
         <action name="procHiswikiAdminModuleInsert" type="controller" standalone="true" />
         <action name="procHiswikiAdminModuleDelete" type="controller" standalone="true" />

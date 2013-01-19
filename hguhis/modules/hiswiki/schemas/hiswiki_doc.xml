@@ -4,7 +4,7 @@
 	@description 문서에 추가적인 정보를 같이 저장한다. extra_info를 사용해도 되지만 DB read 속도 향상을 위해서 테이블 생성함.
 	각각의 문서는 사건이나 행사, 사물에 대한 정보를 저장하는 목적이다.
  -->
-<table name="hguhis_doc">
+<table name="hiswiki_doc">
     <!--// module_srl: 모듈 번호. 이 문서가 어느 게시판에 위치하는지 알려준다. -->
     <column name="module_srl" type="number" size="11" notnull="notnull" index="idx_module_srl" />
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="0.2">
-    <title xml:lang="ko">한동역사기록원</title>
-    <description xml:lang="ko">한동의 역사를 기록할 수 있도록 도와주는 모듈입니다.</description>
+    <title xml:lang="ko">Hiswiki</title>
+    <description xml:lang="ko">Handong Information Storage Wiki</description>
     <version>0.1</version>
     <date>2013-02-28</date>
     <category>service</category>

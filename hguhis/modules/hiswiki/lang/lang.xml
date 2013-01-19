@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lang>
-	<item name="hguhis">
+	<item name="hiswiki">
 		<value xml:lang="ko"><![CDATA[한동 역사 기록원]]></value>
 		<value xml:lang="en"><![CDATA[Handong Record Institute]]></value>
 	</item>	
@@ -40,7 +40,7 @@
 		<value xml:lang="ko"><![CDATA[관리자 메일]]></value>
 		<value xml:lang="en"><![CDATA[Administrator's Mail]]></value>
 	</item>
-	<item name="cmd_hguhis_list">
+	<item name="cmd_hiswiki_list">
 		<value xml:lang="ko"><![CDATA[기록 목록]]></value>
 		<value xml:lang="en"><![CDATA[Records List]]></value>
 	</item>
@@ -56,11 +56,11 @@
 		<value xml:lang="ko"><![CDATA[목록설정]]></value>
 		<value xml:lang="en"><![CDATA[List Setting]]></value>
 	</item>
-	<item name="cmd_create_hguhis">
+	<item name="cmd_create_hiswiki">
 		<value xml:lang="ko"><![CDATA[기록 등록]]></value>
 		<value xml:lang="en"><![CDATA[Create a new record]]></value>
 	</item>
-	<item name="cmd_manage_selected_hguhis">
+	<item name="cmd_manage_selected_hiswiki">
 		<value xml:lang="ko"><![CDATA[선택한 기록 관리]]></value>
 		<value xml:lang="en"><![CDATA[Manage Selected records]]></value>
 	</item>

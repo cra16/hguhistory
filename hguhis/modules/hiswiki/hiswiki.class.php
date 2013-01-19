@@ -1,10 +1,10 @@
 <?php
 /**
- * @class  hguhis
+ * @class  hiswiki
  * @author CRA (cra.handong@gamil.com)
- * high class of the hguhis module 수정 확인용
+ * high class of the hiswiki module 수정 확인용
  **/
-class hguhis extends ModuleObject {
+class hiswiki extends ModuleObject {
 	/**
 	 * Implement if additional tasks are necessary when installing
 	 *

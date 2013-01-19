@@ -4,7 +4,7 @@
 	description: 문서의 history를 기록하는 테이블이다.
 	하나의 문서 (document_srl) 에 여러번의 수정이 있을 경우 수정본이 생겨 최신버전이 아닌 문서들을 trace_srl에 추적한다.
  -->
-<table name="hguhis_trace">
+<table name="hiswiki_trace">
     <!--// document_srl: 문서 번호 -->
     <column name="document_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
     

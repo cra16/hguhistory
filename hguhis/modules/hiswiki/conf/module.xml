@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants />
+    <permissions>
+    </permissions>
+    <actions>
+        <action name="dispHiswikiAdminModuleList" type="view" standalone="true" admin_index="true" />
+        <action name="dispHiswikiAdminModuleInsert" type="view" standalone="true" />
+        <action name="dispHiswikiAdminModuleDelete" type="view" standalone="true"/>
+        <action name="dispHiswikiAdminModuleInfo" type="view" standalone="true"/>
+        <action name="dispHiswikiAdminGrantInfo" type="view" standalone="true"/>
+        <action name="dispHiswikiAdminSkinInfo" type="view" standalone="true"/>
+        
+        <action name="procHiswikiAdminModuleInsert" type="controller" standalone="true" />
+        <action name="procHiswikiAdminModuleDelete" type="controller" standalone="true" />
+        <action name="dispHiswikiFrontPage" type="view" standalone="true" index="true" />
+    </actions>
+	<menus>
+	</menus>
+</module>

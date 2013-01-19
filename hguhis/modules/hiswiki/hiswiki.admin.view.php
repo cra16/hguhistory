@@ -1,11 +1,11 @@
 <?php
 /**
- * @class  hguhisAdminView
+ * @class  hiswikiAdminView
  * @author CRA (cra.handong@gamil.com)
- * hguhis module's admin view class
+ * hiswiki module's admin view class
  **/
 
-class hguhisAdminView extends hguhis {
+class hiswikiAdminView extends hiswiki {
 
 	/**
 	 * @brief 초기화
@@ -38,52 +38,52 @@ class hguhisAdminView extends hguhis {
 		$this->setTemplatePath($template_path);
 
 		// 내용 입력/수정/삭제 후 백엔드 콜백 함수를 처리하는 javascript 추가
-		Context::addJsFile($this->module_path.'tpl/js/hguhis_admin.js');
+		Context::addJsFile($this->module_path.'tpl/js/hiswiki_admin.js');
 	}
-	
+
 	/**
-	 * @function dispHguhisAdminModuleList
+	 * @function dispHiswikiAdminModuleList
 	 * @brief 모듈들의 리스트가 보여진다.
 	 * @author 인호
 	 */
-	function dispHguhisAdminModuleList() {
+	function dispHiswikiAdminModuleList() {
 
 		// setup for page navigation
 		$page = Context::get('page');
 		if (!$page) $page = 1;
 		$args->page = $page;
 
-		// new object - hguhis admin model
-		$oHguhisAdminModel = &getAdminModel('hguhis');
+		// new object - hiswiki admin model
+		$oHiswikiAdminModel = &getAdminModel('hiswiki');
 
-		// get list of hguhis admin module_srl
-		$output = executeQueryArray('hguhis.getHguhisAdminList', $args);
+		// get list of hiswiki admin module_srl
+		$output = executeQueryArray('hiswiki.getHiswikiAdminList', $args);
 
 		// 템플릿에 전해주기 위해 set함
 		Context::set('total_count', $output->total_count);
 		Context::set('total_page', $output->total_page);
 		Context::set('page', $output->page);
-		Context::set('hguhis_list', $output->data);
+		Context::set('hiswiki_list', $output->data);
 		Context::set('page_navigation', $output->page_navigation);
 
 		// 관리자 목록(mid) 보기 템플릿 지정(tpl/index.html)
 		$this->setTemplateFile('module_list');
-	}	
-	
+	}
+
 	/**
-	 * @function dispHguhisAdminModuleInsert
+	 * @function dispHiswikiAdminModuleInsert
 	 * @brief 모듈의 정보를 삽입한다.
 	 * @author 현희
 	 */
-	
-	
-	function dispHguhisAdminModuleInsert() {
-		
+
+
+	function dispHiswikiAdminModuleInsert() {
+
 		// 스킨 목록을 구해옴
 		$oModuleModel = &getModel('module');
 		$skin_list = $oModuleModel->getSkins($this->module_path);
 		Context::set('skin_list',$skin_list);
-	
+
 		// 레이아웃 목록을 구해옴
 		$oLayoutMode = &getModel('layout');
 		$layout_list = $oLayoutMode->getLayoutList();
@@ -96,54 +96,54 @@ class hguhisAdminView extends hguhis {
 		// 템플릿 파일 지정
 		$this->setTemplateFile('module_insert');
 
-	}   
-	
+	}
+
 	/**
 	 * @brief 선택된 모듈의 정보 출력은 곧바로 정보 입력으로 변경한다
 	 **/
-	function dispHguhisAdminModuleInfo() {
-		$this->dispHguhisAdminModuleInsert();
+	function dispHiswikiAdminModuleInfo() {
+		$this->dispHiswikiAdminModuleInsert();
 	}
-        
-        /**
-         * @brief 모듈 삭제 화면 출력
-         **/
-        function dispHguhisAdminModuleDelete() {
 
-			// 삭제를 요청하는 module_srl 확인하고 없으면 관리자 목록 보기
-            if(!Context::get('module_srl')) return $this->dispHguhisAdminModuleList();
+	/**
+	 * @brief 모듈 삭제 화면 출력
+	 **/
+	function dispHiswikiAdminModuleDelete() {
 
-			// 선택된 모듈의 정보를 set 함
-            $module_info = Context::get('module_info');
-            Context::set('module_info',$module_info);
+		// 삭제를 요청하는 module_srl 확인하고 없으면 관리자 목록 보기
+		if(!Context::get('module_srl')) return $this->dispHiswikiAdminModuleList();
 
-            // 템플릿 파일 지정
-            $this->setTemplateFile('module_delete');
-  
-        }
-       
+		// 선택된 모듈의 정보를 set 함
+		$module_info = Context::get('module_info');
+		Context::set('module_info',$module_info);
 
-        /**
-         * @brief 권한 목록 출력
-         **/
-        function dispHguhisAdminGrantInfo() {
+		// 템플릿 파일 지정
+		$this->setTemplateFile('module_delete');
 
-            // 공통 모듈 권한 설정 페이지 호출
-            $oModuleAdminModel = &getAdminModel('module');
-            $grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
-            Context::set('grant_content', $grant_content);
+	}
+	 
 
-            $this->setTemplateFile('grant_list');
-        }
+	/**
+	 * @brief 권한 목록 출력
+	 **/
+	function dispHiswikiAdminGrantInfo() {
 
-        /**
-         * @brief 스킨 정보 보여줌
-         **/
-        function dispHguhisAdminSkinInfo() {
-            // 공통 모듈 권한 설정 페이지 호출
-            $oModuleAdminModel = &getAdminModel('module');
-            $skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
-            Context::set('skin_content', $skin_content);
+		// 공통 모듈 권한 설정 페이지 호출
+		$oModuleAdminModel = &getAdminModel('module');
+		$grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
+		Context::set('grant_content', $grant_content);
+
+		$this->setTemplateFile('grant_list');
+	}
+
+	/**
+	 * @brief 스킨 정보 보여줌
+	 **/
+	function dispHiswikiAdminSkinInfo() {
+		// 공통 모듈 권한 설정 페이지 호출
+		$oModuleAdminModel = &getAdminModel('module');
+		$skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
+		Context::set('skin_content', $skin_content);
 
             $this->setTemplateFile('skin_info');
         }

@@ -1,6 +1,6 @@
-<h3 class="xeAdmin"><span class="gray">{$lang->hguhis_management}</span></h3>
+<h3 class="xeAdmin"><span class="gray">{$lang->hiswiki_management}</span></h3>
 
-<div class="infoText">{nl2br($lang->about_hguhis)}</div>
+<div class="infoText">{nl2br($lang->about_hiswiki)}</div>
 
 <!--@if($module_info)-->
 <div class="header4">
@@ -11,11 +11,11 @@
 
     <ul class="localNavigation">
         <!--@if($module=='admin')-->
-        <li <!--@if($act=='dispHguhisAdminModuleList')-->class="on"<!--@end-->><a href="{getUrl('act','dispHguhisAdminModuleList','module_srl','')}">{$lang->cmd_hguhis_list}</a></li>
+        <li <!--@if($act=='dispHguhisAdminModuleList')-->class="on"<!--@end-->><a href="{getUrl('act','dispHguhisAdminModuleList','module_srl','')}">{$lang->cmd_hiswiki_list}</a></li>
         <!--@else-->
         <li><a href="{getUrl('act','')}">{$lang->cmd_back}</a></li>
         <!--@end-->
-        <li <!--@if($act=='dispHguhisAdminInfo'||$act=='dispHguhisAdminInsert')-->class="on"<!--@end-->><a href="{getUrl('act','dispHguhisAdminInsert')}"><!--@if($module_srl)-->{$lang->cmd_hguhis_config}<!--@else-->{$lang->cmd_hguhis_insert}<!--@end--></a></li>
+        <li <!--@if($act=='dispHguhisAdminInfo'||$act=='dispHguhisAdminInsert')-->class="on"<!--@end-->><a href="{getUrl('act','dispHguhisAdminInsert')}"><!--@if($module_srl)-->{$lang->cmd_hiswiki_config}<!--@else-->{$lang->cmd_hiswiki_insert}<!--@end--></a></li>
 
         <!--@if($module_srl)-->
          <li <!--@if($act=='dispHguhisAdminGrantInfo')-->class="on"<!--@end-->><a href="{getUrl('act','dispHguhisAdminGrantInfo')}">{$lang->cmd_manage_grant}</a></li>

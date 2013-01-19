@@ -33,6 +33,10 @@ class hiswikiView extends hiswiki {
 		// 스킨 경로를 미리 template_path 라는 변수로 설정함
 		// 스킨이 존재하지 않는다면 default로 변경
 		$template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
+		
+		/**
+		 * @Modifier 인호
+		 */
 		if(!is_dir($template_path)||!$this->module_info->skin) {
 			$this->module_info->skin = 'default';
 			$template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
@@ -49,7 +53,6 @@ class hiswikiView extends hiswiki {
 			
 		$logged_info = Context::get('logged_info');
 		Context::set('logged_info',$logged_info);
-			
 		$this->setTemplateFile('front_page');
 			
 	}
@@ -58,7 +61,7 @@ class hiswikiView extends hiswiki {
 	 **/
 	function dispHiswikiContent(){
 			
-		// 접근권리가 았는지 확인
+		// 접근권리가 있는지 확인
 			
 		if(!$this->grant->acess || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
 			

@@ -47,7 +47,7 @@ class hiswikiAdminView extends hiswiki {
 	 * @author 인호
 	 */
 	function dispHiswikiAdminModuleList() {
-
+		
 		// setup for page navigation
 		$page = Context::get('page');
 		if (!$page) $page = 1;
@@ -145,32 +145,22 @@ class hiswikiAdminView extends hiswiki {
 		$skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
 		Context::set('skin_content', $skin_content);
 
-            $this->setTemplateFile('skin_info');
-        }
-	}
+		$this->setTemplateFile('skin_info');
+    }
+	
 	
 	/**
-	 * @function dispHiswikiAdminGrantInfo
+	 * @function dispHiswikiAdminCategoryInfo
 	 * @author 바람꽃(wndflwr@gmail.com)
-	 * @brief 권한을 설정할 수 있다.
+	 * @brief 각 모듈(게시판)의 카테고리를 설정할 수 있다.
 	 */
-	function dispHiswikiAdminGrantInfo() {
+	function dispHiswikiAdminCategoryInfo() {
+		$oDocumentModel = &getModel('document');
+		$catgegory_content = $oDocumentModel->getCategoryHTML(Context::get('module_srl'));
 		
-		// 공통 모듈 권한 설정 페이지 호출
-		$oModuleAdminModel = &getAdminModel('module');
-		$grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
-		Context::set('grant_content', $grant_content);
+		Context::set('category_content', $catgegory_content);
 		
-		$this->setTemplateFile('grant_list');
+		$this->setTemplateFile('category_info');
 	}
-	
-	
-	function dispHiswikiAdminSkinInfo() {
-		// 공통 모듈 권한 설정 페이지 호출
-		$oModuleAdminModel = &getAdminModel('module');
-		$skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
-		Context::set('skin_content', $skin_content);
-		
-		$this->setTemplateFile('skin_info');
-	}
+}
 ?>

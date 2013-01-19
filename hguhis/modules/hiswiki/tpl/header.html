@@ -1,25 +1,43 @@
-<h3 class="xeAdmin"><span class="gray">{$lang->hiswiki_management}</span></h3>
+<!--//
+작성자: 최지희
+수정자: 김장호
+템플릿 문법을 최신버전으로 바꿨음. cond를 이용함.
+-->
 
-<div class="infoText">{nl2br($lang->about_hiswiki)}</div>
+<h3 class="xeAdmin"><span class="gray">Hiswiki</span></h3>
+
+<div class="infoText">한동대 특화된 위키리스트입니다.</div>
 
 <!--@if($module_info)-->
 <div class="header4">
 
-    <!--@if($module_info->mid)-->
-    <h4 class="xeAdmin">{$module_info->mid} <span class="vr">|</span> <a href="{getSiteUrl($module_info->domain,'','mid',$module_info->mid)}" onclick="window.open(this.href); return false;" class="view">View</a></h4>
-    <!--@end-->
+    <h4 class="xeAdmin" cond="$module_info->mid">
+    	{$module_info->mid} <span class="vr">|</span> <a href="{getSiteUrl($module_info->domain,'','mid',$module_info->mid)}" onclick="window.open(this.href); return false;" class="view">View</a>
+    </h4>
 
     <ul class="localNavigation">
         <!--@if($module=='admin')-->
-        <li <!--@if($act=='dispHguhisAdminModuleList')-->class="on"<!--@end-->><a href="{getUrl('act','dispHguhisAdminModuleList','module_srl','')}">{$lang->cmd_hiswiki_list}</a></li>
+        <li class="on"|cond="$act=='dispHiswikiAdminModuleList'">
+        	<a href="{getUrl('act','dispHiswikiAdminModuleList','module_srl','')}">목록</a>
+        </li>
         <!--@else-->
-        <li><a href="{getUrl('act','')}">{$lang->cmd_back}</a></li>
+        <li><a href="{getUrl('act','')}">돌아가기</a></li>
         <!--@end-->
-        <li <!--@if($act=='dispHguhisAdminInfo'||$act=='dispHguhisAdminInsert')-->class="on"<!--@end-->><a href="{getUrl('act','dispHguhisAdminInsert')}"><!--@if($module_srl)-->{$lang->cmd_hiswiki_config}<!--@else-->{$lang->cmd_hiswiki_insert}<!--@end--></a></li>
-
+        <li class="on"|cond="$act=='dispHiswikiAdminModuleInfo'||$act=='dispHiswikiAdminModuleInsert'">
+        	<a href="{getUrl('act','dispHiswikiAdminModuleInsert', 'module_srl', $module_srl)}" cond="$module_srl">모듈 설정</a>
+        	<a href="{getUrl('act','dispHiswikiAdminModuleInsert')}" cond="!$module_srl">삽입</a>
+        </li>
+		
         <!--@if($module_srl)-->
-         <li <!--@if($act=='dispHguhisAdminGrantInfo')-->class="on"<!--@end-->><a href="{getUrl('act','dispHguhisAdminGrantInfo')}">{$lang->cmd_manage_grant}</a></li>
-        <li <!--@if($act=='dispHguhisAdminSkinInfo')-->class="on"<!--@end-->><a href="{getUrl('act','dispHguhisAdminSkinInfo')}">{$lang->cmd_manage_skin}</a></li>
+        <li class="on"|cond="$act=='dispHiswikiAdminGrantInfo'">
+        	<a href="{getUrl('act','dispHiswikiAdminGrantInfo')}">권한 설정</a>
+        </li>
+        <li class="on"|cond="$act=='dispHiswikiAdminSkinInfo'">
+        	<a href="{getUrl('act','dispHiswikiAdminSkinInfo')}">스킨 설정</a>
+        </li>
+        <li class="on"|cond="$act=='dispHiswikiAdminModuleDelete'">
+        	<a href="{getUrl('act', 'dispHiswikiAdminModuleDelete')}">모듈 삭제</a>
+        </li>
 		<!--@end-->
     </ul>
 </div>

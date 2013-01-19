@@ -104,6 +104,69 @@ class hiswikiView extends hiswiki {
 		// setup the tmeplate file
 		$this->setTemplateFile('list');
 	}
+	
+	/** 
+	 * @brief 정보를 입력받아 출력하는 페이지
+	 **/ 
+	function dispHiswikiSearchResult(){
+		//get variable value
+		$document_srl = Context::get('document_srl');
+		$page = Context::get('page');
+		
+		//document를 가져옴
+		$oDocumentModel = &getModel('document');
+		
+		//document가 존재하면 정보를 가져옴
+		if($document_srl){
+			$oDocument = $oDocumentModel->getDocument($document_srl,false,true);
+			if($oDocument->isExists()){
+				//module_srl이 안정적이지 않으면 검색취소
+				if($oDocument->get('module_srl')!=$this->module_info->module_srl) return $this->stop('msg_invalid_request');
+				
+				//접근가능 유저인지 확인
+				if($this->grant->manager) $oDocument->setGrant();
+				
+				// if the consultation function is enabled, and the document is not a notice
+				if($this->consultation && !$oDocument->isNotice()) {
+					$logged_info = Context::get('logged_info');
+					if($oDocument->get('member_srl')!=$logged_info->member_srl) $oDocument = $oDocumentModel->getDocument(0);
+				} else {
+					$oDocument = $oDocumentModel->getDocument(0);
+				}
+				
+				// 보는권한이 있는지 확인
+				} else {
+					$oDocument = $oDocumentModel->getDocument(0);
+				}
+				
+				/**
+				 *check the document view grant
+				 **/
+				if($oDocument->isExists()) {
+					if(!$this->grant->view && !$oDocument->isGranted()) {
+						$oDocument = $oDocumentModel->getDocument(0);
+						Context::set('document_srl','',true);
+						$this->alertMessage('msg_not_permitted');
+					} else {
+						// document 제목을 올림
+						Context::addBrowserTitle($oDocument->getTitleText());
+				
+						// 조회수 추가
+						if(!$oDocument->isSecret() || $oDocument->isGranted()) $oDocument->updateReadedCount();
+				
+						// 비밀글 감춤
+						if($oDocument->isSecret() && !$oDocument->isGranted()) $oDocument->add('content',Context::getLang('thisissecret'));
+					}		
+				}
+			// set the document object on  context
+			$oDocument->add('module_srl', $this->module_srl);	
+			Context::set('oDocument', $oDocument);
+			
+			//add javascript filters
+			Context::addJsFilter($this->module_path.'tpl/filter', 'insert_comment.xml');
+			//스킨보내기
+			$this->setTemplateFile('search_result');
+		}
 
 }
 ?>

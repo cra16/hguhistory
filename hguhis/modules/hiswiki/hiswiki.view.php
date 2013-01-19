@@ -48,6 +48,58 @@
         function dispHiswikiFrontPage() {
         	$this->setTemplateFile('front_page');
         }
+        
+        /**
+         * @brief 컨텐츠 + 검색
+         **/
+        function dispHiswikiContent(){
+        	
+        	 // 접근권리가 았는지 확인
+        	
+        	if(!$this->grant->acess || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
+     
+        	//카테고리 목록들을 불러온다
+        	$this->dispHiswikiCategoryList();
+        	
+        	// 검색창과 옵션들을 올린다
+        	foreach($this->search_option as $opt) $search_option[$opt] = Context::getLang($opt);
+        	$extra_keys = Context::get('extra_keys');
+        	if($extra_keys){
+        		foreach($extra_keys as $key => $val){
+        			if($val->search == 'Y') $search_option['extra_vars'.$val->idx] = $val->name;
+        		}
+        	}
+        	Context::set('search_option',$search_option);
+        	
+        	$oDocumentModel = &getModel('document');
+        	$statusNameList = $this->_getStatusNameList($oDocumentModel);
+        	if(count($statusNameList) > 0) Context::set('status_list', $statusNameList);
+        	
+        	// 화면에 띄움
+        	$this->dispHiswikiContentView();
+        	
+        	// list config, columnList setting
+        	$oHiswikiModel = &getModel('board');
+        	$this->listConfig = $oBoardModel->getListConfig($this->module_info->module_srl);
+        	$this->_makeListColumnList();
+        	
+        	// display the notice list
+        	$this->dispHiswikiNoticeList();
+        	
+        	// 목록
+        	$this->dispHiswikiContentList();
+        	
+        	/**
+        	 * add javascript filters
+        	 **/
+        	Context::addJsFilter($this->module_path.'tpl/filter', 'search.xml');
+        	
+        	$oSecurity = new Security();
+        	$oSecurity->encodeHTML('search_option.');
+        	
+        	// setup the tmeplate file
+        	$this->setTemplateFile('list');
+        }
 
     }
 ?>

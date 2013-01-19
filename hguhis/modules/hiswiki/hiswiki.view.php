@@ -46,9 +46,13 @@
          * 
          **/
         function dispHiswikiFrontPage() {
+        	
+        	$logged_info = Context::get('logged_info');
+        	Context::set('logged_info',$logged_info);
+        	
         	$this->setTemplateFile('front_page');
+        	
         }
-        
         /**
          * @brief 컨텐츠 + 검색
          **/

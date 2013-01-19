@@ -50,8 +50,7 @@ class hiswikiView extends hiswiki {
 		$template_path = sprintf("%sskins/default/",$this->module_path);
         $this->setTemplatePath($template_path);
         
-        $this->setTemplateFile('front_page');
-        	
+        $this->setTemplateFile('front_page');        	
 	}
 	/**
 	 * @brief 컨텐츠 + 검색

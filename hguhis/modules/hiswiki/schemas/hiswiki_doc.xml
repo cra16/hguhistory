@@ -25,4 +25,7 @@
     
     <!--// version: 이 문서의 버전. 1, 2, 3, 4, ... 식으로 올라간다. 최근에 작성한 문서일 수록 버전이 높다. -->
     <column name="version" type="number" size="11" default="1" />
+    
+    <!--// topic: topic 을 Unique 하게 선언 -->
+    <column name="topic" type="varchar" size="250" unique="unique_topic" />
 </table>

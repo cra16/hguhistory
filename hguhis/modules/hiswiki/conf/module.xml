@@ -21,6 +21,7 @@
         <action name="dispHiswikiAdminGrantInfo" type="view" standalone="true"/>
         <action name="dispHiswikiAdminSkinInfo" type="view" standalone="true"/>
         <action name="dispHiswikiAdminGrantInfo" type="view" standalone="true" />
+        <action name="dispHiswikiAdminCategoryInfo" type="view" standalone="true" />
         
         <action name="procHiswikiAdminModuleInsert" type="controller" standalone="true" />
         <action name="procHiswikiAdminModuleDelete" type="controller" standalone="true" />

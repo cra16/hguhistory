@@ -29,6 +29,9 @@
         </li>
 		
         <!--@if($module_srl)-->
+        <li class="on"|cond="$act=='dispHiswikiAdminCategoryInfo'">
+        	<a href="{getUrl('act','dispHiswikiAdminCategoryInfo')}">카테고리 설정</a>
+        </li>
         <li class="on"|cond="$act=='dispHiswikiAdminGrantInfo'">
         	<a href="{getUrl('act','dispHiswikiAdminGrantInfo')}">권한 설정</a>
         </li>

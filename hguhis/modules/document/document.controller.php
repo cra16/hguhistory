@@ -1146,6 +1146,7 @@ class documentController extends document {
 	 * @return object
 	 */
 	function insertCategory($obj) {
+		
 		// Sort the order to display if a child category is added
 		if($obj->parent_srl) {
 			// Get its parent category

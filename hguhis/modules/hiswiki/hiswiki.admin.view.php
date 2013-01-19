@@ -156,9 +156,10 @@ class hiswikiAdminView extends hiswiki {
 	 */
 	function dispHiswikiAdminCategoryInfo() {
 		$oDocumentModel = &getModel('document');
-		
 		$catgegory_content = $oDocumentModel->getCategoryHTML(Context::get('module_srl'));
+		
 		Context::set('category_content', $catgegory_content);
+		
 		$this->setTemplateFile('category_info');
 	}
 }

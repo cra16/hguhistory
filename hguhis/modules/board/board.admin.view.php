@@ -241,6 +241,7 @@
         function dispBoardAdminCategoryInfo() {
             $oDocumentModel = &getModel('document');
             $catgegory_content = $oDocumentModel->getCategoryHTML($this->module_info->module_srl);
+            
             Context::set('category_content', $catgegory_content);
 
             Context::set('module_info', $this->module_info);

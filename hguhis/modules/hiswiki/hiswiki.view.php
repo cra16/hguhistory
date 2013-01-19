@@ -47,11 +47,11 @@ class hiswikiView extends hiswiki {
 	 **/
 	function dispHiswikiFrontPage() {
 			
-		$logged_info = Context::get('logged_info');
-		Context::set('logged_info',$logged_info);
-			
-		$this->setTemplateFile('front_page');
-			
+		$template_path = sprintf("%sskins/default/",$this->module_path);
+        $this->setTemplatePath($template_path);
+        
+        $this->setTemplateFile('front_page');
+        	
 	}
 	/**
 	 * @brief 컨텐츠 + 검색
@@ -104,5 +104,6 @@ class hiswikiView extends hiswiki {
 		// setup the tmeplate file
 		$this->setTemplateFile('list');
 	}
+	
 }
 ?>

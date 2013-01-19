@@ -43,13 +43,29 @@ class hiswikiView extends hiswiki {
 
 	/**
 	 * @brief 목록
-	 *
+	 * @author 김현희
+	 * @modifier 바람꽃 (wndflwr@gmail.com)
 	 **/
 	function dispHiswikiFrontPage() {
-			
+		// 사용할 객체 받아오기
+		$oDocumentModel = &getModel('document');
+		
+		// 최신 글 리스트 불러오기
+		
+		
+		// 인기글 리스트 불러오기 (조회수)
+		
+		// 요청 리스트 불러오기
+		
+		// 인기 태그 리스트 불러오기
+		
+		// 카테고리 리스트 불러오기
+		
+		// 템플릿 경로 설정
 		$template_path = sprintf("%sskins/default/",$this->module_path);
         $this->setTemplatePath($template_path);
         
+        // 템플릿 파일 설정
         $this->setTemplateFile('front_page');        	
 	}
 	/**

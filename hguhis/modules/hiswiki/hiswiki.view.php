@@ -58,7 +58,7 @@ class hiswikiView extends hiswiki {
 	 **/
 	function dispHiswikiContent(){
 			
-		// 접근권리가 았는지 확인
+		// 접근권리가 있는지 확인
 			
 		if(!$this->grant->acess || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
 			

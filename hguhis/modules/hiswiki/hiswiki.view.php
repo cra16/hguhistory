@@ -82,12 +82,9 @@ class hiswikiView extends hiswiki {
 		$this->dispHiswikiContentView();
 			
 		// list config, columnList setting
-		$oHiswikiModel = &getModel('board');
-		$this->listConfig = $oBoardModel->getListConfig($this->module_info->module_srl);
+		$oHiswikiModel = &getModel('hiswiki');
+		$this->listConfig = $oHiswikiModel->getListConfig($this->module_info->module_srl);
 		$this->_makeListColumnList();
-			
-		// display the notice list
-		$this->dispHiswikiNoticeList();
 			
 		// 목록
 		$this->dispHiswikiContentList();
@@ -108,63 +105,46 @@ class hiswikiView extends hiswiki {
 	 * @brief 정보를 입력받아 출력하는 페이지
 	 **/ 
 	function dispHiswikiSearchResult(){
-		//get variable value
-		$document_srl = Context::get('document_srl');
-		$page = Context::get('page');
-		
-		//document를 가져옴
-		$oDocumentModel = &getModel('document');
-		
-		//document가 존재하면 정보를 가져옴
-		if($document_srl){
-			$oDocument = $oDocumentModel->getDocument($document_srl,false,true);
-			if($oDocument->isExists()){
-				//module_srl이 안정적이지 않으면 검색취소
-				if($oDocument->get('module_srl')!=$this->module_info->module_srl) return $this->stop('msg_invalid_request');
-				
-				//접근가능 유저인지 확인
-				if($this->grant->manager) $oDocument->setGrant();
-				
-				// if the consultation function is enabled, and the document is not a notice
-				if($this->consultation && !$oDocument->isNotice()) {
-					$logged_info = Context::get('logged_info');
-					if($oDocument->get('member_srl')!=$logged_info->member_srl) $oDocument = $oDocumentModel->getDocument(0);
-				} else {
-					$oDocument = $oDocumentModel->getDocument(0);
-				}
-				
-				// 보는권한이 있는지 확인
-				} else {
-					$oDocument = $oDocumentModel->getDocument(0);
-				}
-				
-				/**
-				 *check the document view grant
-				 **/
-				if($oDocument->isExists()) {
-					if(!$this->grant->view && !$oDocument->isGranted()) {
-						$oDocument = $oDocumentModel->getDocument(0);
-						Context::set('document_srl','',true);
-						$this->alertMessage('msg_not_permitted');
-					} else {
-						// document 제목을 올림
-						Context::addBrowserTitle($oDocument->getTitleText());
-				
-						// 조회수 추가
-						if(!$oDocument->isSecret() || $oDocument->isGranted()) $oDocument->updateReadedCount();
-				
-						// 비밀글 감춤
-						if($oDocument->isSecret() && !$oDocument->isGranted()) $oDocument->add('content',Context::getLang('thisissecret'));
-					}		
-				}
-			// set the document object on  context
-			$oDocument->add('module_srl', $this->module_srl);	
-			Context::set('oDocument', $oDocument);
-			
-			//add javascript filters
-			Context::addJsFilter($this->module_path.'tpl/filter', 'insert_comment.xml');
+		// check the grant
+        if(!$this->grant->list) {
+            Context::set('document_list', array());
+            Context::set('total_count', 0);
+            Context::set('total_page', 1);
+            Context::set('page', 1);
+            Context::set('page_navigation', new PageHandler(0,0,1,10));
+            return;
+        }
+        $oDocumentModel = &getModel('document');
+        // setup module_srl/page number/ list number/ page count
+        $args->module_srl = $this->module_srl; 
+        $args->page = Context::get('page');
+        $args->list_count = $this->list_count; 
+        $args->page_count = $this->page_count; 
+        // get the search target and keyword
+        $args->search_target = Context::get('search_target'); 
+        $args->search_keyword = Context::get('search_keyword'); 
+
+        // if the category is enabled, then get the category
+        if($this->module_info->use_category=='Y') $args->category_srl = Context::get('category'); 
+
+        // setup the sort index and order index
+        $args->sort_index = Context::get('sort_index');
+        $args->order_type = Context::get('order_type');
+        if(!in_array($args->sort_index, $this->order_target)) $args->sort_index = $this->module_info->order_target?$this->module_info->order_target:'list_order';
+        if(!in_array($args->order_type, array('asc','desc'))) $args->order_type = $this->module_info->order_type?$this->module_info->order_type:'asc';
+
+        // set the current page of documents  
+        $_get = $_GET;
+        if(!$args->page && ($_GET['document_srl'] || $_GET['entry'])) {
+            $oDocument = $oDocumentModel->getDocument(Context::get('document_srl'));
+            if($oDocument->isExists() && !$oDocument->isNotice()) {
+                $page = $oDocumentModel->getDocumentPage($oDocument, $args);
+                Context::set('page', $page);
+                $args->page = $page;
+            }
+        }
 			//스킨보내기
 			$this->setTemplateFile('search_result');
-		}
-
+	}
+}
 ?>

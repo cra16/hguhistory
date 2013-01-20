@@ -47,11 +47,10 @@ class hiswikiView extends hiswiki {
 	 **/
 	function dispHiswikiFrontPage() {
 			
-	$template_path = sprintf("%sskins/default/",$this->module_path);
-        	$this->setTemplatePath($template_path);
-        	
-        	$this->setTemplateFile('front_page');
-        	
+		$template_path = sprintf("%sskins/default/",$this->module_path);
+       		$this->setTemplatePath($template_path);
+        
+     		$this->setTemplateFile('front_page');        	
 	}
 	/**
 	 * @brief 컨텐츠 + 검색
@@ -83,12 +82,9 @@ class hiswikiView extends hiswiki {
 		$this->dispHiswikiContentView();
 			
 		// list config, columnList setting
-		$oHiswikiModel = &getModel('board');
-		$this->listConfig = $oBoardModel->getListConfig($this->module_info->module_srl);
+		$oHiswikiModel = &getModel('hiswiki');
+		$this->listConfig = $oHiswikiModel->getListConfig($this->module_info->module_srl);
 		$this->_makeListColumnList();
-			
-		// display the notice list
-		$this->dispHiswikiNoticeList();
 			
 		// 목록
 		$this->dispHiswikiContentList();
@@ -104,6 +100,51 @@ class hiswikiView extends hiswiki {
 		// setup the tmeplate file
 		$this->setTemplateFile('list');
 	}
+	
+	/** 
+	 * @brief 정보를 입력받아 출력하는 페이지
+	 **/ 
+	function dispHiswikiSearchResult(){
+		// check the grant
+        if(!$this->grant->list) {
+            Context::set('document_list', array());
+            Context::set('total_count', 0);
+            Context::set('total_page', 1);
+            Context::set('page', 1);
+            Context::set('page_navigation', new PageHandler(0,0,1,10));
+            return;
+        }
+        $oDocumentModel = &getModel('document');
+        // setup module_srl/page number/ list number/ page count
+        $args->module_srl = $this->module_srl; 
+        $args->page = Context::get('page');
+        $args->list_count = $this->list_count; 
+        $args->page_count = $this->page_count; 
+        // get the search target and keyword
+        $args->search_target = Context::get('search_target'); 
+        $args->search_keyword = Context::get('search_keyword'); 
 
+        // if the category is enabled, then get the category
+        if($this->module_info->use_category=='Y') $args->category_srl = Context::get('category'); 
+
+        // setup the sort index and order index
+        $args->sort_index = Context::get('sort_index');
+        $args->order_type = Context::get('order_type');
+        if(!in_array($args->sort_index, $this->order_target)) $args->sort_index = $this->module_info->order_target?$this->module_info->order_target:'list_order';
+        if(!in_array($args->order_type, array('asc','desc'))) $args->order_type = $this->module_info->order_type?$this->module_info->order_type:'asc';
+
+        // set the current page of documents  
+        $_get = $_GET;
+        if(!$args->page && ($_GET['document_srl'] || $_GET['entry'])) {
+            $oDocument = $oDocumentModel->getDocument(Context::get('document_srl'));
+            if($oDocument->isExists() && !$oDocument->isNotice()) {
+                $page = $oDocumentModel->getDocumentPage($oDocument, $args);
+                Context::set('page', $page);
+                $args->page = $page;
+            }
+        }
+			//스킨보내기
+			$this->setTemplateFile('search_result');
+	}
 }
 ?>

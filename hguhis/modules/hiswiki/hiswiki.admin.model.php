@@ -11,6 +11,7 @@ class hiswikiAdminModel extends hiswiki {
 	 * @brief 초기화
 	 **/
 	function init() {
+
 	}
 
 	
@@ -49,5 +50,16 @@ class hiswikiAdminModel extends hiswiki {
 		return $table;
 	}
 	
+	/*
+	 * @function TopicWrite 
+	 */
+	/*
+	function getHiswikiContent(){
+		
+		
+	
+	
+	}
+	*/
 }
 ?>

@@ -114,24 +114,7 @@
 			$this->setTemplateFile('view');
 		}
 		
-		/**
-		 * @brief book model에서 받아온 $output->data를 스킨파일에 보내기 전에 배열 형식 변경
-		 **/
-		function arrangeBookInfo($output) {
-			// 1차 배열 형식으로 변경
-			if($output->data) {
-				foreach($output->data as $val) {
-					$obj = null;
-					$obj->book_srl = $val->book_srl;
-					$obj->book_title = $val->book_title;
-					$obj->book_author = $val->book_author;
-					$obj->book_publisher = $val->book_publisher;
-					$obj->book_price = $val->book_price;
-					$obj->regdate = $val->regdate;
-				}
-				return $obj;
-			}
-		}
+		
 		
 		/**
 		 * @brief 내용 작성/수정 화면 출력

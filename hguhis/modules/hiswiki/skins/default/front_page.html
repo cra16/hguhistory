@@ -1,25 +1,28 @@
 <!--hyunhee-->
 <!-- 수정 by 인호 -->
+<!-- @modifier 바람꽃(wndflwr@gmail.com) -->
 <load target="css/hiswiki.css" />
 
 <div id="front_page">
 	<div class="search_box">
-		<form>
-			<input type="text" width="100px" /> 
-			<input type="submit" action="" value="검색" />
-			<input type="button" value="상세검색" />
-		</form>
+		<!--// 검색 창을 띄운다. -->
+		<!--#include("./search_box.html")-->
 	</div>
-	<div class="block category">카테고리</div>
-	<div class="block main_view">대문
+	<div class="block category">
+		<!--// 카테고리 리스트를 띄운다. 아래 카테고리 리스트를 사용하려면 반드시 Context에 $category_info 를 던져 줘야 한다.
+		$category_info는 document.model.php에 getCategoryList() 함수를 사용해서 얻어오기.
+		 -->
+		<!--#include("./category_list.html")-->
+	</div>
+	<div class="block main_view">
 		<div class="button_area" cond="$logged_info->is_admin=='Y'">
 			<input type="button" value="페이지 수정" />
 		</div>
 	</div>
 	<div class="block lists">
-		<div class="list newest">최신</div>
-		<div class="list best">조회수</div>
-		<div class="list request">요청리스트</div>
-		<div class="list best_tag">인기태그</div>
+		<div class="list newest">최신 글 리스트 여기에 뿌리기</div>
+		<div class="list best">조회수가 높거나 하는 글 리스트 여기에 뿌리기</div>
+		<div class="list request">요청 리스트 게시판을 받아서 여기에 뿌리기. 게시판 설정하는 부분도 있어야 할듯.</div>
+		<div class="list best_tag">인기태그리스트를 뿌리기. 인기가 많은 태그는 큰 글자로 뿌리기.</div>
 	</div>
 </div>

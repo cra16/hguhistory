@@ -193,8 +193,6 @@
 		 */
         function getDocumentList($obj, $except_notice = false, $load_extra_vars=true, $columnList = array()) {
         	
-        	debugPrint($obj);
-        	
             $sort_check = $this->_setSortIndex($obj, $load_extra_vars);
             $obj->sort_index = $sort_check->sort_index;
         	// cache controll
@@ -292,8 +290,6 @@
 			}
 			//insert in cache
 			if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
-			
-			debugPrint($output);
 			
             return $output;
         }

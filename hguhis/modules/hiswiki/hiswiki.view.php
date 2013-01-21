@@ -52,7 +52,6 @@ class hiswikiView extends hiswiki {
 		
 		// 최신 글 리스트 불러오기
 		
-		
 		// 인기글 리스트 불러오기 (조회수)
 		
 		// 요청 리스트 불러오기
@@ -60,6 +59,8 @@ class hiswikiView extends hiswiki {
 		// 인기 태그 리스트 불러오기
 		
 		// 카테고리 리스트 불러오기
+		$category_list = $oDocumentModel->getCategoryList($this->module_info->module_srl);
+		Context::set('category_list', $category_list);
 		
 		// 템플릿 경로 설정
 		$template_path = sprintf("%sskins/default/",$this->module_path);

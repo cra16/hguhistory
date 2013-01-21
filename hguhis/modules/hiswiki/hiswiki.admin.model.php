@@ -50,16 +50,5 @@ class hiswikiAdminModel extends hiswiki {
 		return $table;
 	}
 	
-	/*
-	 * @function TopicWrite 
-	 */
-	/*
-	function getHiswikiContent(){
-		
-		
-	
-	
-	}
-	*/
 }
 ?>

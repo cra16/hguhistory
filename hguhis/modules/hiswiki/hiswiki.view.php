@@ -47,7 +47,6 @@ class hiswikiView extends hiswiki {
 	 * @modifier 바람꽃 (wndflwr@gmail.com)
 	 **/
 	function dispHiswikiFrontPage() {
-<<<<<<< HEAD
 		// 사용할 객체 받아오기
 		$oDocumentModel = &getModel('document');
 		
@@ -64,19 +63,10 @@ class hiswikiView extends hiswiki {
 		Context::set('category_list', $category_list);
 		
 		// 템플릿 경로 설정
-=======
-			
->>>>>>> branch 'hguhis' of https://github.com/krifle/hguhistory.git
-		$template_path = sprintf("%sskins/default/",$this->module_path);
-       		$this->setTemplatePath($template_path);
-        
-<<<<<<< HEAD
         // 템플릿 파일 설정
         $this->setTemplateFile('front_page');        	
-=======
-     		$this->setTemplateFile('front_page');        	
->>>>>>> branch 'hguhis' of https://github.com/krifle/hguhistory.git
 	}
+	
 	/**
 	 * @brief 컨텐츠 + 검색
 	 **/
@@ -168,8 +158,8 @@ class hiswikiView extends hiswiki {
                 $args->page = $page;
             }
         }
-			//스킨보내기
-			$this->setTemplateFile('search_result');
+		//스킨보내기
+		$this->setTemplateFile('search_result');
 	}
 }
 ?>

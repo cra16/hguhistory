@@ -55,7 +55,7 @@ class hiswikiView extends hiswiki {
 	/**
 	 * @brief 컨텐츠 + 검색
 	 **/
-	function dispHiswikiContent(){
+	function dispHiswikiContentList(){
 			
 		// 접근권리가 있는지 확인
 			

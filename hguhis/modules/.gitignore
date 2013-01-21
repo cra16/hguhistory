@@ -1,5 +1,3 @@
-/menu
-/document
 /addon
 /admin
 /adminlogging
@@ -9,6 +7,7 @@
 /comment
 /communication
 /counter
+/document
 /editor
 /file
 /importer
@@ -17,6 +16,7 @@
 /krzip
 /layout
 /member
+/menu
 /message
 /module
 /page

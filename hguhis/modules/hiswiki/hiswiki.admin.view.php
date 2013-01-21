@@ -162,5 +162,49 @@ class hiswikiAdminView extends hiswiki {
 		
 		$this->setTemplateFile('category_info');
 	}
+	
+	/**
+	 * @function dispHiswikiWriteTopic
+	 * @brief topic 추가 설정중 
+	 * @author 현희(ifly31@gmail.com) 
+	 **/
+	function dispHiswikiWriteTopic() {
+		
+		// 쓰기 권한 체크
+		if(!$this->grant->write) return $this->dispHiswikiWriteTopic('msg_not_permitted');
+		
+		// document_srl 확인
+		$document_srl = Context::get('document_srl');
+		
+		// document_srl 이 있는 경우 update
+		if(isset($document_srl)) {
+		
+			$obj->document_srl = $document_srl;
+		
+			// hiswiki model에서 내용을 가져옴
+			$oHiswikiModel = &getModel('hiswiki');
+			$output = $oHiswikiModel->getHiswikiContent($obj);
+		
+			// 변경된 $output을 $document_info 변수에 set
+			Context::set('hiswiki_info', $this->arrangeHiswikiInfo($output));
+		
+			// document_srl 이 없는 경우 새로 등록하기 위해서 초기화
+		} else {
+		
+			//$document_srl = NULL;
+			//Context::set('document_srl', $document_srl);
+			// 또는
+			Context::set('document_srl','',true);
+		}
+		
+		// 내용 작성시 검증을 위해 사용되는 XmlJSFilter
+		Context::addJsFilter($this->module_path.'tpl/filter', 'topic_insert.xml');
+		
+		// 콜백 함수를 처리하는 javascript
+		Context::addJsFile($this->module_path.'tpl/js/hiswiki.js');
+		
+		// 내용 작성화면 템플릿 파일 지정 write.html
+		$this->setTemplateFile('write');
+	}
 }
 ?>

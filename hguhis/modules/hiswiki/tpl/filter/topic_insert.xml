@@ -1,0 +1,26 @@
+<filter name="topic_insert" module="hiswiki" act="procHiswikiWriteTopic">
+ <!-- //현희 -->
+  <form>
+    <node target="document_title" required="true" maxlength="40"  />
+    <node target="content" required="true" />
+  <node target="author_srl" required="true" maxlength="40" />
+	<node target="document_srl" required="true" maxlength="40" />
+    <node target="start_date" required="true" maxlength="11" filter="number" />
+    <node target="end_date"  maxlength="11" filter="number" />
+    <node target="module_srl" />
+  </form>
+  <parameter />
+  <response callback_func="completeTopicInsert">
+     <tag name="error" />
+     <tag name="message" />
+     <tag name="document_srl"/>
+     <tag name="module_srl"/>
+  </response>
+</filter>
+
+
+
+
+<!-- 
+	completeTopicInsert
+	procHiswikiWriteTopic -->

@@ -71,5 +71,13 @@ class hiswikiAdminController extends hiswiki {
 		$this->add('page',Context::get('page'));
             $this->setMessage('success_deleted');
         }
+        
+    function procHiswikiAdminTopicWrite(){
+    	
+    	
+    	
+    	
+    	
+    }
 }
 ?>

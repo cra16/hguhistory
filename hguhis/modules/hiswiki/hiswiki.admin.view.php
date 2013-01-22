@@ -47,7 +47,7 @@ class hiswikiAdminView extends hiswiki {
 	 * @author 인호
 	 */
 	function dispHiswikiAdminModuleList() {
-		
+
 		// setup for page navigation
 		$page = Context::get('page');
 		if (!$page) $page = 1;
@@ -121,7 +121,7 @@ class hiswikiAdminView extends hiswiki {
 		$this->setTemplateFile('module_delete');
 
 	}
-	 
+
 
 	/**
 	 * @brief 권한 목록 출력
@@ -146,9 +146,9 @@ class hiswikiAdminView extends hiswiki {
 		Context::set('skin_content', $skin_content);
 
 		$this->setTemplateFile('skin_info');
-    }
-	
-	
+	}
+
+
 	/**
 	 * @function dispHiswikiAdminCategoryInfo
 	 * @author 바람꽃(wndflwr@gmail.com)
@@ -157,54 +157,110 @@ class hiswikiAdminView extends hiswiki {
 	function dispHiswikiAdminCategoryInfo() {
 		$oDocumentModel = &getModel('document');
 		$catgegory_content = $oDocumentModel->getCategoryHTML(Context::get('module_srl'));
-		
+
 		Context::set('category_content', $catgegory_content);
-		
+
 		$this->setTemplateFile('category_info');
 	}
-	
+
 	/**
-	 * @function dispHiswikiWriteTopic
-	 * @brief topic 추가 설정중 
-	 * @author 현희(ifly31@gmail.com) 
+	 * @function dispHiswikiAdminTopicWrite
+	 * @brief topic 추가 설정중
+	 * @author 현희 
 	 **/
-	function dispHiswikiWriteTopic() {
-		
+	function dispHiswikiAdminTopicWrite() {
 		// 쓰기 권한 체크
+		//if(!$this->grant->write) //return $this->dispHiswikiAdminTopicWrite('msg_not_permitted');
+		//	return new Object(-1, 'msg_not_permitted');
 		if(!$this->grant->write) return $this->dispHiswikiWriteTopic('msg_not_permitted');
-		
+
 		// document_srl 확인
 		$document_srl = Context::get('document_srl');
-		
+
 		// document_srl 이 있는 경우 update
 		if(isset($document_srl)) {
-		
+
 			$obj->document_srl = $document_srl;
-		
+
 			// hiswiki model에서 내용을 가져옴
 			$oHiswikiModel = &getModel('hiswiki');
-			$output = $oHiswikiModel->getHiswikiContent($obj);
+			$output = $oHiswikiModel->getHiswikiTopic($obj);
 		
+			$output = $oHiswikiModel->getHiswikiContent($obj);
+
 			// 변경된 $output을 $document_info 변수에 set
 			Context::set('hiswiki_info', $this->arrangeHiswikiInfo($output));
-		
+
 			// document_srl 이 없는 경우 새로 등록하기 위해서 초기화
 		} else {
 		
+			$document_srl = NULL;
+
 			//$document_srl = NULL;
 			//Context::set('document_srl', $document_srl);
 			// 또는
 			Context::set('document_srl','',true);
 		}
-		
+
 		// 내용 작성시 검증을 위해 사용되는 XmlJSFilter
-		Context::addJsFilter($this->module_path.'tpl/filter', 'topic_insert.xml');
+		Context::addJsFilter($this->module_path.'tpl/filter', 'topic_write.xml');
 		
 		// 콜백 함수를 처리하는 javascript
 		Context::addJsFile($this->module_path.'tpl/js/hiswiki.js');
-		
+
 		// 내용 작성화면 템플릿 파일 지정 write.html
 		$this->setTemplateFile('write');
 	}
+	
+	/**
+	 * @brief hiswiki model에서 받아온 $output->data를 스킨파일에 보내기 전에 배열 형식 변경
+	 **/
+	function arrangeHiswikiInfo($output) {
+		// 1차 배열 형식으로 변경
+		if($output->data) {
+			foreach($output->data as $val) {
+				$obj = null;
+				$obj->document_srl = $val->document_srl;
+				$obj->document_title = $val->document_title;
+				$obj->document_author = $val->document_author;
+				$obj->regdate = $val->regdate;
+			}
+			return $obj;
+		}
+	}
+	
+	
+	/*
+	 * @function dispHiswikiTopicList
+	 * @brief admin이 추가시킨 topic List를 확인할 수 있다.
+	 * @author 현희 
+	 */
+	function dispHiswikiTopicList(){
+		/**
+		 * 목록보기 권한 체크 (모든 권한은 ModuleObject에서 xml 정보와 Module_info의 grant 값을 비교하여 미리 설정하여 놓음
+		if (!$this->grants->access || !$this->grant->list) return $this->dispBookMessage('msg_not_permitted');*/
+			
+		// module_srl 확인
+		$module_srl = Context::get('module_srl');
+		$args->module_srl = $module_srl;
+		$args->page = Context::get('page');
+			
+		// module model 객체 생성
+		$oModuleModel = &getModel('module');
+			
+		// hiswiki model에서 목록을 가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		$output = $oHiswikiModel->getHiswikiTopicList($args);
+		if (!$output->data) $output->data = array();
+			
+		// $book_list 변수에 담는다
+		Context::set('hiswiki_list', $output->data);
+		Context::set('page', $output->page);
+		Context::set('page_navigation', $output->page_navigation);
+			
+		// template_file을 topic_list.html로 지정
+		$this->setTemplateFile('topic_list');
+	}
 }
+
 ?>

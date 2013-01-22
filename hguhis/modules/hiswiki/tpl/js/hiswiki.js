@@ -1,6 +1,6 @@
 /* 내용 추가/수정 후 */
 
-function completeTopicInsert(ret_obj) {
+function completeAdminTopicWrite(ret_obj) {
     var error = ret_obj['error'];
     var message = ret_obj['message'];
     var page = ret_obj['page'];

@@ -11,6 +11,7 @@ class hiswikiAdminModel extends hiswiki {
 	 * @brief 초기화
 	 **/
 	function init() {
+
 	}
 
 	

@@ -4,7 +4,6 @@
  * @author CRA (cra.handong@gmail.com)
  * @brief hiswiki 모듈의 view class
  **/
-
 class hiswikiView extends hiswiki {
 
 	/**
@@ -47,31 +46,74 @@ class hiswikiView extends hiswiki {
 	 * @modifier 바람꽃 (wndflwr@gmail.com)
 	 **/
 	function dispHiswikiFrontPage() {
-		// 사용할 객체 받아오기
-		$oDocumentModel = &getModel('document');
+
+		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
+		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
+
+
+		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
+		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
 		
 		// 최신 글 리스트 불러오기
-		
+
 		// 인기글 리스트 불러오기 (조회수)
-		
+
 		// 요청 리스트 불러오기
-		
+
 		// 인기 태그 리스트 불러오기
-		
+
 		// 카테고리 리스트 불러오기
-		$category_list = $oDocumentModel->getCategoryList($this->module_info->module_srl);
-		Context::set('category_list', $category_list);
+		// 케시에 저장된 php 파일에서 데이터 구조 불러오기
+		$filename = sprintf("./files/cache/document_category/%s.php", $this->module_info->module_srl);
+		if (!file_exists($filename)) {
+			$oDocumentController = &getController('document');
+			!$oDocumentController->makeCategoryFile($module_srl);
+		}
+		@include($filename);
 		
-		// 템플릿 경로 설정
-        // 템플릿 파일 설정
-        $this->setTemplateFile('front_page');        	
+		if ($menu->list) {
+			// HTML string을 만들어서 돌려주는 방식을 취해보기.
+			$category_html = "";
+			$category_html = $this->_makeHTMLMenu($menu->list);
+			Context::set('category_html', $category_html);
+		}
+		// 현재 문서가 위치한 카테고리 위치 불러오기 TODO
+		
+		
+		
+
+		// 템플릿 파일 설정
+		$this->setTemplateFile('front_page');
+	}
+
+	/**
+	 * @function _makeHTMLMenu
+	 * @author 바람꽃 (wndflwr@gmail.com)
+	 * @brief category_list를 recursive 하게 구현하여 <ul>, <li> 로 구성된 HTML String으로 만들어 돌려준다.
+	 */
+	private function _makeHTMLMenu($list) {
+		$str = "<ul>";
+		foreach ($list as $val) {
+			$str .= "<li>" . $val["text"] . "</li>";
+			if (count($val["list"])) {
+				$str .= $this->_makeHTMLMenu($val["list"]);
+			}
+		}
+		$str .= "</ul>";
+		return $str;
 	}
 	
 	/**
+	 * @function dispHiswikiContentList
+	 * @author 지희
 	 * @brief 컨텐츠 + 검색
 	 **/
 	function dispHiswikiContentList(){
-			
+		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
+		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
+		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
+		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
+		
 		// 접근권리가 있는지 확인
 			
 		if(!$this->grant->acess || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
@@ -106,7 +148,7 @@ class hiswikiView extends hiswiki {
 			
 		/**
 		 * add javascript filters
-		 **/
+		**/
 		Context::addJsFilter($this->module_path.'tpl/filter', 'search.xml');
 			
 		$oSecurity = new Security();
@@ -115,50 +157,47 @@ class hiswikiView extends hiswiki {
 		// setup the tmeplate file
 		$this->setTemplateFile('list');
 	}
-	
-	/** 
+
+	/**
+	 * @function dispHiswikiSearchResult
+	 * @author 지희
 	 * @brief 정보를 입력받아 출력하는 페이지
-	 **/ 
+	 **/
 	function dispHiswikiSearchResult(){
+		
+		
+		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
+		//if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
+		
 		// check the grant
-        if(!$this->grant->list) {
-            Context::set('document_list', array());
-            Context::set('total_count', 0);
-            Context::set('total_page', 1);
-            Context::set('page', 1);
-            Context::set('page_navigation', new PageHandler(0,0,1,10));
-            return;
-        }
-        $oDocumentModel = &getModel('document');
-        // setup module_srl/page number/ list number/ page count
-        $args->module_srl = $this->module_srl; 
-        $args->page = Context::get('page');
-        $args->list_count = $this->list_count; 
-        $args->page_count = $this->page_count; 
-        // get the search target and keyword
-        $args->search_target = Context::get('search_target'); 
-        $args->search_keyword = Context::get('search_keyword'); 
-
-        // if the category is enabled, then get the category
-        if($this->module_info->use_category=='Y') $args->category_srl = Context::get('category'); 
-
-        // setup the sort index and order index
-        $args->sort_index = Context::get('sort_index');
-        $args->order_type = Context::get('order_type');
-        if(!in_array($args->sort_index, $this->order_target)) $args->sort_index = $this->module_info->order_target?$this->module_info->order_target:'list_order';
-        if(!in_array($args->order_type, array('asc','desc'))) $args->order_type = $this->module_info->order_type?$this->module_info->order_type:'asc';
-
-        // set the current page of documents  
-        $_get = $_GET;
-        if(!$args->page && ($_GET['document_srl'] || $_GET['entry'])) {
-            $oDocument = $oDocumentModel->getDocument(Context::get('document_srl'));
-            if($oDocument->isExists() && !$oDocument->isNotice()) {
-                $page = $oDocumentModel->getDocumentPage($oDocument, $args);
-                Context::set('page', $page);
-                $args->page = $page;
-            }
-        }
-		//스킨보내기
+		if(!$this->grant->access && !$this->grant->view) {
+			Context::set('document_list', array());
+			Context::set('total_count', 0);
+			Context::set('total_page', 1);
+			Context::set('page', 1);
+			Context::set('page_navigation', new PageHandler(0,0,1,10));
+			return new Object(-1, 'msg_not_permitted');
+		}
+				
+		$oDocumentModel = &getModel('document');
+		// setup module_srl/page number/ list number/ page count
+		$args->module_srl = $this->module_info->module_srl;
+		$args->page = Context::get('page');
+		$args->list_count = Context::get('list_count');
+		$args->page_count = Context::get('page_count');
+		// get the search target and keyword
+		$args->search_target = Context::get('search_target');
+		$args->search_keyword = Context::get('search_keyword');
+		
+		// setup the sort index and order index
+		$args->sort_index = Context::get('sort_index');
+		$args->order_type = Context::get('order_type');
+		
+		$output = $oDocumentModel->getDocumentList($args);
+		
+		Context::set('search_results', $output->data);
+		
+		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}
 }

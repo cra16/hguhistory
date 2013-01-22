@@ -22,7 +22,7 @@
         <action name="dispHiswikiAdminSkinInfo" type="view" standalone="true"/>
         <action name="dispHiswikiAdminGrantInfo" type="view" standalone="true" />
         <action name="dispHiswikiAdminCategoryInfo" type="view" standalone="true" />
-        <action name="dispHiswikiAdminTopicWrite" type="view" />
+        <action name="dispHiswikiAdminTopicWrite" type="view" standalone="true" />
         
         <action name="procHiswikiAdminModuleInsert" type="controller" standalone="true" />
         <action name="procHiswikiAdminModuleDelete" type="controller" standalone="true" />
@@ -34,7 +34,7 @@
         <action name="dispHiswikiMessage" type="view" standalone="true" />
         <action name="dispHiswikiSearchPage" type="view" standalone="true" />
         <action name="dispHiswikiModifyFrontPage" type="view" standalone="true" />
-        <action name="dispHiswikiTopicList" type="view"  />
+        <action name="dispHiswikiTopicList" type="view" standalone="true" />
     
         <action name="dispHiswikiSearchResult" type="view" standalone="true" />
     </actions>

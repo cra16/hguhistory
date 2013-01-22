@@ -31,11 +31,11 @@
         <action name="dispHiswikiFrontPage" type="view" standalone="true" index="true" />
         <action name="dispHiswikiContentList" type="view" standalone="true" />
         <action name="dispHiswikiCategory" type="view" standalone="true" />
-        <action name="dispHiswikiMessage" type="view" />
+        <action name="dispHiswikiMessage" type="view" standalone="true" />
         <action name="dispHiswikiSearchPage" type="view" standalone="true" />
+        <action name="dispHiswikiModifyFrontPage" type="view" standalone="true" />
+        <action name="dispHiswikiTopicList" type="view"  />
         
-        <action name="dispHiswikiSearchResult" type="view" standalone="true" />
-
         <action name="dispHiswikiSearchResult" type="view" standalone="true" />
     </actions>
 	<menus>

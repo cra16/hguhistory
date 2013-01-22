@@ -22,8 +22,8 @@ class hiswikiAdminController extends hiswiki {
 		$oModuleController = &getController('module');
 		$oModuleModel = &getModel('module');
 
-		// request 값을 모두 받음
-		$args = Context::getRequestVars();
+		// request 값을 모두 받음 // getRequestVars() 를 사용하면 필요 없는 값까지 받아져서 DB 낭비하게 된다. gets()를 사용하길.
+		$args = Context::gets('module_srl', 'module_category', 'layout_srl', 'use_mobile', 'mlayout_srl', 'menu_srl', 'site_srl', 'mid', 'is_skin_fix', 'mskin', 'browser_title', 'description', 'is_default', 'content', 'mcontent', 'open_rss', 'header_text', 'footer_text');
 		$args->module = 'hiswiki';
 
 		// module_srl이 넘어오면 원 모듈이 있는지 확인

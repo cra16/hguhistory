@@ -1,0 +1,22 @@
+<div id="hiswiki">
+	<div class="hiswiki_header">
+		<h1 class="h1">대문을 수정합니다.</h1>
+		<h2 class="h2">{$module_info->browser_title}</h2>
+	</div>
+	
+	<div class="hiswiki_body">{$new_obja}
+		<div class="editor">
+			<form action="./" method="post">
+				<input type="hidden" name="error_return_url" value="{getUrl('act', 'dispHiswikiModifyFrontPage')}" />
+				<input type="hidden" name="act" value="procHiswikiModifyFrontPage" />
+				<input type="hidden" name="vid" value="" />
+				<input type="hidden" name="content" value="{$front_page_doc->getContentText()}" />
+				<input type="hidden" name="front_page_srl" value="{$module_info->front_page_srl}" />
+				<input type="hidden" name="mid" value="{$mid}" />
+				<input type="hidden" name="module_srl" value="{$module_srl}" />
+				{$modify_front_editor}
+			</form>
+		</div>
+	</div>
+	<div class="hiswiki_footer"></div>
+</div>

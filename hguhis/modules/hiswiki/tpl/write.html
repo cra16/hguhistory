@@ -1,0 +1,27 @@
+<!-- 현희  -->
+<load target="css/hiswiki.css" />
+<div id="write_page">
+	<div class="search_box">
+		<!--// 검색 창을 띄운다. -->
+		<!--#include("./search_box.html")-->
+	</div>
+	<form action="" method="post" >
+	<input type="hidden" name="module_srl" value="{$module_srl}"/>
+	<input type="hidden" name="regdate" value="{date("Ymd")}"/>
+	<input type="hidden" name="document_srl" value="{$document_srl}"/>
+	
+  	<div class="write">
+  		<div class="select_category"></div>
+  		<div class="start_date"></div>
+  		<div class="end_date"></div>
+  		<div class="title">
+  			<input type="text" name="title"/>
+  		</div>
+  		<div class="contents">
+  			<textarea rows="" cols="" name="contents">contents적으세요</textarea>
+  		</div>
+  		<div class="btn">
+  			<span class="button"><input type="submit" value="등록"/></span>
+  		</div>
+	</div>
+</form>

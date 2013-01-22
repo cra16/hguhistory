@@ -9,9 +9,25 @@ class hiswikiModel extends hiswiki {
 
 	/**
 	 * @brief 초기화
+	 * @author 현희
+	 * @topic list 불러오기
 	 **/
 	function init() {
 	}
-	
+
+	function getdispHiswikiTopicList($args) {
+
+		$output = executeQueryArray('hiswiki.getdispHiswikiTopicList', $args);
+		return $output;
+
+
+	}
+
+	function getHiswikiTopic ($args){
+		$output = executeQueryArray('hiswiki.getHiswikiTopic', $args);
+		return $output;
+	}
+
+
 }
 ?>

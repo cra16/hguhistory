@@ -5,7 +5,7 @@
  * @brief hiswiki 모듈의 view class
  **/
 class hiswikiView extends hiswiki {
-
+	
 	/**
 	 * @brief 초기화
 	 **/

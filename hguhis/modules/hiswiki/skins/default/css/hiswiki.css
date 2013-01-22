@@ -16,7 +16,7 @@
 	z-index: 160;
 	cell-padding: 10;
 	height: 100px;
-	text-align: right;
+	text-align:right;
 	valign: middle;
 }
 
@@ -59,8 +59,10 @@
 	
 }
 
-/*
-#write_page .write .contents{
+
+#write_page .write .title{
+	width:100px;
+
+
 	
-	
-}*/
+}

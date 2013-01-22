@@ -170,8 +170,6 @@ class hiswikiAdminView extends hiswiki {
 	 **/
 	function dispHiswikiAdminTopicWrite() {
 		// 쓰기 권한 체크
-		//if(!$this->grant->write) //return $this->dispHiswikiAdminTopicWrite('msg_not_permitted');
-		//	return new Object(-1, 'msg_not_permitted');
 		if(!$this->grant->write) return $this->dispHiswikiWriteTopic('msg_not_permitted');
 
 		// document_srl 확인
@@ -192,8 +190,20 @@ class hiswikiAdminView extends hiswiki {
 			Context::set('hiswiki_info', $this->arrangeHiswikiInfo($output));
 
 			// document_srl 이 없는 경우 새로 등록하기 위해서 초기화
+			// 변경된 $output을 $document_info 변수에 set
+			Context::set('hiswiki_info', $this->arrangeHiswikiInfo($output));
+
+			// document_srl 이 없는 경우 새로 등록하기 위해서 초기화
 		} else {
 		
+			$document_srl = NULL;
+			//Context::set('document_srl', $document_srl);
+			// 또는
+			Context::set('document_srl','',true);
+		}
+
+		// 내용 작성시 검증을 위해 사용되는 XmlJSFilter
+		Context::addJsFilter($this->module_path.'tpl/filter', 'topic_write.xml');
 			$document_srl = NULL;
 
 			//$document_srl = NULL;

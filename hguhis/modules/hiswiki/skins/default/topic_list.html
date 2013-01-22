@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- META -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="Generator" content="XpressEngine" />
+<!-- TITLE -->
+<title>XpressEngine</title>
+<!-- CSS -->
+<link rel="stylesheet"
+	href="/git/hguhistory/hguhis/common/js/plugins/ui/jquery-ui.css?20130119141658"
+	type="text/css" media="all" />
+<link rel="stylesheet"
+	href="/git/hguhistory/hguhis/common/css/xe.css?20130119141703"
+	type="text/css" media="all" />
+<link rel="stylesheet"
+	href="/git/hguhistory/hguhis/modules/board/skins/xe_default/css/board.css?20130119141701"
+	type="text/css" media="all" />
+<link rel="stylesheet"
+	href="/git/hguhistory/hguhis/modules/board/skins/xe_default/css/white.css?20130119141659"
+	type="text/css" media="all" />
+<link rel="stylesheet"
+	href="/git/hguhistory/hguhis/modules/editor/styles/default/style.css?20130119141658"
+	type="text/css" media="all" />
+<!-- JS -->
+<script type="text/javascript"
+	src="/git/hguhistory/hguhis/common/js/jquery.js?20130119141658"></script>
+<script type="text/javascript"
+	src="/git/hguhistory/hguhis/common/js/x.js?20130119141700"></script>
+<script type="text/javascript"
+	src="/git/hguhistory/hguhis/common/js/common.js?20130119141659"></script>
+<script type="text/javascript"
+	src="/git/hguhistory/hguhis/common/js/js_app.js?20130119141700"></script>
+<script type="text/javascript"
+	src="/git/hguhistory/hguhis/common/js/xml_handler.js?20130119141701"></script>
+<script type="text/javascript"
+	src="/git/hguhistory/hguhis/common/js/xml_js_filter.js?20130119141700"></script>
+<script type="text/javascript"
+	src="/git/hguhistory/hguhis/modules/board/tpl/js/board.js?20130119141700"></script>
+<!-- RSS -->
+<!-- ICON -->
+<link rel="shortcut icon"
+	href="./modules/admin/tpl/img/faviconSample.png" />
+<link rel="apple-touch-icon"
+	href="./modules/admin/tpl/img/mobiconSample.png" />
+</head>
+<body>
+	<script type="text/javascript">
+	//<![CDATA[
+	var current_url = "http://localhost/git/hguhistory/hguhis/index.php?module=admin&act=dispHiswikiTopicList";
+	var request_uri = "http://localhost/git/hguhistory/hguhis/";
+var current_mid = "board";
+var waiting_message = "서버에 요청 중입니다. 잠시만 기다려주세요.";
+var ssl_actions = new Array();
+var default_url = "http://localhost/git/hguhistory/hguhis/";
+	xe.current_lang = "ko";
+	//]]>
+	</script>
+
+	<div class="hiswiki">
+		<div class="boardHeader"></div>
+		<div class="boardInformation">
+			<div class="infoLeft">
+				글 수 <strong>1</strong>
+			</div>
+
+			<div class="infoRight">
+				<ul>
+					<li class="setup"><a
+						href="/git/hguhistory/hguhis/index.php?mid=board&amp;act=dispHiswikiAdminBoardInfo">설정</a></li>
+					<li class="myInfo"><a
+						href="/git/hguhistory/hguhis/index.php?mid=board&amp;act=dispMemberInfo">회원정보
+							보기</a></li>
+					<li class="loginAndLogout"><a
+						href="/git/hguhistory/hguhis/index.php?mid=board&amp;act=dispMemberLogout">로그아웃</a></li>
+					<li class="tag_info icon"><a
+						href="/git/hguhistory/hguhis/index.php?mid=board&amp;act=dispBoardTagList"
+						title="Tag List"><span>Tag List</span></a></li>
+					<li class="listTypeClassic icon"><a
+						href="/git/hguhistory/hguhis/index.php?mid=board&amp;listStyle=list"
+						title="Classic Board"><span>Classic Board</span></a></li>
+					<li class="listTypeZine icon"><a
+						href="/git/hguhistory/hguhis/index.php?mid=board&amp;listStyle=webzine"
+						title="Web Zine"><span>Web Zine</span></a></li>
+					<li class="listTypeGallery icon"><a
+						href="/git/hguhistory/hguhis/index.php?mid=board&amp;listStyle=gallery"
+						title="Gallery"><span>Gallery</span></a></li>
+					<li class="contributors icon"><a
+						href="/git/hguhistory/hguhis/index.php?module=module&amp;act=dispHiswikiAdminSkinInfo&amp;selected_module=board&amp;skin=xe_default"
+						onclick="popopen(this.href,'skinInfo'); return false;"
+						title="Contributors"><span>Contributors</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<form action="./" method="get" class="boardListForm">
+			<input type="hidden" name="error_return_url"
+				value="/git/hguhistory/hguhis/index.php?mid=board" /><input
+				type="hidden" name="act" value="" /><input type="hidden" name="mid"
+				value="board" /><input type="hidden" name="vid" value="" />
+			<fieldset>
+				<legend>List of Articles</legend>
+				<table cellspacing="0" border="1" summary="List of Articles"
+					class="topicList">
+					<thead>
+						<tr>
+							<th scope="col"><input type="checkbox"
+								onclick="XE.checkboxToggleAll({ doClick:true }); return false;" /></th>
+
+
+							<th scope="col">번호</th>
+
+
+
+							<th scope="col" class="title">제목</th>
+
+
+
+							<th scope="col">글쓴이</th>
+
+
+
+							<th scope="col"><a
+								href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;sort_index=regdate&amp;order_type=desc">날짜</a></th>
+
+
+
+							<th scope="col"><a
+								href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;sort_index=readed_count&amp;order_type=desc">조회
+									수</a></th>
+
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr class="bg1">
+							<td class="checkbox"><input type="checkbox" name="cart"
+								value="116" onclick="doAddDocumentCart(this)" /></td>
+
+
+							<td class="num">1</td>
+
+
+
+							<td class="title"><a
+								href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;document_srl=116">dfaer</a>
+
+								<img
+								src="http://localhost/git/hguhistory/hguhis/modules/document/tpl/icons/new.gif"
+								alt="new" title="new" style="margin-right: 2px;" /></td>
+
+
+
+							<td class="author"><a href="#popup_menu_area"
+								class="member_4" onclick="return false">hyunhee</a></td>
+
+
+
+							<td class="date">2013-01-22</td>
+
+
+
+							<td class="reading">&nbsp;</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</form>
+		<div class="boardNavigation">
+			<div class="btnArea">
+				<span class="btn"><a
+					href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;act=dispHiswikiAdminTopicWrite">쓰기...</a></span>
+				<span class="etc"> <span class="btn"><a
+						href="/git/hguhistory/hguhis/index.php?module=document&amp;act=dispDocumentManageDocument"
+						onclick="popopen(this.href,'manageDocument'); return false;">게시글
+							관리</a></span> <span class="btn"><a
+						href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;page=1">목록</a></span>
+				</span>
+			</div>
+			<div class="pagination a1">
+				<a href="/git/hguhistory/hguhis/index.php?mid=hiswiki" class="prevEnd">첫
+					페이지</a> <strong>1</strong> <a
+					href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;page=1"
+					class="nextEnd">끝 페이지</a>
+			</div>
+		</div>
+		<form action="http://localhost/git/hguhistory/hguhis/" method="get"
+			onsubmit="return procFilter(this, search)" id="fo_search"
+			class="topicSearchForm">
+			<input type="hidden" name="act" value="" />
+			<fieldset>
+				<legend>Board Search</legend>
+				<input type="hidden" name="mid" value="hiswiki" /> <input
+					type="hidden" name="category" value="" /> <select
+					name="search_target">
+					<option value="title">제목</option>
+					<option value="content">내용</option>
+					<option value="title_content">제목+내용</option>
+					<option value="comment">댓글</option>
+					<option value="user_name">이름</option>
+					<option value="nick_name">닉네임</option>
+					<option value="user_id">아이디</option>
+					<option value="tag">태그</option>
+				</select> <input type="text" name="search_keyword" value="" class="iText"
+					title="검색" /> <span class="btn"><button type="submit">검색</button></span>
+			</fieldset>
+		</form>
+	</div>
+	<!-- ETC -->
+	<div class="wfsr"></div>
+	<script type="text/javascript"
+		src="/git/hguhistory/hguhis/files/cache/js_filter_compiled/d046d1841b9c79c545b82d3be892699d.ko.compiled.js?20130121133030"></script>
+	<script type="text/javascript"
+		src="/git/hguhistory/hguhis/files/cache/js_filter_compiled/1bdc15d63816408b99f674eb6a6ffcea.ko.compiled.js?20130121133030"></script>
+	<script type="text/javascript"
+		src="/git/hguhistory/hguhis/files/cache/js_filter_compiled/9b007ee9f2af763bb3d35e4fb16498e9.ko.compiled.js?20130121133030"></script>
+	<script type="text/javascript"
+		src="/git/hguhistory/hguhis/addons/autolink/autolink.js?20130119141700"></script>
+	<script type="text/javascript"
+		src="/git/hguhistory/hguhis/common/js/plugins/ui/jquery-ui.min.js?20130119141702"></script>
+	<script type="text/javascript"
+		src="/git/hguhistory/hguhis/common/js/plugins/ui/jquery.ui.datepicker-ko.js?20130119141659"></script>
+	<script type="text/javascript"
+		src="/git/hguhistory/hguhis/addons/resize_image/js/resize_image.js?20130119141703"></script>
+</body>
+</html>

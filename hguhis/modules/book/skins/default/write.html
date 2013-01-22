@@ -3,10 +3,10 @@
 <h2><!--@if(!$book_info->book_srl)-->Book Insert<!--@else-->Book Update<!--@end--></h2>
  
 <form action="./" method="post" onsubmit="return procFilter(this, content_insert);">
-<input type="hidden" name="module_srl" value="{$module_srl}" />
-<input type="hidden" name="regdate" value="{date("Ymd")}" />
-<input type="hidden" name="book_srl" value="{$book_srl}" />
- 
+	<input type="hidden" name="module_srl" value="{$module_srl}" />
+	<input type="hidden" name="regdate" value="{date("Ymd")}" />
+	<input type="hidden" name="book_srl" value="{$book_srl}" />
+	 
 <table border="0" class="bookTable">
     <tr>
         <th>BOOK</th>

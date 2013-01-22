@@ -49,10 +49,6 @@ class hiswikiView extends hiswiki {
 
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-
-
-		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
-		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
 		
 		// 최신 글 리스트 불러오기
 

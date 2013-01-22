@@ -33,13 +33,10 @@
         <action name="dispHiswikiCategory" type="view" standalone="true" />
         <action name="dispHiswikiMessage" type="view" />
         <action name="dispHiswikiSearchPage" type="view" standalone="true" />
-
-        <action name="dispHiswikiTopicList" type="view"  />
         
-        
-
         <action name="dispHiswikiSearchResult" type="view" standalone="true" />
 
+        <action name="dispHiswikiSearchResult" type="view" standalone="true" />
     </actions>
 	<menus>
 	</menus>

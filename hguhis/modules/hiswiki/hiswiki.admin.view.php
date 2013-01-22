@@ -166,92 +166,92 @@ class hiswikiAdminView extends hiswiki {
 	/**
 	 * @function dispHiswikiAdminTopicWrite
 	 * @brief topic 추가 설정중
-	 * @author 현희 
+	 * @author 현희
 	 **/
-// 	function dispHiswikiAdminTopicWrite(){
-// 		// check grant
-// 		if(!$this->grant->write_document) return $this->dispBoardMessage('msg_not_permitted');
-		
-// 		$oDocumentModel = &getModel('document');
-		
-// 		/**
-// 		 * check if the category option is enabled not not
-// 		 **/
-// 		if($this->module_info->use_category=='Y') {
-// 			// get the user group information
-// 			if(Context::get('is_logged')) {
-// 				$logged_info = Context::get('logged_info');
-// 				$group_srls = array_keys($logged_info->group_list);
-// 			} else {
-// 				$group_srls = array();
-// 			}
-// 			$group_srls_count = count($group_srls);
-		
-// 			// check the grant after obtained the category list
-// 			$normal_category_list = $oDocumentModel->getCategoryList($this->module_srl);
-// 			if(count($normal_category_list)) {
-// 				foreach($normal_category_list as $category_srl => $category) {
-// 					$is_granted = true;
-// 					if($category->group_srls) {
-// 						$category_group_srls = explode(',',$category->group_srls);
-// 						$is_granted = false;
-// 						if(count(array_intersect($group_srls, $category_group_srls))) $is_granted = true;
-		
-// 					}
-// 					if($is_granted) $category_list[$category_srl] = $category;
-// 				}
-// 			}
-// 			Context::set('category_list', $category_list);
-// 		}
-		
-// 		// GET parameter document_srl from request
-// 		$document_srl = Context::get('document_srl');
-// 		$oDocument = $oDocumentModel->getDocument(0, $this->grant->manager);
-// 		$oDocument->setDocument($document_srl);
-// 		if($oDocument->get('module_srl') == $oDocument->get('member_srl')) $savedDoc = true;
-// 		$oDocument->add('module_srl', $this->module_srl);
-		
-// 		// if the document is not granted, then back to the password input form
-// 		$oModuleModel = &getModel('module');
-// 		if($oDocument->isExists()&&!$oDocument->isGranted()) return $this->setTemplateFile('input_password_form');
-// 		if(!$oDocument->isExists()) {
-// 			$point_config = $oModuleModel->getModulePartConfig('point',$this->module_srl);
-// 			$logged_info = Context::get('logged_info');
-// 			$oPointModel = &getModel('point');
-// 			$pointForInsert = $point_config["insert_document"];
-// 			if($pointForInsert < 0) {
-// 				if( !$logged_info ) return $this->disphiswikiMessage('msg_not_permitted');
-// 				else if (($oPointModel->getPoint($logged_info->member_srl) + $pointForInsert )< 0 ) return $this->dispBoardMessage('msg_not_enough_point');
-// 			}
-// 		}
-// 		if(!$oDocument->get('status')) $oDocument->add('status', $oDocumentModel->getDefaultStatus());
-		
-// 		$statusList = $this->_getStatusNameList($oDocumentModel);
-// 		if(count($statusList) > 0) Context::set('status_list', $statusList);
-// 		// get Document status config value
-// 		Context::set('document_srl',$document_srl);
-// 		Context::set('oDocument', $oDocument);
-		
-// 		// apply xml_js_filter on header
-// 		$oDocumentController = &getController('document');
-// 		$oDocumentController->addXmlJsFilter($this->module_info->module_srl);
-		
-// 		// if the document exists, then setup extra variabels on context
-// 		if($oDocument->isExists() && !$savedDoc) Context::set('extra_keys', $oDocument->getExtraVars());
-		
-// 		/**
-// 		 * add JS filters
-// 		 **/
-// 		Context::addJsFilter($this->module_path.'tpl/filter', 'topic_write.xml');
-		
-// 		$oSecurity = new Security();
-// 		$oSecurity->encodeHTML('category_list.text', 'category_list.title');
-		
-// 		$this->setTemplateFile('write_form');
-// 	}
-	
-	
-		function dispHiswikiAdminTopicWrite() {
+	// 	function dispHiswikiAdminTopicWrite(){
+	// 		// check grant
+	// 		if(!$this->grant->write_document) return $this->dispBoardMessage('msg_not_permitted');
+
+	// 		$oDocumentModel = &getModel('document');
+
+	// 		/**
+	// 		 * check if the category option is enabled not not
+	// 		 **/
+	// 		if($this->module_info->use_category=='Y') {
+	// 			// get the user group information
+	// 			if(Context::get('is_logged')) {
+	// 				$logged_info = Context::get('logged_info');
+	// 				$group_srls = array_keys($logged_info->group_list);
+	// 			} else {
+	// 				$group_srls = array();
+	// 			}
+	// 			$group_srls_count = count($group_srls);
+
+	// 			// check the grant after obtained the category list
+	// 			$normal_category_list = $oDocumentModel->getCategoryList($this->module_srl);
+	// 			if(count($normal_category_list)) {
+	// 				foreach($normal_category_list as $category_srl => $category) {
+	// 					$is_granted = true;
+	// 					if($category->group_srls) {
+	// 						$category_group_srls = explode(',',$category->group_srls);
+	// 						$is_granted = false;
+	// 						if(count(array_intersect($group_srls, $category_group_srls))) $is_granted = true;
+
+	// 					}
+	// 					if($is_granted) $category_list[$category_srl] = $category;
+	// 				}
+	// 			}
+	// 			Context::set('category_list', $category_list);
+	// 		}
+
+	// 		// GET parameter document_srl from request
+	// 		$document_srl = Context::get('document_srl');
+	// 		$oDocument = $oDocumentModel->getDocument(0, $this->grant->manager);
+	// 		$oDocument->setDocument($document_srl);
+	// 		if($oDocument->get('module_srl') == $oDocument->get('member_srl')) $savedDoc = true;
+	// 		$oDocument->add('module_srl', $this->module_srl);
+
+	// 		// if the document is not granted, then back to the password input form
+	// 		$oModuleModel = &getModel('module');
+	// 		if($oDocument->isExists()&&!$oDocument->isGranted()) return $this->setTemplateFile('input_password_form');
+	// 		if(!$oDocument->isExists()) {
+	// 			$point_config = $oModuleModel->getModulePartConfig('point',$this->module_srl);
+	// 			$logged_info = Context::get('logged_info');
+	// 			$oPointModel = &getModel('point');
+	// 			$pointForInsert = $point_config["insert_document"];
+	// 			if($pointForInsert < 0) {
+	// 				if( !$logged_info ) return $this->disphiswikiMessage('msg_not_permitted');
+	// 				else if (($oPointModel->getPoint($logged_info->member_srl) + $pointForInsert )< 0 ) return $this->dispBoardMessage('msg_not_enough_point');
+	// 			}
+	// 		}
+	// 		if(!$oDocument->get('status')) $oDocument->add('status', $oDocumentModel->getDefaultStatus());
+
+	// 		$statusList = $this->_getStatusNameList($oDocumentModel);
+	// 		if(count($statusList) > 0) Context::set('status_list', $statusList);
+	// 		// get Document status config value
+	// 		Context::set('document_srl',$document_srl);
+	// 		Context::set('oDocument', $oDocument);
+
+	// 		// apply xml_js_filter on header
+	// 		$oDocumentController = &getController('document');
+	// 		$oDocumentController->addXmlJsFilter($this->module_info->module_srl);
+
+	// 		// if the document exists, then setup extra variabels on context
+	// 		if($oDocument->isExists() && !$savedDoc) Context::set('extra_keys', $oDocument->getExtraVars());
+
+	// 		/**
+	// 		 * add JS filters
+	// 		 **/
+	// 		Context::addJsFilter($this->module_path.'tpl/filter', 'topic_write.xml');
+
+	// 		$oSecurity = new Security();
+	// 		$oSecurity->encodeHTML('category_list.text', 'category_list.title');
+
+	// 		$this->setTemplateFile('write_form');
+	// 	}
+
+
+	function dispHiswikiAdminTopicWrite() {
 		// 쓰기 권한 체크
 		//if(!$this->grant->write) //return $this->dispHiswikiAdminTopicWrite('msg_not_permitted');
 		//	return new Object(-1, 'msg_not_permitted');
@@ -268,13 +268,13 @@ class hiswikiAdminView extends hiswiki {
 			// hiswiki model에서 내용을 가져옴
 			$oHiswikiModel = &getModel('hiswiki');
 			$output = $oHiswikiModel->getHiswikiTopic($obj);
-		
+
 			// 변경된 $output을 $document_info 변수에 set
 			Context::set('hiswiki_info', $this->arrangeHiswikiInfo($output));
 
 			// document_srl 이 없는 경우 새로 등록하기 위해서 초기화
 		} else {
-		
+
 			$document_srl = NULL;
 			//Context::set('document_srl', $document_srl);
 			// 또는
@@ -283,14 +283,14 @@ class hiswikiAdminView extends hiswiki {
 
 		// 내용 작성시 검증을 위해 사용되는 XmlJSFilter
 		Context::addJsFilter($this->module_path.'tpl/filter', 'topic_write.xml');
-		
+
 		// 콜백 함수를 처리하는 javascript
 		Context::addJsFile($this->module_path.'tpl/js/hiswiki.js');
 
 		// 내용 작성화면 템플릿 파일 지정 write.html
 		$this->setTemplateFile('write');
 	}
-	
+
 	/**
 	 * @function dispHiswikiTopicList
 	 * @brief admin이 추가시킨 topic List를 확인할 수 있다.
@@ -323,8 +323,8 @@ class hiswikiAdminView extends hiswiki {
 		// template_file을 topic_list.html로 지정
 		$this->setTemplateFile('topic_list');
 	}
-	
-	
+
+
 	/**
 	 * @brief hiswiki model에서 받아온 $output->data를 스킨파일에 보내기 전에 배열 형식 변경
 	 **/

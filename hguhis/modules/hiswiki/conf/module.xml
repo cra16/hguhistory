@@ -33,13 +33,8 @@
         <action name="dispHiswikiCategory" type="view" standalone="true" />
         <action name="dispHiswikiMessage" type="view" />
         <action name="dispHiswikiSearchPage" type="view" standalone="true" />
-<<<<<<< HEAD
         <action name="dispHiswikiTopicList" type="view"  />
-        
-        
-=======
         <action name="dispHiswikiSearchResult" type="view" standalone="true" />
->>>>>>> refs/remotes/origin/hguhis
     </actions>
 	<menus>
 	</menus>

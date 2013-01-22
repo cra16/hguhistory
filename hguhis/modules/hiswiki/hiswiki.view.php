@@ -75,7 +75,6 @@ class hiswikiView extends hiswiki {
 	 * @brief 컨텐츠 + 검색
 	 **/
 	function dispHiswikiContentList(){
-
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
 			
@@ -127,51 +126,40 @@ class hiswikiView extends hiswiki {
 	 * @brief 정보를 입력받아 출력하는 페이지
 	 **/
 	function dispHiswikiSearchResult(){
-
+		
+		
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		//if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-
+		
 		// check the grant
-		if(!$this->grant->list) {
+		if(!$this->grant->access && !$this->grant->view) {
 			Context::set('document_list', array());
 			Context::set('total_count', 0);
 			Context::set('total_page', 1);
 			Context::set('page', 1);
 			Context::set('page_navigation', new PageHandler(0,0,1,10));
-			return;
+			return new Object(-1, 'msg_not_permitted');
 		}
+				
 		$oDocumentModel = &getModel('document');
 		// setup module_srl/page number/ list number/ page count
-		$args->module_srl = $this->module_srl;
+		$args->module_srl = $this->module_info->module_srl;
 		$args->page = Context::get('page');
-		$args->list_count = $this->list_count;
-		$args->page_count = $this->page_count;
+		$args->list_count = Context::get('list_count');
+		$args->page_count = Context::get('page_count');
 		// get the search target and keyword
 		$args->search_target = Context::get('search_target');
 		$args->search_keyword = Context::get('search_keyword');
 		
-		debugPrint($args);
-
-		// if the category is enabled, then get the category
-		if($this->module_info->use_category=='Y') $args->category_srl = Context::get('category');
-
 		// setup the sort index and order index
 		$args->sort_index = Context::get('sort_index');
 		$args->order_type = Context::get('order_type');
-		if(!in_array($args->sort_index, $this->order_target)) $args->sort_index = $this->module_info->order_target?$this->module_info->order_target:'list_order';
-		if(!in_array($args->order_type, array('asc','desc'))) $args->order_type = $this->module_info->order_type?$this->module_info->order_type:'asc';
-
-		// set the current page of documents
-		$_get = $_GET;
-		if(!$args->page && ($_GET['document_srl'] || $_GET['entry'])) {
-			$oDocument = $oDocumentModel->getDocument(Context::get('document_srl'));
-			if($oDocument->isExists() && !$oDocument->isNotice()) {
-				$page = $oDocumentModel->getDocumentPage($oDocument, $args);
-				Context::set('page', $page);
-				$args->page = $page;
-			}
-		}
-		//스킨보내기
+		
+		$output = $oDocumentModel->getDocumentList($args);
+		
+		Context::set('search_results', $output->data);
+		
+		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}
 }

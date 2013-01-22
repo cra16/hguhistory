@@ -1,4 +1,4 @@
-<!-- 현 -->
+<!-- //현희  -->
 <query id="getHiswikiTopic" action="select">
     <tables>
         <table name="Topics" />

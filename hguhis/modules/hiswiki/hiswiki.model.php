@@ -15,9 +15,9 @@ class hiswikiModel extends hiswiki {
 	function init() {
 	}
 
-	function getdispHiswikiTopicList($args) {
+	function getHiswikiTopicList($args) {
 
-		$output = executeQueryArray('hiswiki.getdispHiswikiTopicList', $args);
+		$output = executeQueryArray('hiswiki.getHiswikiTopicList', $args);
 		return $output;
 
 

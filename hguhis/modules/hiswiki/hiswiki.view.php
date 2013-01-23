@@ -80,6 +80,13 @@ class hiswikiView extends hiswiki {
 		}
 		// 현재 문서가 위치한 카테고리 위치 불러오기 TODO
 		
+		// 대문 내용(content) 던지기
+		$oDocumentModel = &getModel('document');
+		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
+		
+		if ($front_page_doc->isExists()) {
+			Context::set('front_page', $front_page_doc->getContent(false, false, false, false, false));
+		}
 		
 		// 권한 정보 던지기
 		Context::set('grant_info', $this->grant);
@@ -129,6 +136,7 @@ class hiswikiView extends hiswiki {
 		}
 		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
 		Context::set('front_page_doc', $front_page_doc);
+		//debugPrint($front_page_doc->getContentText());
 		
 		// 에디터를 넘긴다.
 		$oEditorModel = &getModel('editor');
@@ -139,8 +147,8 @@ class hiswikiView extends hiswiki {
 		$editorOpt->enable_default_component = true;
 		$editorOpt->enable_component = true;
 		$editorOpt->disable_html = false;
-		$editorOpt->enable_autosave = true;
-		Context::set('modify_front_editor', $oEditorModel->getEditor($this->module_info->front_page_doc, $editorOpt));
+		$editorOpt->enable_autosave = false;
+		Context::set('modify_front_editor', $oEditorModel->getEditor($this->module_info->front_page_srl, $editorOpt));
 		
 		// 모듈 정보 넘긴다.
 		Context::set('module_info', $this->module_info);

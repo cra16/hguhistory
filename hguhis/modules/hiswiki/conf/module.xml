@@ -35,8 +35,11 @@
         <action name="dispHiswikiSearchPage" type="view" standalone="true" />
         <action name="dispHiswikiModifyFrontPage" type="view" standalone="true" />
         <action name="dispHiswikiTopicList" type="view" standalone="true" />
-    
+        
         <action name="dispHiswikiSearchResult" type="view" standalone="true" />
+        
+        <action name="procHiswikiModifyFrontPage" type="controller" standalone="true" />
+        
     </actions>
 	<menus>
 	</menus>

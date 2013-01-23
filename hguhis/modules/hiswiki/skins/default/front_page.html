@@ -3,6 +3,11 @@
 <!-- @modifier 바람꽃(wndflwr@gmail.com) -->
 <load target="css/hiswiki.css" />
 
+<!--// 메시지가 있으면 여기에 출력 -->
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
 <div id="front_page">
 	<div class="search_box">
 		<!--// 검색 창을 띄운다. -->
@@ -13,6 +18,7 @@
 		<include target="category_list.html" />
 	</div>
 	<div class="block main_view">
+		<div class="front_page">{$front_page}</div>
 		<div class="button_area" cond="$logged_info->is_admin=='Y'">
 			<a cond="$grant_info->manager||$grant_info->is_admin" href="{getUrl('act', 'dispHiswikiModifyFrontPage')}">페이지 수정</a>
 		</div>

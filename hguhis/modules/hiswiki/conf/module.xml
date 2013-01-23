@@ -24,26 +24,25 @@
         <action name="dispHiswikiAdminCategoryInfo" type="view" standalone="true" />
         <action name="dispHiswikiAdminTopicWrite" type="view" standalone="true" />
         
-        <action name="dispHiswikiAdminTopicWrite" type="view" standalone="true" />
-        <action name="dispHiswikiAdminTopicDelete" type="view" standalone="true" />
-        <action name="procHiswikiAdminTopicWrite" type="controller" standalone="true" />
-        <action name="procHiswikiAdminTopicDelete" type="controller" standalone="true" />
-        
-        <action name="dispHiswikiTopicList" type="view" standalone="true" />
-
-        <action name="procHiswikiAdminModuleInsert" type="controller" standalone="true" />
+  		<action name="procHiswikiAdminModuleInsert" type="controller" standalone="true" />
         <action name="procHiswikiAdminModuleDelete" type="controller" standalone="true" />
-        
+        <action name="procHiswikiAdminTopicWrite" type="controller" standalone="true" />
+
         <action name="dispHiswikiFrontPage" type="view" standalone="true" index="true" />
         <action name="dispHiswikiContentList" type="view" standalone="true" />
         <action name="dispHiswikiCategory" type="view" standalone="true" />
         <action name="dispHiswikiMessage" type="view" standalone="true" />
         <action name="dispHiswikiSearchPage" type="view" standalone="true" />
         <action name="dispHiswikiModifyFrontPage" type="view" standalone="true" />
-            
         <action name="dispHiswikiSearchResult" type="view" standalone="true" />
         
         <action name="procHiswikiModifyFrontPage" type="controller" standalone="true" />
+        <action name="dispHiswikiAdminTopicWrite" type="view" standalone="true" />
+        <action name="dispHiswikiAdminTopicDelete" type="view" standalone="true" />
+        <action name="procHiswikiAdminTopicDelete" type="controller" standalone="true" />
+        <action name="dispHiswikiTopicList" type="view" standalone="true" />
+        
+        
         
     </actions>
 	<menus>

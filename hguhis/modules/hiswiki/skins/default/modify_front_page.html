@@ -1,0 +1,32 @@
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+<div id="hiswiki">
+	<form action="./" method="post">
+		<input type="hidden" name="success_return_url" value="{getUrl('act', 'dispHiswikiFrontPage')}" />
+		<input type="hidden" name="error_return_url" value="{getUrl('act', 'dispHiswikiModifyFrontPage')}" />
+		<input type="hidden" name="act" value="procHiswikiModifyFrontPage" />
+		<input type="hidden" name="vid" value="" />
+		<input type="hidden" name="content" value="{$front_page_doc->getContentText()}" />
+		<input type="hidden" name="front_page_srl" value="{$module_info->front_page_srl}" />
+		<input type="hidden" name="mid" value="{$mid}" />
+		<input type="hidden" name="module_srl" value="{$module_srl}" />
+		<div class="hiswiki_header">
+			<h1 class="h1">대문을 수정합니다.</h1>
+			<h2 class="h2">{$module_info->browser_title}</h2>
+		</div>
+		
+		<div class="hiswiki_body">
+			<div class="editor">
+				{$modify_front_editor}
+			</div>
+		</div>
+		<div class="hiswiki_footer">
+			<div class="btnArea">
+				<a href="{getUrl('act', 'dispHiswikiFrontPage')}">돌아가기</a>
+				<a href="{getUrl('')}">미리보기</a>
+				<input type="submit" />
+			</div>
+		</div>
+	</form>
+</div>

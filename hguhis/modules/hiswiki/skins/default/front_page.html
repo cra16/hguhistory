@@ -3,20 +3,24 @@
 <!-- @modifier 바람꽃(wndflwr@gmail.com) -->
 <load target="css/hiswiki.css" />
 
+<!--// 메시지가 있으면 여기에 출력 -->
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
 <div id="front_page">
 	<div class="search_box">
 		<!--// 검색 창을 띄운다. -->
-		<!--#include("./search_box.html")-->
+		<include target="search_box.html" />
 	</div>
 	<div class="block category">
-		<!--// 카테고리 리스트를 띄운다. 아래 카테고리 리스트를 사용하려면 반드시 Context에 $category_info 를 던져 줘야 한다.
-		$category_info는 document.model.php에 getCategoryList() 함수를 사용해서 얻어오기.
-		 -->
-		<!--#include("./category_list.html")-->
+		<!--// 카테고리 리스트를 띄운다. -->
+		<include target="category_list.html" />
 	</div>
 	<div class="block main_view">
+		<div class="front_page">{$front_page}</div>
 		<div class="button_area" cond="$logged_info->is_admin=='Y'">
-			<input type="button" value="페이지 수정" />
+			<a cond="$grant_info->manager||$grant_info->is_admin" href="{getUrl('act', 'dispHiswikiModifyFrontPage')}">페이지 수정</a>
 		</div>
 	</div>
 	<div class="block lists">

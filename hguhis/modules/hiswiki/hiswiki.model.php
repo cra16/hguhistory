@@ -17,7 +17,7 @@ class hiswikiModel extends hiswiki {
 
 	function getdispHiswikiTopicList($args) {
 
-		$output = executeQueryArray('hiswiki.getdispHiswikiTopicList', $args);
+		$output = executeQueryArray('hiswiki.getHiswikiTopicList', $args);
 		return $output;
 
 

@@ -1,7 +1,6 @@
 <?php
 /**
  * @class  Hiswikicontroller
- * @author 현희 
  * @brief  hiswiki 모듈의 controller class
  **/
 
@@ -15,33 +14,47 @@ class hiswikiController extends hiswiki {
 	
 	
 	/**
-	 * @brief Hiswiki입력
-	 **/
-	function procHiswikiAdminTopicWrite() {
-
-		// request 값을 모두 받음
-		$obj = Context::getRequestVars();
-
-		// 현재 모듈번호 확인
-		$obj->module_srl = Context::get('module_srl');
-
-		//document_srl 확인
-		$document_srl = Context::get('document_srl');
-
-		// document_srl에 따라 새로 입력하거나 수정하기 위해
-		if($document_srl) {
-
-			// module_srl이 있으면 update
-			$output = executeQuery("hiswiki.updateTopic", $obj);
-			$this->setMessage('success_updated');
-
-		} else {
-
-			// module_srl이 없으면 insert
-			$output = executeQuery("hiswiki.topicWrite", $obj);
-			$this->setMessage('success_registed');
-
+	 * @function procHiswikiModifyFrontPage
+	 * @author 바람꽃(wndflwr@gmail.com)
+	 * @brief 대문을 저장함돠.
+	 * 대문은 documents 테이블에 저장되고 저장된 대문의 위치는 module_info->front_page_srl에 저장되어있슴.
+	 */
+	function procHiswikiModifyFrontPage() {
+		// 올바른 요청인지, 대문 수정 권한은 있는지 확인한다.
+		if ($this->module_info->module != 'hiswiki' || !$this->grant->manager) {
+			$this->stop('msg_invalid_request');
+			return new Object(-1, 'msg_invalid_request');
 		}
+		
+		// 필요한 데이터만 받기
+		$obj = Context::gets('content', 'module_srl', 'mid', 'module_srl', 'front_page_srl');
+		$obj->title = $this->module_info->browser_title;
+		
+		// documentModel와 documentController를 사용하여 입력 또는 수정하기
+		$oDocumentModel = &getModel('document');
+		$oDocumentController = &getController('document');
+		// 문서가 존재하는지 확인
+		$front_page_doc = $oDocumentModel->getDocument($obj->front_page_srl);
+		// 존재하면 업데이트
+		if ($front_page_doc->isExists()) {
+			$obj->document_srl = $obj->front_page_srl;
+			$output = $oDocumentController->updateDocument($front_page_doc, $obj);
+		}
+		// 존재하지 않으면 신규 삽입
+		else {
+			$output = $oDocumentController->insertDocument($obj);
+			// document_srl이 새롭게 할당되었으므로 module_info에 업데이트 한다.
+			$this->module_info->front_page_srl = $output->get('document_srl');
+			$oModuleController = &getController('module');
+			$output = $oModuleController->updateModule($this->module_info);
+		}
+		$this->setError($output->error);
+		$this->setMessage($output->message);
+		
+		// redirect_url 설정
+		$this->setRedirectUrl(Context::get('success_return_url'));
 	}
 }
+	
+	
 ?>

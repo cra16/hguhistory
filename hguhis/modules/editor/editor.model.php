@@ -333,6 +333,7 @@
 			Context::loadLang($tpl_path.'lang');
             // Return the compiled result from tpl file
             $oTemplate = new TemplateHandler();
+            
             return $oTemplate->compile($tpl_path, $tpl_file);
         }
 

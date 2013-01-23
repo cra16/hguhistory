@@ -326,6 +326,7 @@ class hiswikiAdminView extends hiswiki {
 
 
 	/**
+	 * @author 현희 
 	 * @brief hiswiki model에서 받아온 $output->data를 스킨파일에 보내기 전에 배열 형식 변경
 	 **/
 	function arrangeHiswikiInfo($output) {
@@ -341,5 +342,63 @@ class hiswikiAdminView extends hiswiki {
 			return $obj;
 		}
 	}
+	
+// 	/**
+// 	 *   
+// 	 * @brief display the module skin information
+// 	 **/
+// 	function dispHiswikiAdminSkinInfo() {
+// 		// get the grant infotmation from admin module
+// 		$oModuleAdminModel = &getAdminModel('module');
+// 		$skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
+// 		Context::set('skin_content', $skin_content);
+	
+// 		$this->setTemplateFile('skin_info');
+// 	}
+	
+// 	/**
+// 	 * @brief display the selected board module admin information
+// 	 **/
+// 	function dispHiswikiAdminBoardInfo() {
+// 		$this->dispHiswikiAdminInsertBoard();
+// 	}
+	
+// 	/**
+// 	 * @brief display the module insert form
+// 	 **/
+// 	/*function dispHiswikiAdminInsertBoard() {
+// 		if(!in_array($this->module_info->module, array('admin', 'board','blog','guestbook'))) {
+// 			return $this->alertMessage('msg_invalid_request');
+// 		}
+	
+// 		// get the skins list
+// 		$oModuleModel = &getModel('module');
+// 		$skin_list = $oModuleModel->getSkins($this->module_path);
+// 		Context::set('skin_list',$skin_list);
+	
+// 		$mskin_list = $oModuleModel->getSkins($this->module_path, "m.skins");
+// 		Context::set('mskin_list', $mskin_list);
+	
+// 		// get the layouts list
+// 		$oLayoutModel = &getModel('layout');
+// 		$layout_list = $oLayoutModel->getLayoutList();
+// 		Context::set('layout_list', $layout_list);
+	
+// 		$mobile_layout_list = $oLayoutModel->getLayoutList(0,"M");
+// 		Context::set('mlayout_list', $mobile_layout_list);
+	
+// 		$security = new Security();
+// 		$security->encodeHTML('skin_list..title','mskin_list..title');
+// 		$security->encodeHTML('layout_list..title','layout_list..layout');
+// 		$security->encodeHTML('mlayout_list..title','mlayout_list..layout');
+	
+// 		// get document status list
+// 		$oDocumentModel = &getModel('document');
+// 		$documentStatusList = $oDocumentModel->getStatusNameList();
+// 		Context::set('document_status_list', $documentStatusList);
+	
+// 		// set the template file
+// 		$this->setTemplateFile('topic_write');
+// 	}*/
 }
 ?>

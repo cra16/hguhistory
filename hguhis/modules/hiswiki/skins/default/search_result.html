@@ -4,17 +4,9 @@
 <div class="outerDiv">
 	<div class="titleResultDiv">
 		<span class="ResultHeading">표제어 검색 결과</span>
-		<div class="ResultViewDiv">
-			<span class="title">제목</span>
-			<div class="content">내용</div>
-		</div>
-		<div class="ResultViewDiv">
-			<span class="title">제목</span>
-			<div class="content">내용</div>
-		</div>
-		<div class="ResultViewDiv">
-			<span class="title">제목</span>
-			<div class="content">내용</div>
+		<div class="ResultViewDiv" loop="$search_results_title=>$val">
+			<span class="title">{$val->getTitle()}</span>
+			<div class="content">{$val->getSummary()}</div>
 		</div>
 		<span class="moreSearchResult"><a href="">더보기...</a></span>
 	</div>

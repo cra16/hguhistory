@@ -241,6 +241,5 @@
         function getFiles($target, $module_srls_list, $search_keyword, $page=1, $list_count = 20) {
             return $this->_getFiles($target, $module_srls_list, $search_keyword, $page, $list_count, 'N');
         }
-
     }
 ?>

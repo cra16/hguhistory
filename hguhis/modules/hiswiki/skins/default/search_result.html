@@ -2,43 +2,32 @@
 <!--#include("_search_form.html")-->
 
 <div class="outerDiv">
-	<div class="titleResultDiv">
+	<div class="ResultDiv">
 		<span class="ResultHeading">표제어 검색 결과</span>
 		<div class="ResultViewDiv" loop="$search_results_title=>$val">
+			<div class="title">{$val->getTitle()}</div>
+			<div class="content">{$val->getSummary()}</div>
+			<div>
+				<span class="regdate">{$val->getRegdate()}</span> / <span
+					class="regdate">{$val->getNickName()}</span> / <span
+					class="regdate">{$val->()}</span>
+			</div>
+		</div>
+		<span class="moreSearchResult"><a href="">더보기...</a></span>
+	</div>
+	<div class="ResultDiv">
+		<span class="ResultHeading">내용 검색 결과</span>
+		<div class="ResultViewDiv" loop="$search_results_content=>$val">
 			<span class="title">{$val->getTitle()}</span>
 			<div class="content">{$val->getSummary()}</div>
 		</div>
 		<span class="moreSearchResult"><a href="">더보기...</a></span>
 	</div>
-	<div class="contentResultDiv">
-		<span class="ResultHeading">본문 검색 결과</span>
-		<div class="ResultViewDiv">
-			<span class="title">제목</span>
-			<div class="content">내용</div>
-		</div>
-		<div class="ResultViewDiv">
-			<span class="title">제목</span>
-			<div class="content">내용</div>
-		</div>
-		<div class="ResultViewDiv">
-			<span class="title">제목</span>
-			<div class="content">내용</div>
-		</div>
-		<span class="moreSearchResult"><a href="">더보기...</a></span>
-	</div>
-	<div class="tagResultDiv">
+	<div class="ResultDiv">
 		<span class="ResultHeading">태그 검색 결과</span>
-		<div class="ResultViewDiv">
-			<span class="title">제목</span>
-			<div class="content">내용</div>
-		</div>
-		<div class="ResultViewDiv">
-			<span class="title">제목</span>
-			<div class="content">내용</div>
-		</div>
-		<div class="ResultViewDiv">
-			<span class="title">제목</span>
-			<div class="content">내용</div>
+		<div class="ResultViewDiv" loop="$search_results_tag=>$val">
+			<span class="title">{$val->getTitle()}</span>
+			<div class="content">{$val->getSummary()}</div>
 		</div>
 		<span class="moreSearchResult"><a href="">더보기...</a></span>
 	</div>

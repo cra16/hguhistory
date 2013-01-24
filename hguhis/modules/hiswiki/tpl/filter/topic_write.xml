@@ -18,7 +18,7 @@
   </response>
 </filter>
 
-<filter name="insert" module="board" act="procBoardInsertDocument">
+<!-- <filter name="insert" module="board" act="procBoardInsertDocument">
   <form>
     <node target="nick_name" required="true" maxlength="20"/>
     <node target="password" required="true" />
@@ -35,7 +35,7 @@
     <tag name="document_srl" />
     <tag name="category_srl" />
   </response>
-</filter>
+</filter>-->
 
 
 <!-- 

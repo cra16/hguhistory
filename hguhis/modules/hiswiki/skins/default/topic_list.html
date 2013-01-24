@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="Generator" content="XpressEngine" />
 <!-- TITLE -->
-	<title>XpressEngine</title>
+	<title>Topic_List</title>
 <!-- CSS -->
 	<link rel="stylesheet"
 		href="/git/hguhistory/hguhis/common/js/plugins/ui/jquery-ui.css?20130119141658"
@@ -49,21 +49,19 @@
 			//         
 			var current_url = "http://localhost/git/hguhistory/hguhis/index.php?module=admin&act=dispHiswikiTopicList";
 			var request_uri = "http://localhost/git/hguhistory/hguhis/";
-			var current_mid = "board";
+			var current_mid = "topic";
 			var waiting_message = "서버에 요청 중입니다. 잠시만 기다려주세요.";
 			var ssl_actions = new Array();
 			var default_url = "http://localhost/git/hguhistory/hguhis/";
 			xe.current_lang = "ko";
 			//
 		</script>
-	
 		<div class="hiswiki">
 			<div class="boardHeader"></div>
 			<div class="boardInformation">
 				<div class="infoLeft">
 					글 수 <strong>1</strong>
 				</div>
-	
 				<div class="infoRight">
 					<ul>
 						<li class="setup"><a
@@ -74,7 +72,7 @@
 						<li class="loginAndLogout"><a
 							href="/git/hguhistory/hguhis/index.php?mid=board&amp;act=dispMemberLogout">로그아웃</a></li>
 						<li class="tag_info icon"><a
-							href="/git/hguhistory/hguhis/index.php?mid=board&amp;act=dispBoardTagList"
+							href="/git/hguhistory/hguhis/index.php?mid=board&amp;act=dispTagList"
 							title="Tag List"><span>Tag List</span></a></li>
 						<li class="listTypeClassic icon"><a
 							href="/git/hguhistory/hguhis/index.php?mid=board&amp;listStyle=list"
@@ -105,33 +103,14 @@
 							<tr>
 								<th scope="col"><input type="checkbox"
 									onclick="XE.checkboxToggleAll({ doClick:true }); return false;" /></th>
-	
-	
 								<th scope="col">번호</th>
-	
-	
-	
 								<th scope="col" class="title">제목</th>
-	
-	
-	
 								<th scope="col">글쓴이</th>
-	
-	
-	
-								<th scope="col"><a
-									href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;sort_index=regdate&amp;order_type=desc">날짜</a></th>
-	
-	
-	
-								<th scope="col"><a
-									href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;sort_index=readed_count&amp;order_type=desc">조회
-										수</a></th>
-	
+								<th scope="col"><a href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;sort_index=regdate&amp;order_type=desc">날짜</a></th>
+								<th scope="col"><a href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;sort_index=readed_count&amp;order_type=desc">조회수</a></th>
 							</tr>
 						</thead>
 						<tbody>
-	
 							<tr class="bg1">
 								<td class="checkbox"><input type="checkbox" name="cart"
 									value="116" onclick="doAddDocumentCart(this)" /></td>
@@ -152,9 +131,7 @@
 						href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;act=dispHiswikiAdminTopicWrite">쓰기...</a></span>
 					<span class="etc"> <span class="btn"><a
 							href="/git/hguhistory/hguhis/index.php?module=document&amp;act=dispDocumentManageDocument"
-							onclick="popopen(this.href,'manageDocument'); return false;">게시글
-								관리</a></span> <span class="btn"><a
-							href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;page=1">목록</a></span>
+							onclick="popopen(this.href,'manageDocument'); return false;">게시글관리</a></span> <span class="btn"><a href="/git/hguhistory/hguhis/index.php?mid=hiswiki&amp;page=1">목록</a></span>
 					</span>
 				</div>
 				<div class="pagination a1">

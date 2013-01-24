@@ -255,40 +255,25 @@ class hiswikiAdminView extends hiswiki {
 		// 쓰기 권한 체크
 		//if(!$this->grant->write) //return $this->dispHiswikiAdminTopicWrite('msg_not_permitted');
 		//	return new Object(-1, 'msg_not_permitted');
-		//if(!$this->grant->write) return $this->dispHiswikiWriteTopic('msg_not_permitted');
-
-		// document_srl 확인
-		$document_srl = Context::get('document_srl');
-
-		// document_srl 이 있는 경우 update
-		if(isset($document_srl)) {
-
-			$obj->document_srl = $document_srl;
-
-			// hiswiki model에서 내용을 가져옴
-			$oHiswikiModel = &getModel('hiswiki');
-			$output = $oHiswikiModel->getHiswikiTopic($obj);
-
-			// 변경된 $output을 $document_info 변수에 set
-			Context::set('hiswiki_info', $this->arrangeHiswikiInfo($output));
-
-			// document_srl 이 없는 경우 새로 등록하기 위해서 초기화
-		} else {
-
-			$document_srl = NULL;
-			//Context::set('document_srl', $document_srl);
-			// 또는
-			Context::set('document_srl','',true);
-		}
-
-		// 내용 작성시 검증을 위해 사용되는 XmlJSFilter
-		Context::addJsFilter($this->module_path.'tpl/filter', 'topic_write.xml');
-
-		// 콜백 함수를 처리하는 javascript
-		Context::addJsFile($this->module_path.'tpl/js/hiswiki.js');
-
+		//if(!$this->grant->write) return $this->dispHiswikiTopic W('msg_not_permitted');
+		$oEditorModel = &getModel('editor');
+		
+		$option->allow_fileupload = true;
+		$option->enable_autosave = true;
+		$option->enable_component = true;
+		$option->enable_default_component = true;
+		$option->primary_key_name = 'document_srl';
+		$option->content_key_name = 'content';
+		
+		$editor = $oEditorModel->getEditor($upload_target_srl, $option);
+		Context::set('editor',$editor);
+		Context::set('module_info',$this->module_info);
+		
 		// 내용 작성화면 템플릿 파일 지정 write.html
 		$this->setTemplateFile('write');
+		
+		return;
+
 	}
 
 	/**

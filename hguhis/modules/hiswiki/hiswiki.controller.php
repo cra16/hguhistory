@@ -54,6 +54,19 @@ class hiswikiController extends hiswiki {
 		// redirect_url 설정
 		$this->setRedirectUrl(Context::get('success_return_url'));
 	}
+	
+	/**
+	 *@author 현희
+	 *@ 토빅 뷰 컨트롤러
+	 */
+	
+	function procHiswikiTopicView(){
+	
+		$vars = Context::gets('category_srl','module_srl','title','content','start_date','end_date','tags');
+		$oDocumentController = &getController('document');
+		// 		$output = $oDocumentController->
+	
+	}
 }
 	
 	

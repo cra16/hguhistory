@@ -175,7 +175,7 @@ class documentController extends document {
 	 * @return object
 	 */
 	function insertDocument($obj, $manual_inserted = false, $isRestore = false, $isLatest = true) {
-		debugPrint($obj);
+
 		if(!checkCSRF())
 		{
 			return new Object(-1, 'msg_invalid_request');

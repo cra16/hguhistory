@@ -5,7 +5,7 @@
  * @brief hiswiki 모듈의 view class
  **/
 class hiswikiView extends hiswiki {
-	
+
 	/**
 	 * @brief 초기화
 	 **/
@@ -17,7 +17,7 @@ class hiswikiView extends hiswiki {
 			$module_srl = $this->module_srl;
 			Context::set('module_srl', $module_srl);
 		}
-		
+
 		// module model 객체 생성
 		$oModuleModel = &getModel('module');
 			
@@ -28,7 +28,7 @@ class hiswikiView extends hiswiki {
 			$this->module_info = $module_info;
 			Context::set('module_info',$module_info);
 		}
-		
+
 		// 스킨 경로를 미리 template_path 라는 변수로 설정함
 		// 스킨이 존재하지 않는다면 default로 변경
 		$template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
@@ -37,7 +37,6 @@ class hiswikiView extends hiswiki {
 			$template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
 		}
 		$this->setTemplatePath($template_path);
-
 	}
 
 	/**
@@ -49,7 +48,7 @@ class hiswikiView extends hiswiki {
 
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-		
+
 		// 접근 권한 확인
 		if (!$this->grant->access) return new Object("msg_not_permitted");
 		
@@ -61,6 +60,8 @@ class hiswikiView extends hiswiki {
 		$obj->page_count = 20;
 		$obj->order_type = 'asc';
 		
+		// 이 모듈 관리자가 설정한 대문(document 형식으로 저장되어있음) 불러오기
+
 		// 최신 글 리스트 불러오기
 		$obj->sort_index = 'regdate';
 		$newestDocList = $oDocumentModel->getDocumentList($obj, false, false);
@@ -69,7 +70,6 @@ class hiswikiView extends hiswiki {
 		// 인기글 리스트 불러오기 (조회수)
 		
 		// 요청 리스트 불러오기
-		
 		
 		// 인기 태그 리스트 불러오기
 		
@@ -81,7 +81,7 @@ class hiswikiView extends hiswiki {
 			!$oDocumentController->makeCategoryFile($module_srl);
 		}
 		@include($filename);
-		
+
 		if ($menu->list) {
 			// HTML string을 만들어서 돌려주는 방식을 취해보기.
 			$category_html = "";
@@ -89,16 +89,17 @@ class hiswikiView extends hiswiki {
 			Context::set('category_html', $category_html);
 		}
 		// 현재 문서가 위치한 카테고리 위치 불러오기 TODO
-		
+
 		// 대문 내용(content) 던지기
 		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
-		
+
 		if ($front_page_doc->isExists()) {
 			Context::set('front_page', $front_page_doc->getContent(false, false, false, false, false));
 		}
-		
+
 		// 권한 정보 던지기
 		Context::set('grant_info', $this->grant);
+
 		
 		// 템플릿 파일 설정
 		$this->setTemplateFile('front_page');
@@ -106,7 +107,7 @@ class hiswikiView extends hiswiki {
 
 	/**
 	 * @function _makeHTMLMenu
-	 * @author 바람꽃 (wndflwr@gmail.com) 
+	 * @author 바람꽃 (wndflwr@gmail.com)
 	 * @brief category_list를 recursive 하게 구현하여 <ul>, <li> 로 구성된 HTML String으로 만들어 돌려준다.
 	 */
 	private function _makeHTMLMenu($list) {
@@ -120,7 +121,7 @@ class hiswikiView extends hiswiki {
 		$str .= "</ul>";
 		return $str;
 	}
-	
+
 	/**
 	 * @function dispHiswikiModifyFrontPage
 	 * @author 바람꽃 (wndflwr@gmail.com)
@@ -129,13 +130,13 @@ class hiswikiView extends hiswiki {
 	function dispHiswikiModifyFrontPage() {
 		// 비정상적인 방법으로 접근할 경우 거부
 		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-		
+
 		// 접근 권한 확인한다.
 		if (!$this->grant->access || !$this->grant->manager) return new Object(-1, "msg_not_permitted");
-		
+
 		// document를 불러온다. 없으면 새로 module_srl을 할당해서 저장한 다음 documentObject를 넘긴다.
 		$oDocumentModel = &getModel('document');
-		
+
 		// front_page_srl 이 저장되어있지 않으면 새롭게 문서 srl을 할당해서 module_extra_vars 테이블에 저장한다.
 		if (!$this->module_info->front_page_srl) {
 			$this->module_info->front_page_srl = getNextSequence();
@@ -145,7 +146,7 @@ class hiswikiView extends hiswiki {
 		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
 		Context::set('front_page_doc', $front_page_doc);
 		//debugPrint($front_page_doc->getContentText());
-		
+
 		// 에디터를 넘긴다.
 		$oEditorModel = &getModel('editor');
 		$editorOpt->primary_key_name = 'front_page_srl';
@@ -157,14 +158,14 @@ class hiswikiView extends hiswiki {
 		$editorOpt->disable_html = false;
 		$editorOpt->enable_autosave = false;
 		Context::set('modify_front_editor', $oEditorModel->getEditor($this->module_info->front_page_srl, $editorOpt));
-		
+
 		// 모듈 정보 넘긴다.
 		Context::set('module_info', $this->module_info);
-		
+
 		// 템플릿 파일 설정
 		$this->setTemplateFile('modify_front_page');
 	}
-	
+
 	/**
 	 * @function dispHiswikiContentList
 	 * @author 지희
@@ -173,7 +174,7 @@ class hiswikiView extends hiswiki {
 	function dispHiswikiContentList(){
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-		
+
 		// 접근권리가 있는지 확인
 			
 		if(!$this->grant->acess || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
@@ -208,7 +209,7 @@ class hiswikiView extends hiswiki {
 			
 		/**
 		 * add javascript filters
-		**/
+		 **/
 		Context::addJsFilter($this->module_path.'tpl/filter', 'search.xml');
 			
 		$oSecurity = new Security();
@@ -224,7 +225,6 @@ class hiswikiView extends hiswiki {
 	 * @brief 정보를 입력받아 출력하는 페이지
 	 **/
 	function dispHiswikiSearchResult(){
-
 
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		//if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
@@ -248,42 +248,36 @@ class hiswikiView extends hiswiki {
 		$args->page_count = Context::get('page_count');
 
 		// get the keyword
-		$args->search_keyword = 'dfdfdfdfdf';
+		$args->search_keyword = Context::get('search_keyword');
 
 		// setup the sort index and order index
 		$args->sort_index = Context::get('sort_index');
 		$args->order_type = Context::get('order_type');
 
 		// 1. get the keyword by title
-		$args->search_target = Context::get('title');
-		
-		
-		
+		$args->search_target = 'title';
+
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
-				
+
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_title', $output->data);
-		
+
 		// 2. get the keyword by content
-		$args->search_target = Context::get('content');
-		
+		$args->search_target = 'content';
+
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
-		
+
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_content', $output->data);
-		
+
 		// 3. get the keyword by tags
-		$args->search_target = Context::get('tags');
-		
-		debugPrint($args);
-		
+		$args->search_target = 'tags';
+
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
-		
-		
-		
+
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_tags', $output->data);
 

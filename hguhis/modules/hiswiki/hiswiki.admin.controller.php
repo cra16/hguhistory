@@ -84,7 +84,7 @@ class hiswikiAdminController extends hiswiki {
 		//if(!$this->grant->write_document) return new Object(-1, 'msg_not_permitted');
 		//$logged_info = Context::get('logged_info');
 		
-		$vars = Context::gets('content', 'title','module_srl');
+		$vars = Context::gets('content', 'title','module_srl','start_date','end_date','tag_1','tag_2','tag3');
 		$oDocumentController = &getController('document');
 		$output = $oDocumentController->insertDocument($vars);
 		if($output->toBool()==true)

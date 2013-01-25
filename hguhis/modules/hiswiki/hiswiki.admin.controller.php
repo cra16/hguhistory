@@ -8,7 +8,7 @@
 class hiswikiAdminController extends hiswiki {
 
 	function init() {
-
+		
 	}
 
 	/**
@@ -88,6 +88,7 @@ class hiswikiAdminController extends hiswiki {
 		$vars = Context::gets('content', 'title','module_srl','start_date','end_date','tags');
 		$oDocumentController = &getController('document');
 		$output = $oDocumentController->insertDocument($vars);
+		
 		if($output->toBool()==true)
 			$this->setRedirectUrl(Context::get('success_return_url'));
 		else

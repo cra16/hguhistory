@@ -65,7 +65,7 @@ class hiswikiAdminView extends hiswiki {
 		Context::set('page', $output->page);
 		Context::set('hiswiki_list', $output->data);
 		Context::set('page_navigation', $output->page_navigation);
-
+		
 		// 관리자 목록(mid) 보기 템플릿 지정(tpl/index.html)
 		$this->setTemplateFile('module_list');
 	}
@@ -88,7 +88,13 @@ class hiswikiAdminView extends hiswiki {
 		$oLayoutMode = &getModel('layout');
 		$layout_list = $oLayoutMode->getLayoutList();
 		Context::set('layout_list', $layout_list);
-
+		
+		// 요청 게시판 연동 정보 보내기
+		$oMenuAdminModel = &getAdminModel('menu');
+		$resultModuleList = $oMenuAdminModel->getModuleListInSitemap(0);
+		Context::set('module_list', $resultModuleList);
+		
+		
 		// 템플릿 페스 지정
 		$template_path = sprintf("%stpl/",$this->module_path);
 		$this->setTemplatePath($template_path);

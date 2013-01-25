@@ -51,17 +51,42 @@ class hiswikiView extends hiswiki {
 
 		// 접근 권한 확인
 		if (!$this->grant->access) return new Object("msg_not_permitted");
-
+		
+		// 글 리스트를 가져올 준비하기
+		$oDocumentModel = &getModel('document');
+		$obj->module_srl = $this->module_info->module_srl;
+		$obj->page = 1;
+		$obj->list_count = 10; // 최신글 몇 개를 불러올 것인가? 기본 10개
+		$obj->page_count = 20;
+		$obj->order_type = 'asc';
+		
 		// 이 모듈 관리자가 설정한 대문(document 형식으로 저장되어있음) 불러오기
 
 		// 최신 글 리스트 불러오기
-
+		$obj->sort_index = 'regdate';
+		$newestDocList = $oDocumentModel->getDocumentList($obj, false, false);
+		Context::set('newestDocList', $newestDocList->data);
+		
+		
 		// 인기글 리스트 불러오기 (조회수)
-
+		$obj->regdate = date('YmdHis', time() - 2678400);
+		$popular_doc = executeQueryArray('hiswiki.getPopularDocuments', $obj);
+		foreach ($popular_doc->data as $key => $val) {
+			$popDocList[$key] = $oDocumentModel->getDocument($val->document_srl, false, false);
+		}
+		Context::set('popDocList', $popDocList);
+		
 		// 요청 리스트 불러오기
-
+		// TODO 연동작업 들어가기
+		
 		// 인기 태그 리스트 불러오기
-
+		$oTagModel = &getModel('tag');
+		$obj->list_count = 50; // 몇 개를 불러오는지 결정
+		$obj->sort_index = 'count';
+		$popTagList = $oTagModel->getTagList($obj);
+		Context::set('popTagList', $popTagList->data);
+		
+		
 		// 카테고리 리스트 불러오기
 		// 케시에 저장된 php 파일에서 데이터 구조 불러오기
 		$filename = sprintf("./files/cache/document_category/%s.php", $this->module_info->module_srl);
@@ -80,7 +105,6 @@ class hiswikiView extends hiswiki {
 		// 현재 문서가 위치한 카테고리 위치 불러오기 TODO
 
 		// 대문 내용(content) 던지기
-		$oDocumentModel = &getModel('document');
 		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
 
 		if ($front_page_doc->isExists()) {
@@ -90,7 +114,7 @@ class hiswikiView extends hiswiki {
 		// 권한 정보 던지기
 		Context::set('grant_info', $this->grant);
 
-
+		
 		// 템플릿 파일 설정
 		$this->setTemplateFile('front_page');
 	}
@@ -135,7 +159,6 @@ class hiswikiView extends hiswiki {
 		}
 		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
 		Context::set('front_page_doc', $front_page_doc);
-		//debugPrint($front_page_doc->getContentText());
 
 		// 에디터를 넘긴다.
 		$oEditorModel = &getModel('editor');

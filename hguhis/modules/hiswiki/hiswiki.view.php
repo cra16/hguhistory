@@ -284,7 +284,7 @@ class hiswikiView extends hiswiki {
 		$oDocumentModel = &getModel('document');
 	
 		$document = $oDocumentModel->getDocument(Context::get('document_srl'));
-		
+		//
 		Context::set('document',$document);
 		Context::set('module_info',$this->module_info);
 		

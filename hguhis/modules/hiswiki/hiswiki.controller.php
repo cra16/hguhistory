@@ -64,8 +64,12 @@ class hiswikiController extends hiswiki {
 	
 		$vars = Context::gets('category_srl','module_srl','title','content','start_date','end_date','tags');
 		$oDocumentController = &getController('document');
-		// 		$output = $oDocumentController->
+		$output = $oDocumentController->getContentView($vars);
+		
+		$this->setRedirectUrl(Context::get('success_view_url'));
 	
+		
+		
 	}
 }
 	

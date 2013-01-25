@@ -174,7 +174,8 @@ class hiswikiAdminView extends hiswiki {
 		//	return new Object(-1, 'msg_not_permitted');
 		//if(!$this->grant->write) return $this->dispHiswikiTopic W('msg_not_permitted');
 		$oEditorModel = &getModel('editor');
-		
+
+		//editor option 설정 
 		$option->allow_fileupload = true;
 		$option->enable_autosave = true;
 		$option->enable_component = true;

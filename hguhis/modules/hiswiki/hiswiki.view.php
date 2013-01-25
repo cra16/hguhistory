@@ -297,5 +297,76 @@ class hiswikiView extends hiswiki {
 		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}
+	
+	/**
+	 * @author 현희
+	 * @brief 토픽 뷰
+	 */
+	function dispHiswikiTopicView(){
+	
+		$oDocumentModel = &getModel('document');
+	
+		$document = $oDocumentModel->getDocument(Context::get('document_srl'));
+		
+		Context::set('document',$document);
+		Context::set('module_info',$this->module_info);
+		
+		$this->setTemplatePath($this->module_path.'tpl');
+		$this->setTemplateFile('../skins/default/topic_view');
+	
+	}
+	
+	
+	/**
+	 * @function dispHiswikiTopicList
+	 * @brief admin이 추가시킨 topic List를 확인할 수 있다.
+	 * @author 현희
+	 **/
+	function dispHiswikiTopicList(){
+		/*
+		 * 목록보기 권한 체크 (모든 권한은 ModuleObject에서 xml 정보와 Module_info의 grant 값을 비교하여 미리 설정하여 놓음
+		 		*if (!$this->grants->access || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
+		 		*/
+			
+		// module_srl 확인
+		$module_srl = Context::get('module_srl');
+		$args->module_srl = $module_srl;
+		$args->page = Context::get('page');
+			
+		// module model 객체 생성
+		$oModuleModel = &getModel('module');
+			
+		// hiswiki model에서 목록을 가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		$output = $oHiswikiModel->getHiswikiTopicList($args);
+		if (!$output->data) $output->data = array();
+			
+		// $_list 변수에 담는다
+		Context::set('hiswiki_list', $output->data);
+		Context::set('page', $output->page);
+		Context::set('page_navigation', $output->page_navigation);
+			
+		// template_file을 topic_list.html로 지정
+		$this->setTemplateFile('topic_list');
+	}
+	
+	
+	/**
+	 * @author 현희
+	 * @brief hiswiki model에서 받아온 $output->data를 스킨파일에 보내기 전에 배열 형식 변경
+	 **/
+	function arrangeHiswikiInfo($output) {
+		// 1차 배열 형식으로 변경
+		if($output->data) {
+			foreach($output->data as $val) {
+				$obj = null;
+				$obj->document_srl = $val->document_srl;
+				$obj->document_title = $val->document_title;
+				$obj->document_author = $val->document_author;
+				$obj->regdate = $val->regdate;
+			}
+			return $obj;
+		}
+	}
 }
 ?>

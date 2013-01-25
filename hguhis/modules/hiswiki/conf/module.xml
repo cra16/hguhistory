@@ -22,11 +22,11 @@
         <action name="dispHiswikiAdminSkinInfo" type="view" standalone="true"/>
         <action name="dispHiswikiAdminGrantInfo" type="view" standalone="true" />
         <action name="dispHiswikiAdminCategoryInfo" type="view" standalone="true" />
-        <action name="dispHiswikiAdminTopicWrite" type="view" standalone="true" />
+        <action name="dispHiswikiTopicWrite" type="view" standalone="true" />
         
   		<action name="procHiswikiAdminModuleInsert" type="controller" standalone="true" />
         <action name="procHiswikiAdminModuleDelete" type="controller" standalone="true" />
-        <action name="procHiswikiAdminTopicWrite" type="controller" standalone="true" />
+        <action name="procHiswikiTopicWrite" type="controller" standalone="true" />
 
         <action name="dispHiswikiFrontPage" type="view" standalone="true" index="true" />
         <action name="dispHiswikiContentList" type="view" standalone="true" />

@@ -56,6 +56,29 @@ class hiswikiController extends hiswiki {
 	}
 	
 	/**
+	 * @function procHiswikiTopicWrite
+	 * @brief Hiswiki입력
+	 * @author 현희
+	 **/
+	function procHiswikiTopicWrite() {
+	
+		// check grant
+		//if($this->module_info->module != "hiswiki") return new Object(-1, "msg_invalid_request");
+		//if(!$this->grant->write_document) return new Object(-1, 'msg_not_permitted');
+		//$logged_info = Context::get('logged_info');
+	
+		$vars = Context::gets('content', 'title','module_srl','start_date','end_date','tags');
+		$oDocumentController = &getController('document');
+		$output = $oDocumentController->insertDocument($vars);
+		if($output->toBool()==true)
+			$this->setRedirectUrl(Context::get('success_return_url'));
+		else
+			$this->setRedirectUrl(Context::get('error_return_url'));
+	
+		return;
+	}
+	
+	/**
 	 *@author 현희
 	 *@ 토빅 뷰 컨트롤러
 	 */
@@ -64,8 +87,9 @@ class hiswikiController extends hiswiki {
 	
 		$vars = Context::gets('category_srl','module_srl','title','content','start_date','end_date','tags');
 		$oDocumentController = &getController('document');
-		// 		$output = $oDocumentController->
-	
+		$output = $oDocumentController->getContentView($vars);
+		
+		$this->setRedirectUrl(Context::get('success_view_url'));
 	}
 }
 	

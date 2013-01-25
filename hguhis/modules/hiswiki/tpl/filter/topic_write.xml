@@ -1,4 +1,4 @@
-<filter name="topic_write" module="hiswiki" act="procHiswikiAdminTopicWrite">
+<filter name="topic_write" module="hiswiki" act="procHiswikiTopicWrite">
  <!-- //현희 -->
   <form>
     <node target="document_title" required="true" maxlength="40"  />
@@ -10,7 +10,7 @@
     <node target="module_srl" />
   </form>
   <parameter />
-  <response callback_func="completeAdminTopicWrite">
+  <response callback_func="completeTopicWrite">
      <tag name="error" />
      <tag name="message" />
      <tag name="document_srl"/>

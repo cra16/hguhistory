@@ -72,6 +72,7 @@ class hiswikiAdminController extends hiswiki {
         $this->setMessage('success_deleted');
 
 	}
+<<<<<<< HEAD
         
 	/**
 	 * @function procHiswikiAdminTopicWrite
@@ -96,5 +97,7 @@ class hiswikiAdminController extends hiswiki {
 		
 		return;
 	}
+=======
+>>>>>>> refs/remotes/origin/hguhis
 }
 ?>

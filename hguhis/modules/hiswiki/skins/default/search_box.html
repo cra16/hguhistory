@@ -1,6 +1,7 @@
 <div class="search_box">
-	<form>
-		<input type="text" />
+	<form method="get" action="./">
+		<input type="hidden" name="act" value="dispHiswikiSearchResult" />
+		<input type="text" name="search_keyword" value="{$search_keyword}" />
 		<input type="submit" value="검색" />
 		<a href="#" >상세 검색</a>
 	</form>

@@ -24,10 +24,30 @@
 		</div>
 	</div>
 	<div class="block lists">
-		<div class="list newest">최신 글 리스트 여기에 뿌리기</div>
-		<div class="list best">조회수가 높거나 하는 글 리스트 여기에 뿌리기</div>
+		<div class="list newest">
+			<ul>
+				<li loop="$newestDocList=>$val">
+					<a href="{getUrl('document_srl', $val->get('document_srl'))}" >
+						{$val->getTitleText(50)}
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="list best">
+			<ul>
+				<li loop="$popDocList=>$val">
+					<a href="{getUrl('document_srl', $val->get('document_srl'))}">
+						{$val->getTitleText(50)}
+					</a>
+				</li>
+			</ul>
+		</div>
 		<div class="list request">요청 리스트 게시판을 받아서 여기에 뿌리기. 게시판 설정하는 부분도 있어야 할듯.</div>
-		<div class="list best_tag">인기태그리스트를 뿌리기. 인기가 많은 태그는 큰 글자로 뿌리기.</div>
+		<div class="list best_tag">
+			<p>
+				<span loop="$popTagList=>$val" class="popLevel1"|cond="$val->tag>50">{$val->tag}</span>
+			</p>
+		</div>
 	</div>
 	<div class="write_button">
 		<a href="{getUrl('act','dispHiswikiAdminTopicWrite')}">글쓰기</a>

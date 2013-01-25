@@ -49,8 +49,11 @@
 			</p>
 		</div>
 	</div>
-	<div class="write_button">
-		<a href="{getUrl('act','dispHiswikiTopicWrite')}">글쓰기</a>
+	<div class="btnArea">
+		<div class="write_button">
+			<a href="{getUrl('act','dispHiswikiTopicWrite')}">글쓰기</a>
+		</div>
+		<a href="{getUrl('act', 'dispHiswikiAdminModuleList')}" cond="$logged_info->is_admin=='Y'">모듈 설정</a>
 	</div>
 	
 </div>

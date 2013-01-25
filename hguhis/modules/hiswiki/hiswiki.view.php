@@ -234,7 +234,7 @@ class hiswikiView extends hiswiki {
 		// setup module_srl/page number/ list number/ page count
 		$args->module_srl = $this->module_info->module_srl;
 		$args->page = Context::get('page');
-		$args->list_count = 3;
+		$args->list_count = 20;
 		$args->page_count = Context::get('page_count');
 
 		// get the keyword
@@ -242,14 +242,14 @@ class hiswikiView extends hiswiki {
 
 		// setup the sort index and order index
 		$args->sort_index = Context::get('sort_index');
-		$args->order_type = Context::get('order_type');
+		$args->order_type = 'asc';
 
 		// 1. get the keyword by title
 		$args->search_target = 'title';
 
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
-
+debugPrint($output);
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_title', $output->data);
 

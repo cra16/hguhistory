@@ -1,5 +1,6 @@
 <!--// hyunhee -->
 <!--%import("filter/admin_insert.xml")-->
+<load target="js/hiswiki_admin.js" />
 
 <!--#include("header.html")-->
 
@@ -82,11 +83,27 @@
             <p>{$lang->about_footer_text}</p>
         </td>
     </tr>
+    
+    <!--// @author 바람꽃 wndflwr@gmail.com -->
+    <tr>
+    	<th scope="row"><div>요청게시판 연동</div></th>
+    	<td>
+    		<p>
+    			<select class="module_list">
+    				<option loop="$module_list=>$key,$val" value="{$key}" cond="$key!='page'&&$key!='hiswiki'">{$val->title}</option>
+    			</select>
+    			<select class="select_module_list" name="link_board">
+    			</select>
+    		</p>
+    		<p>요청 게시판을 연동시키실 수 있으십니다. 먼저 board, bodex, beluxe 등의 모듈을 사용하여 게시판을 생성해 연결해 주세요..</p>
+    	</td>
+    </tr>
+    
     <tr>
         <th colspan="2" class="button">
             <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
         </th>
-  </tr>
+  	</tr>
     </table>
 
 </form>

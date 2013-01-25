@@ -1,106 +1,58 @@
+<!--// datepicker javascript plugin load -->
+<!--%load_js_plugin("ui")-->
+<!--%load_js_plugin("ui.datepicker")-->
 <form action="./" method="post">
-	<input type="hidden" name="document_srl" /> <input type="hidden"
-		name="content" /> <input type="hidden" name="act"
-		value="procHiswikiAdminTopicWrite" /> <input type="hidden"
-		name="success_return_url"
-		value="{getUrl('act','dispHiswikiTopicList')}" /> <input type="hidden"
-		name="error_return_url"
-		value="{getUrl('act','procHiswikiAdminTopicWrite')" /> 
-	<div class="category box">
-	카테고리<select>
+	<input type="hidden" name="document_srl" />
+	<input type="hidden" name="content" />
+	<input type="hidden" name="act"value="procHiswikiAdminTopicWrite" />
+	<input type="hidden" name="success_return_url" value="{getUrl('act','dispHiswikiTopicList')}" />
+	<input type="hidden" name="error_return_url" value="{getUrl('act','procHiswikiAdminTopicWrite')" /> 
+	<div class="box category">
+	카테고리 <select>
 		<option value="">카테고리 선택</option>
-	</select></div>
-	<div class="year box">
-		제목<input type="text" name="title" size="100%" /><br> 시작연도<select>
-			<option value="">년도</option>
-			<option value="1995">1995</option>
-			<option value="1996">1996</option>
-			<option value="1997">1997</option>
-			<option value="1998">1998</option>
-			<option value="1999">1999</option>
-			<option value="2000">2000</option>
-			<option value="2001">2001</option>
-			<option value="2002">2002</option>
-			<option value="2003">2003</option>
-			<option value="2004">2004</option>
-			<option value="2005">2005</option>
-			<option value="2006">2006</option>
-			<option value="2007">2007</option>
-			<option value="2008">2008</option>
-			<option value="2009">2009</option>
-			<option value="2010">2010</option>
-			<option value="2011">2011</option>
-			<option value="2012">2012</option>
-			<option value="2013">2013</option>
-		</select> <select>
-			<option value="">월</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-			<option value="10">10</option>
-			<option value="11">11</option>
-			<option value="12">12</option>
-		</select> <select>
-			<option value="">일</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-		</select><br> 종료연도<select>
-			<option value="">년도</option>
-			<option value="1995">1995</option>
-			<option value="1996">1996</option>
-			<option value="1997">1997</option>
-			<option value="1998">1998</option>
-			<option value="1999">1999</option>
-			<option value="2000">2000</option>
-			<option value="2001">2001</option>
-			<option value="2002">2002</option>
-			<option value="2003">2003</option>
-			<option value="2004">2004</option>
-			<option value="2005">2005</option>
-			<option value="2006">2006</option>
-			<option value="2007">2007</option>
-			<option value="2008">2008</option>
-			<option value="2009">2009</option>
-			<option value="2010">2010</option>
-			<option value="2011">2011</option>
-			<option value="2012">2012</option>
-			<option value="2013">2013</option>
-		</select> <select>
-			<option value="">월</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-			<option value="10">10</option>
-			<option value="11">11</option>
-			<option value="12">12</option>
-		</select> <select>
-			<option value="">일</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-		</select>
+	</select>
 	</div>
+	<div class="title"> 제목 <input type="text" name="title" size="100%" /></div>
+	<div class="date">
+		<div class="box start_date">
+			시작연도 
+			<input type="hidden" name="start_date" class="start_date" value="" />
+			<input type="text" class="cal startDate" value="" />
+		</div>
+		<div class="box end_date">
+			종료연도 
+			<input type="hidden" name="end_date" class="end_date" value="" />
+			<input type="text" class="cal endDate"  value="" />
+		</div>
+		<script type="text/javascript">
+			(function($) {
+				$(function() {
+					var option = {
+						changeMonth : true,
+						changeYear : true,
+						gotoCurrent : false,
+						yearRange : '1995:+5',
+						dateFormat : 'yy-mm-dd',
+						onSelect : function() {
+
+							$(this).prev('input[type="hidden"]').val(this.value.replace(/-/g, ""))
+						}
+					};
+					$.extend(option, $.datepicker.regional['ko']);
+					$(".cal").datepicker(option);
+				});
+			})(jQuery);
+		</script>
+	</div>
+
 	<input type="hidden" name="module_srl"
-		value="{$module_info->module_srl}" /> {$editor}
+		value="{$module_info->module_srl}" />
+		 {$editor}
 	<div class="tag_box">
-		태그검색어 입력<input type="text" name="tag_1" /> <input type="text" name="tag_2" /> <input type="text" name="tag_3" />
-	</div>
+		태그검색어 입력 <input type="text" name="tags" class="tags" /> 쉼표(,)로 구분하여 여러개 입력가능 </div>
 	<div class="submit_btn">
 		<input type="submit" />
 	</div>
 </form>
-//달력 위젯 적용하기
+
 //+ 태그, 카테고리, 달력

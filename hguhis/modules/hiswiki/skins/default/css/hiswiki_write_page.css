@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+<!--현희-->
+#front_page div {
+	border: 1px solid black;
+	float: left;
+}
+
+#front_page {
+	width: 100%;
+	float: 1eft;
+}
+
+#front_page .search_box {
+	top: 84px;
+	width: 100%;
+	z-index: 160;
+	cell-padding: 10;
+	height: 100px;
+	text-align:right;
+	valign: middle;
+}

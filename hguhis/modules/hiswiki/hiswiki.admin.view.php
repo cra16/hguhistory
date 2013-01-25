@@ -128,7 +128,6 @@ class hiswikiAdminView extends hiswiki {
 
 	}
 
-
 	/**
 	 * @brief 권한 목록 출력
 	 **/
@@ -154,7 +153,6 @@ class hiswikiAdminView extends hiswiki {
 		$this->setTemplateFile('skin_info');
 	}
 
-
 	/**
 	 * @function dispHiswikiAdminCategoryInfo
 	 * @author 바람꽃(wndflwr@gmail.com)
@@ -167,37 +165,6 @@ class hiswikiAdminView extends hiswiki {
 		Context::set('category_content', $catgegory_content);
 
 		$this->setTemplateFile('category_info');
-	}
-
-	/**
-	 * @function dispHiswikiAdminTopicWrite
-	 * @brief topic 추가 설정중
-	 * @author 현희
-	 **/
-	function dispHiswikiAdminTopicWrite() {
-		// 쓰기 권한 체크
-		//if(!$this->grant->write) //return $this->dispHiswikiAdminTopicWrite('msg_not_permitted');
-		//	return new Object(-1, 'msg_not_permitted');
-		//if(!$this->grant->write) return $this->dispHiswikiTopic W('msg_not_permitted');
-		$oEditorModel = &getModel('editor');
-
-		//editor option 설정 
-		$option->allow_fileupload = true;
-		$option->enable_autosave = true;
-		$option->enable_component = true;
-		$option->enable_default_component = true;
-		$option->primary_key_name = 'document_srl';
-		$option->content_key_name = 'content';
-		
-		$editor = $oEditorModel->getEditor($upload_target_srl, $option);
-		Context::set('editor',$editor);
-		Context::set('module_info',$this->module_info);
-		
-		// 내용 작성화면 템플릿 파일 지정 write.html
-		$this->setTemplateFile('write');
-		
-		return;
-
 	}
 }
 ?>

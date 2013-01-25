@@ -23,26 +23,26 @@ class hiswikiController extends hiswiki {
 		// 올바른 요청인지, 대문 수정 권한은 있는지 확인한다.
 		if ($this->module_info->module != 'hiswiki' || !$this->grant->manager) {
 			$this->stop('msg_invalid_request');
-			return new Object(-1, 'msg_invalid_request');
+			return new argsect(-1, 'msg_invalid_request');
 		}
 		
 		// 필요한 데이터만 받기
-		$obj = Context::gets('content', 'module_srl', 'mid', 'module_srl', 'front_page_srl');
-		$obj->title = $this->module_info->browser_title;
+		$args = Context::gets('content', 'module_srl', 'mid', 'module_srl', 'front_page_srl');
+		$args->title = $this->module_info->browser_title;
 		
 		// documentModel와 documentController를 사용하여 입력 또는 수정하기
 		$oDocumentModel = &getModel('document');
 		$oDocumentController = &getController('document');
 		// 문서가 존재하는지 확인
-		$front_page_doc = $oDocumentModel->getDocument($obj->front_page_srl);
+		$front_page_doc = $oDocumentModel->getDocument($args->front_page_srl);
 		// 존재하면 업데이트
 		if ($front_page_doc->isExists()) {
-			$obj->document_srl = $obj->front_page_srl;
-			$output = $oDocumentController->updateDocument($front_page_doc, $obj);
+			$args->document_srl = $args->front_page_srl;
+			$output = $oDocumentController->updateDocument($front_page_doc, $args);
 		}
 		// 존재하지 않으면 신규 삽입
 		else {
-			$output = $oDocumentController->insertDocument($obj);
+			$output = $oDocumentController->insertDocument($args);
 			// document_srl이 새롭게 할당되었으므로 module_info에 업데이트 한다.
 			$this->module_info->front_page_srl = $output->get('document_srl');
 			$oModuleController = &getController('module');
@@ -63,19 +63,42 @@ class hiswikiController extends hiswiki {
 	function procHiswikiTopicWrite() {
 	
 		// check grant
-		//if($this->module_info->module != "hiswiki") return new Object(-1, "msg_invalid_request");
-		//if(!$this->grant->write_document) return new Object(-1, 'msg_not_permitted');
+		//if($this->module_info->module != "hiswiki") return new argsect(-1, "msg_invalid_request");
+		//if(!$this->grant->write_document) return new argsect(-1, 'msg_not_permitted');
 		//$logged_info = Context::get('logged_info');
-	
+
 		$vars = Context::gets('content', 'title','module_srl','start_date','end_date','tags');
 		$oDocumentController = &getController('document');
 		$output = $oDocumentController->insertDocument($vars);
-		if($output->toBool()==true)
-			$this->setRedirectUrl(Context::get('success_return_url'));
-		else
+		
+		if (!$output->toBool()) {
 			$this->setRedirectUrl(Context::get('error_return_url'));
+			return;
+		}
+		$output = $this->_insertHiswikiDoc($vars);
+		if ($output->toBool()) {
+			$this->setRedirectUrl(Context::get('success_return_url'));
+		}
+	}
 	
-		return;
+	function _insertHiswikiDoc($args) {
+		//DB 트랜잭션
+		$oDB = &DB::getInstance();
+		$oDB->begin();;
+		$output = ModuleHandler::triggerCall('hiswiki.insertHiswikiDoc', 'before', $args);
+		if(!$output->toBool()) return $output;
+		// Register it if no given document_srl exists
+		if(!$args->document_srl) $args->document_srl = getNextSequence();
+		if(!$args->status) $this->_checkDocumentStatusForOldVersion($args);
+		//insert
+		$output = executeQuery('hiswiki.insertHiswikiDoc', $args);
+		if(!$output->toBool()) {
+			$oDB->rollback();
+			return $output;
+		}
+		//commit
+		$oDB->commit();
+		return $output;
 	}
 	
 	/**
@@ -92,6 +115,4 @@ class hiswikiController extends hiswiki {
 		$this->setRedirectUrl(Context::get('success_view_url'));
 	}
 }
-	
-	
 ?>

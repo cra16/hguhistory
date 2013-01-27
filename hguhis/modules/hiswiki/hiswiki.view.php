@@ -262,6 +262,7 @@ class hiswikiView extends hiswiki {
 
 		// get the keyword
 		$args->search_keyword = Context::get('search_keyword');
+		$args->tag = Context::get('search_keyword');
 
 		// setup the sort index and order index
 		$args->sort_index = Context::get('sort_index');
@@ -269,28 +270,30 @@ class hiswikiView extends hiswiki {
 
 		// 1. get the keyword by title
 		$args->search_target = 'title';
-
+		
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
-debugPrint($output);
+
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_title', $output->data);
 
 		// 2. get the keyword by content
 		$args->search_target = 'content';
-
+		
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
 
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_content', $output->data);
-
+		
 		// 3. get the keyword by tags
 		$args->search_target = 'tags';
-
+		
+		$oDocumentModel = &getModel('tag');
+		
 		// 넘겨준 파라메터로 검색 결과 받아오기
-		$output = $oDocumentModel->getDocumentList($args);
-
+		$output = $oDocumentModel->getDocumentSrlByTag($args);
+		
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_tags', $output->data);
 
@@ -338,7 +341,7 @@ debugPrint($output);
 			
 		// hiswiki model에서 목록을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
-		$output = $oHiswikiModel->getHiswikiTopicList($args);
+		$output = $oHiswikiModel->getHiswikiList($args);
 		if (!$output->data) $output->data = array();
 			
 		// $_list 변수에 담는다

@@ -72,28 +72,5 @@ class hiswikiAdminController extends hiswiki {
         $this->setMessage('success_deleted');
 
 	}
-        
-	/**
-	 * @function procHiswikiAdminTopicWrite
-	 * @brief Hiswiki입력
-	 * @author 현희 
-	 **/
-	function procHiswikiAdminTopicWrite() {
-
-		// check grant
-		//if($this->module_info->module != "hiswiki") return new Object(-1, "msg_invalid_request");
-		//if(!$this->grant->write_document) return new Object(-1, 'msg_not_permitted');
-		//$logged_info = Context::get('logged_info');
-		
-		$vars = Context::gets('content', 'title','module_srl','start_date','end_date','tags');
-		$oDocumentController = &getController('document');
-		$output = $oDocumentController->insertDocument($vars);
-		if($output->toBool()==true)
-			$this->setRedirectUrl(Context::get('success_return_url'));
-		else
-			$this->setRedirectUrl(Context::get('error_return_url'));
-		
-		return;
-	}
 }
 ?>

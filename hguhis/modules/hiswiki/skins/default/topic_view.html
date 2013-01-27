@@ -1,1 +1,17 @@
 <load target="../document/tpl/js/document_admin.js" usecdn="true" />
+<form action="./" method="post">
+	<input type="hidden" name="document_srl" />
+	<input type="hidden" name="act" value="procHiswikiTopicView" />
+	<input type="hidden" name="success_view_url" value="{getUrl('act','dispHiswikiTopicView')}" />
+	<input type="hidden" name="success_view_url" value="{getUrl('act','procHiswikiTopicView')" />
+
+	<input type="hidden" name="title" />
+	<input type="hidden" name="contents"/>
+	<input type="hidden" name="category_url" />
+	<input type="hidden" name="module_srl" />
+	<input type="hidden" name="start_date" />
+	<input type="hidden" name="end_date" />
+	<input type="hidden" name="tags" />
+	<input type="hidden" name="module_srl"
+			value="{$document_model->getdocument}" />
+</form>

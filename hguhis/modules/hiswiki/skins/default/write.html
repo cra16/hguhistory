@@ -4,9 +4,9 @@
 <form action="./" method="post">
 	<input type="hidden" name="document_srl" />
 	<input type="hidden" name="content" />
-	<input type="hidden" name="act"value="procHiswikiAdminTopicWrite" />
-	<input type="hidden" name="success_return_url" value="{getUrl('act','dispHiswikiTopicList')}" />
-	<input type="hidden" name="error_return_url" value="{getUrl('act','procHiswikiAdminTopicWrite')" /> 
+	<input type="hidden" name="act" value="procHiswikiTopicWrite" />
+	<input type="hidden" name="success_return_url" value="{getUrl('act','dispHiswikiForntPage')}" />
+	<input type="hidden" name="error_return_url" value="{getUrl('act','procHiswikiTopicWrite')}" /> 
 	<div class="box category">
 	카테고리 <select>
 		<option value="">카테고리 선택</option>
@@ -44,7 +44,6 @@
 			})(jQuery);
 		</script>
 	</div>
-
 	<input type="hidden" name="module_srl"
 		value="{$module_info->module_srl}" />
 		 {$editor}
@@ -54,5 +53,3 @@
 		<input type="submit" />
 	</div>
 </form>
-
-//+ 태그, 카테고리, 달력

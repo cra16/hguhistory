@@ -1,16 +1,23 @@
 <!--#include("_header.html")-->
-<!--#include("_search_form.html")-->
-
+<!--#include("search_box.html")-->
+<style type="text/css">
+.ResultDiv {
+	border: red solid 1px;
+}
+</style>
 <div class="outerDiv">
 	<div class="ResultDiv">
 		<span class="ResultHeading">표제어 검색 결과</span>
 		<div class="ResultViewDiv" loop="$search_results_title=>$val">
-			<div class="title">{$val->getTitle()}</div>
-			<div class="content">{$val->getSummary()}</div>
+			<a class="documentLink" href="{$val->getPermanentUrl()}">
+				<div class="title">{$val->getTitle()}</div>
+				<div class="content">{$val->getSummary()}</div>
+			</a>
 			<div>
-				<span class="regdate">{$val->getRegdate()}</span> / <span
-					class="regdate">{$val->getNickName()}</span> / <span
-					class="regdate">{$val->()}</span>
+				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> / 작성자 <span
+					class="regdate">{$val->getNickName()}</span> / 조회수 <span
+					class="regdate">{$val->get('readed_count')}</span> / 태그 
+					<span class="regdate">{$val->get('tags')}</span>
 			</div>
 		</div>
 		<span class="moreSearchResult"><a href="">더보기...</a></span>
@@ -18,16 +25,32 @@
 	<div class="ResultDiv">
 		<span class="ResultHeading">내용 검색 결과</span>
 		<div class="ResultViewDiv" loop="$search_results_content=>$val">
-			<span class="title">{$val->getTitle()}</span>
-			<div class="content">{$val->getSummary()}</div>
+			<a class="documentLink" href="{$val->getPermanentUrl()}">
+				<div class="title">{$val->getTitle()}</div>
+				<div class="content">{$val->getSummary()}</div>
+			</a>
+			<div>
+				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> / 작성자 <span
+					class="regdate">{$val->getNickName()}</span> / 조회수 <span
+					class="regdate">{$val->get('readed_count')}</span>
+			</div>
 		</div>
 		<span class="moreSearchResult"><a href="">더보기...</a></span>
 	</div>
 	<div class="ResultDiv">
-		<span class="ResultHeading">태그 검색 결과</span>
-		<div class="ResultViewDiv" loop="$search_results_tag=>$val">
-			<span class="title">{$val->getTitle()}</span>
-			<div class="content">{$val->getSummary()}</div>
+		<div class="ResultHeading">태그 검색 결과</div>
+		<div class="ResultViewDiv" loop="$search_results_tags=>$val">
+			<a class="documentLink" href="{$val->getPermanentUrl()}">
+				<div class="title">{$val->getTitle()}</div>
+				<div class="content">{$val->getSummary()}</div>
+			</a>
+			<div>
+				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> / 작성자 <span
+					class="regdate">{$val->getNickName()}</span> / 조회수 <span
+					class="regdate">{$val->get('readed_count')}</span><span
+					class="regdate">{$val->get('readed_count')}</span> / 태그 
+					<span class="regdate">{$val->get('tags')}</span>
+			</div>
 		</div>
 		<span class="moreSearchResult"><a href="">더보기...</a></span>
 	</div>

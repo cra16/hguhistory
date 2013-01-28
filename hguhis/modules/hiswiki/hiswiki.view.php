@@ -267,12 +267,12 @@ class hiswikiView extends hiswiki {
 		// get the keyword
 		$args->search_keyword = Context::get('search_keyword');
 		$args->tag = Context::get('search_keyword');
-		
+
 		// setup the sort index and order index
 		$args->sort_index = Context::get('sort_index');
 		$args->order_type = 'asc';
-		
-				// 1. get the keyword by title
+
+		// 1. get the keyword by title
 		$args->search_target = 'title';
 		
 		// 넘겨준 파라메터로 검색 결과 받아오기
@@ -291,7 +291,7 @@ class hiswikiView extends hiswiki {
 		Context::set('search_results_content', $output->data);
 		
 		// 3. get the keyword by tags
-				$args->search_target = 'tags';
+		$args->search_target = 'tags';
 		
 		$oDocumentModel = &getModel('tag');
 		
@@ -375,7 +375,7 @@ class hiswikiView extends hiswiki {
 			
 		// hiswiki model에서 목록을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
-		$output = $oHiswikiModel->getHiswikiTopicList($args);
+		$output = $oHiswikiModel->getHiswikiList($args);
 		if (!$output->data) $output->data = array();
 			
 		// $_list 변수에 담는다

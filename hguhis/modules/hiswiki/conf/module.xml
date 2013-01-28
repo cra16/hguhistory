@@ -42,6 +42,7 @@
         <action name="dispHiswikiTopicList" type="view" standalone="true" />
         <action name="dispHiswikiTopicView" type="view" standalone="true" />
         <action name="procHiswikiTopicView" type="controller" standalone="true" />
+        <action name="_insertHiswikiDoc" type="controller" standalone="true" />
     </actions>
 	<menus>
 	</menus>

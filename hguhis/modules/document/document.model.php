@@ -252,7 +252,285 @@ class documentModel extends document {
 		$data = $output->data;
 		unset($output->data);
 
+<<<<<<< HEAD
+			if($except_notice) {
+				foreach($data as $key => $attribute) {
+					if($attribute->is_notice == 'Y') $virtual_number --;
+				}
+			}
+
+			foreach($data as $key => $attribute) {
+				if($except_notice && $attribute->is_notice == 'Y') continue;
+				$document_srl = $attribute->document_srl;
+				if(!$GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) {
+					$oDocument = null;
+					$oDocument = new documentItem();
+					$oDocument->setAttribute($attribute, false);
+					if($is_admin) $oDocument->setGrant();
+					$GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+				}
+
+				$output->data[$virtual_number] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+				$virtual_number --;
+
+			}
+
+			if($load_extra_vars) $this->setToAllDocumentExtraVars();
+
+			if(count($output->data)) {
+				foreach($output->data as $number => $document) {
+					$output->data[$number] = $GLOBALS['XE_DOCUMENT_LIST'][$document->document_srl];
+				}
+			}
+			//insert in cache
+			if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
+            return $output;
+        }
+
+		/**
+		 * Module_srl value, bringing the document's gongjisa Port
+		 * @param object $obj
+		 * @param array $columnList
+		 * @return object|void
+		 */
+        function getNoticeList($obj, $columnList = array()) {
+            $args->module_srl = $obj->module_srl;
+            $args->category_srl= $obj->category_srl;
+            $output = executeQueryArray('document.getNoticeList', $args, $columnList);
+            if(!$output->toBool()||!$output->data) return;
+
+            foreach($output->data as $key => $val) {
+                $document_srl = $val->document_srl;
+                if(!$document_srl) continue;
+
+                if(!$GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) {
+                    $oDocument = null;
+                    $oDocument = new documentItem();
+                    $oDocument->setAttribute($val, false);
+                    $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+                }
+                $result->data[$document_srl] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+            }
+            $this->setToAllDocumentExtraVars();
+
+            foreach($result->data as $document_srl => $val) {
+                $result->data[$document_srl] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+            }
+
+            return $result;
+        }
+
+		/**
+		 * Function to retrieve the key values of the extended variable document
+		 * $Form_include: writing articles whether to add the necessary extensions of the variable input form
+		 * @param int $module_srl
+		 * @return array
+		 */
+        function getExtraKeys($module_srl) {
+            if(is_null($GLOBALS['XE_EXTRA_KEYS'][$module_srl])) {
+                $oExtraVar = &ExtraVar::getInstance($module_srl);
+                $obj->module_srl = $module_srl;
+                $obj->sort_index = 'var_idx';
+                $obj->order = 'asc';
+                $output = executeQueryArray('document.getDocumentExtraKeys', $obj);
+				
+				// correcting index order
+				$isFixed = FALSE;
+				if(is_array($output->data))
+				{
+					$prevIdx = 0;
+					foreach($output->data as $no => $value)
+					{
+						// case first
+						if($prevIdx == 0 && $value->idx != 1)
+						{
+							$args = new stdClass();
+							$args->module_srl = $module_srl;
+							$args->var_idx = $value->idx;
+							$args->new_idx = 1;
+							executeQuery('document.updateDocumentExtraKeyIdx', $args);
+							executeQuery('document.updateDocumentExtraVarIdx', $args);
+							$prevIdx = 1;
+							$isFixed = TRUE;
+							continue;
+						}
+
+						// case others
+						if($prevIdx > 0 && $prevIdx + 1 != $value->idx)
+						{
+							$args = new stdClass();
+							$args->module_srl = $module_srl;
+							$args->var_idx = $value->idx;
+							$args->new_idx = $prevIdx + 1;
+							executeQuery('document.updateDocumentExtraKeyIdx', $args);
+							executeQuery('document.updateDocumentExtraVarIdx', $args);
+							$prevIdx += 1;
+							$isFixed = TRUE;
+							continue;
+						}
+
+						$prevIdx = $value->idx;
+					}
+				}
+
+				if($isFixed)
+				{
+					$output = executeQueryArray('document.getDocumentExtraKeys', $obj);
+				}
+
+                $oExtraVar->setExtraVarKeys($output->data);
+                $keys = $oExtraVar->getExtraVars();
+                if(!$keys) $keys = array();
+                $GLOBALS['XE_EXTRA_KEYS'][$module_srl] = $keys;
+            }
+
+            return $GLOBALS['XE_EXTRA_KEYS'][$module_srl];
+        }
+
+		/**
+		 * A particular document to get the value of the extra variable function
+		 * @param int $module_srl
+		 * @param int $document_srl
+		 * @return array
+		 */
+        function getExtraVars($module_srl, $document_srl) {
+            if(!isset($GLOBALS['XE_EXTRA_VARS'][$document_srl])) {
+                // Extended to extract the values of variables set
+                $oDocument = $this->getDocument($document_srl, false);
+                $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+                $this->setToAllDocumentExtraVars();
+            }
+            if(is_array($GLOBALS['XE_EXTRA_VARS'][$document_srl])) ksort($GLOBALS['XE_EXTRA_VARS'][$document_srl]);
+            return $GLOBALS['XE_EXTRA_VARS'][$document_srl];
+        }
+
+		/**
+		 * Show pop-up menu of the selected posts
+		 * Printing, scrap, recommendations and negative, reported the Add Features
+		 * @return void
+		 */
+        function getDocumentMenu() {
+            // Post number and the current login information requested Wanted
+            $document_srl = Context::get('target_srl');
+            $mid = Context::get('cur_mid');
+            $logged_info = Context::get('logged_info');
+            $act = Context::get('cur_act');
+            // to menu_list "pyosihalgeul, target, url" put into an array
+            $menu_list = array();
+            // call trigger
+            ModuleHandler::triggerCall('document.getDocumentMenu', 'before', $menu_list);
+
+            $oDocumentController = &getController('document');
+            // Members must be a possible feature
+            if($logged_info->member_srl) {
+
+				$oDocumentModel = &getModel('document');
+				$columnList = array('document_srl', 'module_srl', 'member_srl', 'ipaddress');
+				$oDocument = $oDocumentModel->getDocument($document_srl, false, false, $columnList);
+				$module_srl = $oDocument->get('module_srl');
+				$member_srl = $oDocument->get('member_srl');
+				if(!$module_srl) return new Object(-1, 'msg_invalid_request');
+
+				$oModuleModel = &getModel('module');
+				$document_config = $oModuleModel->getModulePartConfig('document',$module_srl);
+				if($document_config->use_vote_up!='N' && $member_srl!=$logged_info->member_srl){
+					// Add a Referral Button
+					$url = sprintf("doCallModuleAction('document','procDocumentVoteUp','%s')", $document_srl);
+					$oDocumentController->addDocumentPopupMenu($url,'cmd_vote','','javascript');
+				}
+
+				if($document_config->use_vote_down!='N' && $member_srl!=$logged_info->member_srl){
+					// Add button to negative
+					$url= sprintf("doCallModuleAction('document','procDocumentVoteDown','%s')", $document_srl);
+					$oDocumentController->addDocumentPopupMenu($url,'cmd_vote_down','','javascript');
+				}
+
+                // Adding Report
+                $url = sprintf("doCallModuleAction('document','procDocumentDeclare','%s')", $document_srl);
+                $oDocumentController->addDocumentPopupMenu($url,'cmd_declare','','javascript');
+
+                // Add Bookmark button
+                $url = sprintf("doCallModuleAction('member','procMemberScrapDocument','%s')", $document_srl);
+                $oDocumentController->addDocumentPopupMenu($url,'cmd_scrap','','javascript');
+            }
+            // Add print button
+            $url = getUrl('','module','document','act','dispDocumentPrint','document_srl',$document_srl);
+            $oDocumentController->addDocumentPopupMenu($url,'cmd_print','','printDocument');
+            // Call a trigger (after)
+            ModuleHandler::triggerCall('document.getDocumentMenu', 'after', $menu_list);
+            // If you are managing to find posts by ip
+            if($logged_info->is_admin == 'Y') {
+                $oDocumentModel = &getModel('document');
+                $oDocument = $oDocumentModel->getDocument($document_srl);	//before setting document recycle
+
+                if($oDocument->isExists()) {
+                    // Find a post equivalent to ip address
+                    $url = getUrl('','module','admin','act','dispDocumentAdminList','search_target','ipaddress','search_keyword',$oDocument->getIpAddress());
+                    $oDocumentController->addDocumentPopupMenu($url,'cmd_search_by_ipaddress',$icon_path,'TraceByIpaddress');
+
+                    $url = sprintf("var params = new Array(); params['ipaddress_list']='%s'; exec_xml('spamfilter', 'procSpamfilterAdminInsertDeniedIP', params, completeCallModuleAction)", $oDocument->getIpAddress());
+                    $oDocumentController->addDocumentPopupMenu($url,'cmd_add_ip_to_spamfilter','','javascript');
+                }
+            }
+            // Changing the language of pop-up menu
+            $menus = Context::get('document_popup_menu_list');
+            $menus_count = count($menus);
+            for($i=0;$i<$menus_count;$i++) {
+                $menus[$i]->str = Context::getLang($menus[$i]->str);
+            }
+            // Wanted to finally clean pop-up menu list
+            $this->add('menus', $menus);
+        }
+
+		/**
+		 * The total number of documents that are bringing
+		 * @param int $module_srl
+		 * @param object $search_obj
+		 * @return int
+		 */
+        function getDocumentCount($module_srl, $search_obj = NULL) {
+            // Additional search options
+            $args->module_srl = $module_srl;
+            $args->s_title = $search_obj->s_title;
+            $args->s_content = $search_obj->s_content;
+            $args->s_user_name = $search_obj->s_user_name;
+            $args->s_member_srl = $search_obj->s_member_srl;
+            $args->s_ipaddress = $search_obj->s_ipaddress;
+            $args->s_regdate = $search_obj->s_regdate;
+            $args->category_srl = $search_obj->category_srl;
+
+            $output = executeQuery('document.getDocumentCount', $args);
+            // Return total number of
+            $total_count = $output->data->count;
+            return (int)$total_count;
+        }
+
+		/**
+		 * the total number of documents that are bringing
+		 * @param object $search_obj
+		 * @return array
+		 */
+        function getDocumentCountByGroupStatus($search_obj = NULL) {
+            // Additional search options
+            $args->module_srl = $search_obj->module_srl;
+            $args->s_title = $search_obj->s_title;
+            $args->s_content = $search_obj->s_content;
+            $args->s_user_name = $search_obj->s_user_name;
+            $args->s_member_srl = $search_obj->s_member_srl;
+            $args->s_ipaddress = $search_obj->s_ipaddress;
+            $args->s_regdate = $search_obj->s_regdate;
+            $args->category_srl = $search_obj->category_srl;
+
+            $output = executeQuery('document.getDocumentCountByGroupStatus', $args);
+			if(!$output->toBool()) return array();
+
+			return $output->data;
+        }
+
+		function getDocumentExtraVarsCount($module_srl, $search_obj = NULL)
+=======
 		if(!isset($virtual_number))
+>>>>>>> refs/remotes/origin/hguhis
 		{
 			$keys = array_keys($data);
 			$virtual_number = $keys[0];

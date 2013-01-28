@@ -304,7 +304,6 @@ class hiswikiView extends hiswiki {
 		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}
-	
 	/**
 	 * @function dispHiswikiTopicWrite
 	 * @brief topic 추가 설정중
@@ -341,17 +340,22 @@ class hiswikiView extends hiswiki {
 	 * @brief 토픽 뷰
 	 */
 	function dispHiswikiTopicView(){
-	
+
+		$document_srl = Context::get('document_srl');
+		if(!$document_srl){
+			return new Object(-1, 'msg_invalid_request');
+		}
+		$page = Context::get('page');
+		
+		// document model을 가져옴
 		$oDocumentModel = &getModel('document');
 	
 		$document = $oDocumentModel->getDocument(Context::get('document_srl'));
-		//
+		
 		Context::set('document',$document);
 		Context::set('module_info',$this->module_info);
-		
-		$this->setTemplatePath($this->module_path.'tpl');
-		$this->setTemplateFile('../skins/default/topic_view');
-	
+		$this->setTemplateFile('topic_view');
+		debugPrint($document,$this->module_info);
 	}
 	
 	/**

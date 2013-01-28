@@ -80,7 +80,11 @@ class hiswikiController extends hiswiki {
 			$this->setRedirectUrl(Context::get('success_return_url'));
 		}
 	}
-	
+	/**
+	 * @fuction _insertHiswikiDoc
+	 * @brief hiswiki_doc의 db에저장
+	 * @author 지희
+	 */
 	function _insertHiswikiDoc($args) {
 		//DB 트랜잭션
 		$oDB = &DB::getInstance();
@@ -113,6 +117,22 @@ class hiswikiController extends hiswiki {
 		$output = $oDocumentController->getContentView($vars);
 		
 		$this->setRedirectUrl(Context::get('success_view_url'));
+	}
+	
+	/**
+	 * @author 지희
+	 * @brief 문서를 수정한다
+	 */
+	function _modifyHiswikiDoc(){
+		
+	}
+	
+	/**
+	 * @author 지희
+	 * @brief 문서를 삭제한다
+	 */
+	function _deleteHiswikiDoc(){
+		
 	}
 }
 ?>

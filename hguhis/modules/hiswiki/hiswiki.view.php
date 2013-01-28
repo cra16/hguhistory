@@ -66,8 +66,7 @@ class hiswikiView extends hiswiki {
 		$obj->sort_index = 'regdate';
 		$newestDocList = $oDocumentModel->getDocumentList($obj, false, false);
 		Context::set('newestDocList', $newestDocList->data);
-		
-		
+				
 		// 인기글 리스트 불러오기 (조회수)
 		$obj->regdate = date('YmdHis', time() - 2678400);
 		$popular_doc = executeQueryArray('hiswiki.getPopularDocuments', $obj);
@@ -210,7 +209,7 @@ class hiswikiView extends hiswiki {
 		if(count($statusNameList) > 0) Context::set('status_list', $statusNameList);
 			
 		// 화면에 띄움
-		$this->dispHiswikiContentView();
+		$this->dispHiswikiTopicView();
 			
 		// list config, columnList setting
 		$oHiswikiModel = &getModel('hiswiki');
@@ -334,17 +333,22 @@ class hiswikiView extends hiswiki {
 	 * @brief 토픽 뷰
 	 */
 	function dispHiswikiTopicView(){
-	
+
+		$document_srl = Context::get('document_srl');
+		if(!$document_srl){
+			return new Object(-1, 'msg_invalid_request');
+		}
+		$page = Context::get('page');
+		
+		// document model을 가져옴
 		$oDocumentModel = &getModel('document');
 	
 		$document = $oDocumentModel->getDocument(Context::get('document_srl'));
-		//
+		
 		Context::set('document',$document);
 		Context::set('module_info',$this->module_info);
-		
-		$this->setTemplatePath($this->module_path.'tpl');
-		$this->setTemplateFile('../skins/default/topic_view');
-	
+		$this->setTemplateFile('topic_view');
+		debugPrint($document,$this->module_info);
 	}
 	
 	/**

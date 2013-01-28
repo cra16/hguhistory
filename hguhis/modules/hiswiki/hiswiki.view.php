@@ -210,7 +210,7 @@ class hiswikiView extends hiswiki {
 		if(count($statusNameList) > 0) Context::set('status_list', $statusNameList);
 			
 		// 화면에 띄움
-		$this->dispHiswikiTopicView();
+		$this->dispHiswikiContentView();
 			
 		// list config, columnList setting
 		$oHiswikiModel = &getModel('hiswiki');
@@ -300,7 +300,6 @@ class hiswikiView extends hiswiki {
 		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}
-	
 	/**
 	 * @function dispHiswikiTopicWrite
 	 * @brief topic 추가 설정중

@@ -66,7 +66,8 @@ class hiswikiView extends hiswiki {
 		$obj->sort_index = 'regdate';
 		$newestDocList = $oDocumentModel->getDocumentList($obj, false, false);
 		Context::set('newestDocList', $newestDocList->data);
-				
+		
+		
 		// 인기글 리스트 불러오기 (조회수)
 		$obj->regdate = date('YmdHis', time() - 2678400);
 		$popular_doc = executeQueryArray('hiswiki.getPopularDocuments', $obj);
@@ -256,19 +257,20 @@ class hiswikiView extends hiswiki {
 		// setup module_srl/page number/ list number/ page count
 		$args->module_srl = $this->module_info->module_srl;
 		$args->page = Context::get('page');
-		$args->list_count = 3;
+		$args->list_count = 20;
 		$args->page_count = Context::get('page_count');
 
 		// get the keyword
 		$args->search_keyword = Context::get('search_keyword');
+		$args->tag = Context::get('search_keyword');
 
 		// setup the sort index and order index
 		$args->sort_index = Context::get('sort_index');
-		$args->order_type = Context::get('order_type');
+		$args->order_type = 'asc';
 
 		// 1. get the keyword by title
 		$args->search_target = 'title';
-
+		
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
 
@@ -277,19 +279,21 @@ class hiswikiView extends hiswiki {
 
 		// 2. get the keyword by content
 		$args->search_target = 'content';
-
+		
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
 
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_content', $output->data);
-
+		
 		// 3. get the keyword by tags
 		$args->search_target = 'tags';
-
+		
+		$oDocumentModel = &getModel('tag');
+		
 		// 넘겨준 파라메터로 검색 결과 받아오기
-		$output = $oDocumentModel->getDocumentList($args);
-
+		$output = $oDocumentModel->getDocumentSrlByTag($args);
+		
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_tags', $output->data);
 
@@ -372,7 +376,7 @@ class hiswikiView extends hiswiki {
 			
 		// hiswiki model에서 목록을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
-		$output = $oHiswikiModel->getHiswikiTopicList($args);
+		$output = $oHiswikiModel->getHiswikiList($args);
 		if (!$output->data) $output->data = array();
 			
 		// $_list 변수에 담는다

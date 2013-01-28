@@ -76,15 +76,19 @@ class hiswikiView extends hiswiki {
 		}
 		Context::set('popDocList', $popDocList);
 		
-		// 요청 리스트 불러오기
-		// TODO 연동작업 들어가기
-		
 		// 인기 태그 리스트 불러오기
 		$oTagModel = &getModel('tag');
 		$obj->list_count = 50; // 몇 개를 불러오는지 결정
 		$obj->sort_index = 'count';
 		$popTagList = $oTagModel->getTagList($obj);
 		Context::set('popTagList', $popTagList->data);
+		
+		// 요청 게시판의 리스트 불러오기
+		// 요청 게시판의 module_srl 받아오기
+		$obj->module_srl = $this->module_info->link_board;
+		$obj->sort_index = 'regdate';
+		$requestDocList = $oDocumentModel->getDocumentList($obj);
+		Context::set('requestDocList', $requestDocList->data);
 		
 		
 		// 카테고리 리스트 불러오기
@@ -238,62 +242,65 @@ class hiswikiView extends hiswiki {
 	 * @brief 정보를 입력받아 출력하는 페이지
 	 **/
 	function dispHiswikiSearchResult(){
-
+		
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		//if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-
+		
 		// check the grant
 		if(!$this->grant->access && !$this->grant->view) {
-			Context::set('document_list', array());
-			Context::set('total_count', 0);
-			Context::set('total_page', 1);
-			Context::set('page', 1);
-			Context::set('page_navigation', new PageHandler(0,0,1,10));
-			return new Object(-1, 'msg_not_permitted');
-		}
-
-		$oDocumentModel = &getModel('document');
-
+		Context::set('document_list', array());
+		Context::set('total_count', 0);
+					Context::set('total_page', 1);
+					Context::set('page', 1);
+					Context::set('page_navigation', new PageHandler(0,0,1,10));
+		return new Object(-1, 'msg_not_permitted');
+				}
+		
+				$oDocumentModel = &getModel('document');
+		
 		// setup module_srl/page number/ list number/ page count
 		$args->module_srl = $this->module_info->module_srl;
 		$args->page = Context::get('page');
-		$args->list_count = 3;
+		$args->list_count = 20;
 		$args->page_count = Context::get('page_count');
-
+		
 		// get the keyword
 		$args->search_keyword = Context::get('search_keyword');
-
+		$args->tag = Context::get('search_keyword');
+		
 		// setup the sort index and order index
 		$args->sort_index = Context::get('sort_index');
-		$args->order_type = Context::get('order_type');
-
-		// 1. get the keyword by title
+		$args->order_type = 'asc';
+		
+				// 1. get the keyword by title
 		$args->search_target = 'title';
-
+		
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
-
+		
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_title', $output->data);
-
+		
 		// 2. get the keyword by content
 		$args->search_target = 'content';
-
+		
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
-
+		
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_content', $output->data);
-
+		
 		// 3. get the keyword by tags
-		$args->search_target = 'tags';
-
+				$args->search_target = 'tags';
+		
+		$oDocumentModel = &getModel('tag');
+		
 		// 넘겨준 파라메터로 검색 결과 받아오기
-		$output = $oDocumentModel->getDocumentList($args);
-
+		$output = $oDocumentModel->getDocumentSrlByTag($args);
+		
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_tags', $output->data);
-
+		
 		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}

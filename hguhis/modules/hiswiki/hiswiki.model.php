@@ -27,6 +27,17 @@ class hiswikiModel extends hiswiki {
 		$output = executeQueryArray('hiswiki.getHiswikiTopic', $args);
 		return $output;
 	}
+	
+	/**
+	 * @param unknown_type $documentSrl
+	 * @author 지희
+	 * hiswikiDoc 자료 가져오기
+	 **/
+	function getHiswikiDoc($document_srl) {
+		$args->document_srl = $document_srl;
+		$output = executeQueryArray('hiswiki.getHiswikiDoc',$args);
+		return $output;
+	}
 
 
 }

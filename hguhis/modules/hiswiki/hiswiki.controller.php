@@ -75,6 +75,7 @@ class hiswikiController extends hiswiki {
 			$this->setRedirectUrl(Context::get('error_return_url'));
 			return;
 		}
+		$vars->docment_srl = $output->get('document_srl');
 		$output = $this->_insertHiswikiDoc($vars);
 		if ($output->toBool()) {
 			$this->setRedirectUrl(Context::get('success_return_url'));
@@ -86,22 +87,14 @@ class hiswikiController extends hiswiki {
 	 * @author 지희
 	 */
 	function _insertHiswikiDoc($args) {
-		//DB 트랜잭션
-		$oDB = &DB::getInstance();
-		$oDB->begin();;
-		$output = ModuleHandler::triggerCall('hiswiki.insertHiswikiDoc', 'before', $args);
-		if(!$output->toBool()) return $output;
 		// Register it if no given document_srl exists
-		if(!$args->document_srl) $args->document_srl = getNextSequence();
-		if(!$args->status) $this->_checkDocumentStatusForOldVersion($args);
+		if(!$args->document_srl) return new Object(-1, 'error');
+		
 		//insert
 		$output = executeQuery('hiswiki.insertHiswikiDoc', $args);
 		if(!$output->toBool()) {
-			$oDB->rollback();
 			return $output;
 		}
-		//commit
-		$oDB->commit();
 		return $output;
 	}
 	

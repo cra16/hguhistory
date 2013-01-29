@@ -14,7 +14,7 @@
         }
 
 		function getBookAdminList($args){
-            $output = executeQueryArray('book.getBookAdminList', $args);
+            $output = executeQuery('book.getBookAdminList', $args);
 			return $output;
 		}
 

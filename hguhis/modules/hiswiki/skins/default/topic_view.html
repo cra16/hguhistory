@@ -1,5 +1,17 @@
 <!--지희 글의 내용을 본다-->
-<load target="css/hiswiki.css"/>
+<style>
+div.document_view li {
+	list-style:none;
+	position:relative;
+	float:left;	
+}
+div.clear {
+	clear:both;
+}
+</style>
+
+
+<load target="css/hiswiki.css" />
 <div id="topic_view">
 	<div class="search_box">
 		<!--// 검색 창을 띄운다. -->
@@ -12,39 +24,48 @@
 	<div class="document_view">
 		<!--올라온 글의 내용을 본다-->
 		<div>
-			<span>Start Date:</span>
-			<span style="border:0px">&nbsp;&nbsp;&nbsp;</span>
-			<span>End Date:</span>
+			<span>Start Date:</span> <span>{zdate($hiswiki_doc[0]->start_date."000000",'Y-m-d')}</span> 
+			<span style="border: 0px">&nbsp;&nbsp;&nbsp;</span> 
+			<span>End Date:</span> 
+			<span>{zdate($hiswiki_doc[0]->end_date."000000",'Y-m-d')}</span>
 		</div>
 		<div>
-			<div class="content">
-				Title: {$document->getTitle()}
-			</div>
+			<div class="content">Title: {$document->getTitle()}</div>
 			<div align="right">
-				<span>글쓴이: {$document->getNickName()}</span>
-				<span style="border:0px">&nbsp;&nbsp;&nbsp;</span>
-				<span>등록일: {$document->getRegdate()}</span>
-			</div>	
-			<div class="content">
-				{$document->getContent()}
+				<span>글쓴이: {$document->getNickName()}</span> <span
+					style="border: 0px">&nbsp;&nbsp;&nbsp;</span> <span>등록일:
+					{$document->getRegdate()}</span>
 			</div>
-		</div>	
-        <div class="tag">
-        	태그:
-            <ul>
-                <!--@for($i=0;$i<count($tag_list);$i++)-->
-                    {@ $tag = $tag_list[$i]; }
-                    <li><a href="{getUrl('search_target','tag','search_keyword',$tag,'document_srl','')}" rel="tag">{htmlspecialchars($tag)}</a><!--@if($i<count($tag_list)-1)-->,&nbsp;<!--@end--></li>
-                <!--@end-->
-            </ul>
-        </div>
-    <div class="btnArea">
-        <!--@if($module_info->default_style != 'blog' || ($module_info->default_style == 'blog' && Context::get('document_srl')))-->
-        <span class="btn"><a href="{getUrl('document_srl','')}"><!--@if($module_info->default_style != 'blog')-->{$lang->cmd_list}<!--@else-->{$lang->cmd_view_all}<!--@end--></a></span>
-        <!--@end-->
-        <span class="btn"><a href="{getUrl('act','dispHiswikiTopicWrite','document_srl',$oDocument->document_srl,'comment_srl','')}">{$lang->cmd_modify}...</a></span>
-        <span class="btn"><a href="{getUrl('act','dispHiswikiTopicDelete','document_srl',$oDocument->document_srl,'comment_srl','')}">{$lang->cmd_delete}</a></span>
-    </div>
+			<div class="content">{$document->getContent()}</div>
+		</div>
+
+		{@ $tag_list = $document->get('tag_list') }
+		<!--@if(count($tag_list))-->
+		<div class="tag">
+			<ul>
+				<!--@for($i=0;$i<count($tag_list);$i++)-->
+				{@ $tag = $tag_list[$i]; }
+				<li><a
+					href="{getUrl('search_target','tag','search_keyword',$tag,'document_srl','')}"
+					rel="tag">{htmlspecialchars($tag)}</a><!--@if($i<count($tag_list)-1)-->,&nbsp;<!--@end--> </li>
+				<!--@end-->
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<!--@end-->
+
+		<div class="btnArea">
+			<!--@if($module_info->default_style != 'blog' || ($module_info->default_style == 'blog' && Context::get('document_srl')))-->
+			<span class="btn"><a href="{getUrl('document_srl','')}"> <!--@if($module_info->default_style != 'blog')-->{$lang->cmd_list}<!--@else-->{$lang->cmd_view_all}<!--@end-->
+			</a></span>
+			<!--@end-->
+        	<!--@if($document->isEditable())-->
+			<span class="btn"><a
+				href="{getUrl('act','dispHiswikiTopicWrite','document_srl',$document->document_srl,'')}">{$lang->cmd_modify}...</a></span>
+			<span class="btn"><a
+				href="{getUrl('act','dispHiswikiTopicDelete','document_srl',$document->document_srl,'')}">{$lang->cmd_delete}</a></span>
+				<!--@end-->
+		</div>
 	</div>
 </div>
 

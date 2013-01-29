@@ -1,11 +1,74 @@
-<div class="category_list" cond="$category_html">
+<!--//@file category_list.html -->
+<!--//@author 바람꽃(wndflwr@gmail.com) -->
+<!--//@breif 카테고리 목록들을 나타낸다. TODO 문서 내 사용된 style 과 javascript를 파일로 옮기기. -->
+<style>
+	div.hiswiki_category ul.category_path {
+		padding:0 0 0 0;
+	}
+	div.hiswiki_category ul.category_path li {
+		list-style:none;
+	}
+	div.hiswiki_category ul.category_path li.fl {
+		float:left;
+	}
+	div.hiswiki_category ul.category_path li.fr {
+		float:right;
+	}
+	.clear {
+		clear:both;
+	}
+	div.hiswiki_category div.category_list {
+		border: 1px solid gray;
+		margin: 10px 0px 20px 0px;
+	}
+	div.hiswiki_category div.category_list ul {
+		padding: 0 0 0 25px;
+	}
+	div.hiswiki_category div.category_list ul li {
+		list-style:none;
+		line-height:270%;
+		padding:0 0 0 30px;
+		background:#ffffff url(modules/hiswiki/skins/default/img/category_arrow_right.gif) no-repeat left;
+	} 
+	div.hiswiki_category div.category_list ul li:hover {
+		background-color:rgb(255, 255, 224);
+	}
+	div.hiswiki_category div.current_path {
+		margin: 0 0 15px 0;
+		line-height: 200%;
+	}
+</style>
+
+<div class="hiswiki_category" cond="$category_html">
 	<div class="current_path">
-		전체 분류 > 학교관련 > ...
+		<ul class="category_path">
+			<li class="fl">
+				<a href="{getUrl()}">전체분류</a>
+			</li>
+			<li loop="$category_path=>$val" class="fl">
+				&nbsp;&gt; <a href="{getUrl()}">{$val->text}</a>
+			</li>
+			<li class="fr"><a href="#category_list" id="see_all_category">카테고리 전체보기</a></li>
+		</ul>
+		<div class="clear"></div>
 	</div>
-	<div class="see_more_category">
-		<a href="">카테고리 전체 보기</a>
-	</div>
-	<div class="category_list">
+	<a name="category_list"></a>
+	<div class="category_list" style="display:none;">
 		{$category_html}
 	</div>
 </div>
+
+<script type="text/javascript">
+jQuery(function($) {
+	$(document).ready(function() {
+		$('#see_all_category').click(function() {
+			var $category_list = $('div.category_list');
+			if ($category_list.css('display') == 'none')
+				$category_list.slideDown();
+			else
+				$category_list.slideUp();
+			return false;
+		});
+	});
+});
+</script>

@@ -18,9 +18,11 @@
 		<include target="category_list.html" />
 	</div>
 	<div class="block main_view">
-		<div class="front_page">{$front_page}</div>
-		<div class="button_area" cond="$logged_info->is_admin=='Y'">
-			<a cond="$grant_info->manager||$grant_info->is_admin" href="{getUrl('act', 'dispHiswikiModifyFrontPage')}">페이지 수정</a>
+		<div class="front_page">
+			<div class="front_page_content">{$front_page}</div>
+			<div class="front_page_setting" cond="$grant_info->manager">
+				<a href="{getUrl('act', 'dispHiswikiModifyFrontPage', 'module_srl', $module_info->module_srl)}">페이지 설정</a>
+			</div>
 		</div>
 	</div>
 	<div class="block lists">
@@ -42,15 +44,27 @@
 				</li>
 			</ul>
 		</div>
-		<div class="list request">요청 리스트 게시판을 받아서 여기에 뿌리기. 게시판 설정하는 부분도 있어야 할듯.</div>
+		<div class="list request">
+			<ul>
+				<li loop="$requestDocList=>$val">
+					<a href="{getUrl('document_srl', $val->get('document_srl'))}">
+						{$val->getTitleText(50)}
+					</a>
+				</li>
+			</ul>
+		</div>
 		<div class="list best_tag">
 			<p>
+				<span>나중에 태그 검색기능 완성되면 태그들과 연결.</span>
 				<span loop="$popTagList=>$val" class="popLevel1"|cond="$val->tag>50">{$val->tag}</span>
 			</p>
 		</div>
 	</div>
-	<div class="write_button">
-		<a href="{getUrl('act','dispHiswikiTopicWrite')}">글쓰기</a>
+	<div class="btnArea">
+		<div class="write_button">
+			<a href="{getUrl('act','dispHiswikiTopicWrite')}">글쓰기</a>
+		</div>
+		<a href="{getUrl('act', 'dispHiswikiAdminModuleInfo')}" cond="$logged_info->is_admin=='Y'">모듈 설정</a>
 	</div>
 	
 </div>

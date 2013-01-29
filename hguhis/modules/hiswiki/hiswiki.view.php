@@ -5,7 +5,10 @@
  * @brief hiswiki 모듈의 view class
  **/
 class hiswikiView extends hiswiki {
-
+	
+	private $tmp;
+	private $current_pointer;
+	
 	/**
 	 * @brief 초기화
 	 **/
@@ -90,24 +93,9 @@ class hiswikiView extends hiswiki {
 		$requestDocList = $oDocumentModel->getDocumentList($obj);
 		Context::set('requestDocList', $requestDocList->data);
 		
-		
 		// 카테고리 리스트 불러오기
-		// 케시에 저장된 php 파일에서 데이터 구조 불러오기
-		$filename = sprintf("./files/cache/document_category/%s.php", $this->module_info->module_srl);
-		if (!file_exists($filename)) {
-			$oDocumentController = &getController('document');
-			!$oDocumentController->makeCategoryFile($module_srl);
-		}
-		@include($filename);
-
-		if ($menu->list) {
-			// HTML string을 만들어서 돌려주는 방식을 취해보기.
-			$category_html = "";
-			$category_html = $this->_makeHTMLMenu($menu->list);
-			Context::set('category_html', $category_html);
-		}
-		// 현재 문서가 위치한 카테고리 위치 불러오기 TODO
-
+		$this->getCategoryList();
+		
 		// 대문 내용(content) 던지기
 		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
 
@@ -117,10 +105,71 @@ class hiswikiView extends hiswiki {
 
 		// 권한 정보 던지기
 		Context::set('grant_info', $this->grant);
-
+		
+		// 모듈 정보 던지기
+		Context::set('module_info', $this->module_info);
 		
 		// 템플릿 파일 설정
 		$this->setTemplateFile('front_page');
+	}
+	
+	/**
+	 * @function getCategoryList
+	 * @authro 바람꽃 (wndflwr@gmail.com)
+	 * @brief 카테고리를 사용하기 전에 반드시 이 함수를 실행시키도록 한다.
+	 */
+	private function getCategoryList() {
+		// 케시에 저장된 php 파일에서 데이터 구조 불러오기
+		$filename = sprintf("./files/cache/document_category/%s.php", $this->module_info->module_srl);
+		if (!file_exists($filename)) {
+			$oDocumentController = &getController('document');
+			!$oDocumentController->makeCategoryFile($module_srl);
+		}
+		@include($filename);
+		
+		// 현재 문서가 위치한 카테고리 위치 불러오기 TODO
+		$category_now = Context::get('category_srl');
+		
+		if ($menu->list) {
+			
+			Context::set('test', $menu->list);
+			
+			// HTML string을 만들어서 돌려주는 방식을 취해보기.
+			// 전역변수 $tmp 에 현재 category_srl 입력
+			$this->tmp = $category_now;
+			$category_html = "";
+			$category_html = $this->_makeHTMLMenu($menu->list);
+			Context::set('category_html', $category_html);
+			
+			// 현재 카테고리의 위치를 추적하기
+			$category_path = array();
+			// flatten 된 category 리스트 불러오기
+			$oDocumentModel = &getModel('document');
+			$flat_list = $oDocumentModel->getCategoryList($this->module_info->module_srl);
+			if ($category_now) {
+				do {
+					$tmp = new stdClass();
+					$t = $this->current_pointer->category_srl;
+					$tmp->mid = $flat_list[$t]->mid;
+					$tmp->category_srl = $flat_list[$t]->category_srl;
+					$tmp->title = $flat_list[$t]->title;
+					$tmp->text = $flat_list[$t]->text;
+					$category_path[] = $tmp;
+					$this->current_pointer->parent_srl = $flat_list[$this->current_pointer->parent_srl]->parent_srl;
+					$this->current_pointer->category_srl = $flat_list[$this->current_pointer->category_srl]->parent_srl;
+				} while ($this->current_pointer->parent_srl);
+				
+				$tmp = new stdClass();
+				$t = $this->current_pointer->category_srl;
+				$tmp->mid = $flat_list[$t]->mid;
+				$tmp->category_srl = $flat_list[$t]->category_srl;
+				$tmp->title = $flat_list[$t]->title;
+				$tmp->text = $flat_list[$t]->text;
+				$category_path[] = $tmp;
+				
+				Context::set('category_path', array_reverse($category_path));
+			}
+		}
 	}
 
 	/**
@@ -131,7 +180,14 @@ class hiswikiView extends hiswiki {
 	private function _makeHTMLMenu($list) {
 		$str = "<ul>";
 		foreach ($list as $val) {
-			$str .= "<li>" . $val["text"] . "</li>";
+			$url = getUrl('act', 'dispHiswikiTopicList', 'category_srl', $val['category_srl']);
+			if ($val["category_srl"] == $this->tmp) {
+				$str .= "<li class=\"selected\"><a href=\"" . $url . "\">" . $val["text"] . "</a></li>";
+				$this->current_pointer->parent_srl = $val["parent_srl"];
+				$this->current_pointer->category_srl = $val["category_srl"];
+			} else {
+				$str .= "<li><a href=\"" . $url . "\">" . $val["text"] . "</a></li>";
+			}
 			if (count($val["list"])) {
 				$str .= $this->_makeHTMLMenu($val["list"]);
 			}

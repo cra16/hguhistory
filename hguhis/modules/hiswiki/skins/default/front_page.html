@@ -18,9 +18,11 @@
 		<include target="category_list.html" />
 	</div>
 	<div class="block main_view">
-		<div class="front_page">{$front_page}</div>
-		<div class="button_area" cond="$logged_info->is_admin=='Y'">
-			<a cond="$grant_info->manager||$grant_info->is_admin" href="{getUrl('act', 'dispHiswikiModifyFrontPage')}">페이지 수정</a>
+		<div class="front_page">
+			<div class="front_page_content">{$front_page}</div>
+			<div class="front_page_setting" cond="$grant_info->manager">
+				<a href="{getUrl('act', 'dispHiswikiModifyFrontPage', 'module_srl', $module_info->module_srl)}">페이지 설정</a>
+			</div>
 		</div>
 	</div>
 	<div class="block lists">

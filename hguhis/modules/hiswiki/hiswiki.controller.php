@@ -89,7 +89,28 @@ class hiswikiController extends hiswiki {
 	function _insertHiswikiDoc($args) {
 		// Register it if no given document_srl exists
 		if(!$args->document_srl) return new Object(-1, 'error');
+
+		// generate document module model object
+		$oDocumentModel = &getModel('document');
 		
+		// generate document module의 controller object
+		$oDocumentController = &getController('document');
+		
+		// check if the document is existed
+		$oDocument = $oDocumentModel->getDocument($obj->document_srl, $this->grant->manager);
+		
+		// update the document if it is existed
+		if($oDocument->isExists() && $oDocument->document_srl == $obj->document_srl) {
+			if(!$oDocument->isGranted()) return new Object(-1,'msg_not_permitted');
+			$output = $oDocumentController->updateDocument($oDocument, $obj);
+			$msg_code = 'success_updated';
+
+		// insert a new document otherwise
+		} else {
+			$output = $oDocumentController->insertDocument($obj, $bAnonymous);
+			$msg_code = 'success_registed';
+			$obj->document_srl = $output->get('document_srl');
+		}
 		//insert
 		$output = executeQuery('hiswiki.insertHiswikiDoc', $args);
 		if(!$output->toBool()) {
@@ -110,14 +131,6 @@ class hiswikiController extends hiswiki {
 		$output = $oDocumentController->getContentView($vars);
 		
 		$this->setRedirectUrl(Context::get('success_view_url'));
-	}
-	
-	/**
-	 * @author 지희
-	 * @brief 문서를 수정한다
-	 */
-	function _modifyHiswikiDoc(){
-		
 	}
 	
 	/**

@@ -40,7 +40,6 @@
             $output = executeQueryArray('document.getDocumentExtraVars', $args);
 			return $output;
 		}
-<<<<<<< HEAD
 
 		/**
 		 * Extra variables for each article will not be processed bulk select and apply the macro city
@@ -69,10 +68,6 @@
                     $extra_vars[$val->document_srl][$val->var_idx][$val->lang_code] = trim($val->value);
                 }
             }
-=======
-		
-		$this->_setSearchOption($obj, $args, $query_id, $use_division);
->>>>>>> refs/remotes/origin/hguhis
 
             $user_lang_code = Context::getLangType();
             for($i=0,$c=count($document_srls);$i<$c;$i++) {
@@ -212,7 +207,6 @@
 				}
 			}
 
-<<<<<<< HEAD
 			$this->_setSearchOption($obj, $args, $query_id, $use_division);
 
 			if ($sort_check->isExtraVars)
@@ -540,9 +534,6 @@
         }
 
 		function getDocumentExtraVarsCount($module_srl, $search_obj = NULL)
-=======
-		if(!isset($virtual_number))
->>>>>>> refs/remotes/origin/hguhis
 		{
 			// Additional search options
 			$args->module_srl = $module_srl;

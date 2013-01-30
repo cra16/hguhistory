@@ -1,0 +1,40 @@
+<!--#include("_header.html")-->
+<!--#include("search_box.html")-->
+
+<div class="outerDiv">
+	<table class="contentList">
+		<thead class="">
+			<tr class="">
+				<th class="no">No</th>
+				<th class="title">Title</th>
+				<th class="regdate">Regdate</th>
+				<th class="nick_name">Nick Name</th>
+				<th class="read_count">Read</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr loop="$document_list=>$key, $val">
+				<td class="num">{$key}</td>
+				<td class="title"><a href="{$val->getPermanentUrl()}">{$val->getTitle()}</a></td>
+				<td class="regdate">{$val->getRegdate('Y.m.d')}</td>
+				<td class="nick_name">{$val->getNickName()}</td>
+				<td class="read_count">{$val->get('readed_count')}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- page navigation -->
+	<div class="pageDiv">
+		<a href="{getUrl('page','','document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="prevEnd">처음</a>
+		<!--@while($page_no = $page_navigation->getNextPage())-->
+			<!--@if($page == $page_no)-->
+				<strong>{$page_no}</strong>
+			<!--@else-->
+				<a href="{getUrl('page',$page_no,'document_srl','','division',$division,'last_division',$last_division,'entry','')}">{$page_no}</a>
+			<!--@end-->
+		<!--@end-->
+		<a href="{getUrl('page',$page_navigation->last_page,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="nextEnd">맨끝</a>
+	</div>
+</div>
+
+<!--#include("_footer.html")-->

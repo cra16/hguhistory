@@ -201,7 +201,201 @@
 				$cache_key = $oCacheHandler->getGroupKey('documentList', $object_key);
 				$output = $oCacheHandler->get($cache_key);
 
+<<<<<<< HEAD
+		$document_count = count($document_list);
+		foreach($document_list as $key => $attribute) {
+			$document_srl = $attribute->document_srl;
+			if(!$document_srl) continue;
+
+			if(!$GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) {
+				$oDocument = null;
+				$oDocument = new documentItem();
+				$oDocument->setAttribute($attribute, false);
+				if($is_admin) $oDocument->setGrant();
+				$GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+			}
+
+			$result[$attribute->document_srl] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+		}
+
+		if($load_extra_vars) $this->setToAllDocumentExtraVars();
+
+		$output = null;
+		if(count($result)) {
+			foreach($result as $document_srl => $val) {
+				$output[$document_srl] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+			}
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Module_srl value, bringing the list of documents
+	 * @param object $obj
+	 * @param bool $except_notice
+	 * @param bool $load_extra_vars
+	 * @param array $columnList
+	 * @return Object
+	 */
+	function getDocumentList($obj, $except_notice = false, $load_extra_vars=true, $columnList = array()) {
+		$sort_check = $this->_setSortIndex($obj, $load_extra_vars);
+		$obj->sort_index = $sort_check->sort_index;
+		// cache controll
+		$oCacheHandler = &CacheHandler::getInstance('object');
+		if($oCacheHandler->isSupport()){
+			$object_key = 'object:'.$obj->module_srl.'_category_srl:'.$obj->category_srl.'_list_count:'.$obj->list_count.'_search_target:'.$obj->search_target.'_search_keyword:'.$obj->search_keyword.'_page'.$obj->page.'_sort_index:'.$obj->sort_index.'_order_type:'.$obj->order_type;
+			$cache_key = $oCacheHandler->getGroupKey('documentList', $object_key);
+			$output = $oCacheHandler->get($cache_key);
+
+			if($output)
+			{
+				return $output;
+			}
+		}
+
+		$this->_setSearchOption($obj, $args, $query_id, $use_division);
+
+		if ($sort_check->isExtraVars)
+		{
+			$output = executeQueryArray($query_id, $args);
+		}
+		else
+		{
+			// document.getDocumentList query execution
+			// Query_id if you have a group by clause getDocumentListWithinTag getDocumentListWithinComment or used again to perform the query because
+			$groupByQuery = array('document.getDocumentListWithinComment' => 1, 'document.getDocumentListWithinTag' => 1);
+			if(isset($groupByQuery[$query_id])) {
+				$group_args = clone($args);
+				$group_args->sort_index = 'documents.'.$args->sort_index;
+				$output = executeQueryArray($query_id, $group_args);
+				if(!$output->toBool()||!count($output->data)) return $output;
+
+				foreach($output->data as $key => $val) {
+					if($val->document_srl) $target_srls[] = $val->document_srl;
+				}
+
+				$page_navigation = $output->page_navigation;
+				$keys = array_keys($output->data);
+				$virtual_number = $keys[0];
+
+				$target_args->document_srls = implode(',',$target_srls);
+				$target_args->list_order = $args->sort_index;
+				$target_args->order_type = $args->order_type;
+				$target_args->list_count = $args->list_count;
+				$target_args->page = 1;
+				$output = executeQueryArray('document.getDocuments', $target_args);
+				$output->page_navigation = $page_navigation;
+				$output->total_count = $page_navigation->total_count;
+				$output->total_page = $page_navigation->total_page;
+				$output->page = $page_navigation->cur_page;
+			} else {
+				$output = executeQueryArray($query_id, $args, $columnList);
+			}
+		}
+		// Return if no result or an error occurs
+		if(!$output->toBool()||!count($output->data)) return $output;
+		$idx = 0;
+		$data = $output->data;
+		unset($output->data);
+
+		if(!isset($virtual_number))
+		{
+			$keys = array_keys($data);
+			$virtual_number = $keys[0];
+		}
+
+		if($except_notice) {
+			foreach($data as $key => $attribute) {
+				if($attribute->is_notice == 'Y') $virtual_number --;
+			}
+		}
+
+		foreach($data as $key => $attribute) {
+			if($except_notice && $attribute->is_notice == 'Y') continue;
+			$document_srl = $attribute->document_srl;
+			if(!$GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) {
+				$oDocument = null;
+				$oDocument = new documentItem();
+				$oDocument->setAttribute($attribute, false);
+				if($is_admin) $oDocument->setGrant();
+				$GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+			}
+
+			$output->data[$virtual_number] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+			$virtual_number --;
+
+		}
+
+		if($load_extra_vars) $this->setToAllDocumentExtraVars();
+
+		if(count($output->data)) {
+			foreach($output->data as $number => $document) {
+				$output->data[$number] = $GLOBALS['XE_DOCUMENT_LIST'][$document->document_srl];
+			}
+		}
+		//insert in cache
+		if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
+		return $output;
+		
+	}
+
+	/**
+	 * Module_srl value, bringing the document's gongjisa Port
+	 * @param object $obj
+	 * @param array $columnList
+	 * @return object|void
+	 */
+	function getNoticeList($obj, $columnList = array()) {
+		$args->module_srl = $obj->module_srl;
+		$args->category_srl= $obj->category_srl;
+		$output = executeQueryArray('document.getNoticeList', $args, $columnList);
+		if(!$output->toBool()||!$output->data) return;
+
+		foreach($output->data as $key => $val) {
+			$document_srl = $val->document_srl;
+			if(!$document_srl) continue;
+
+			if(!$GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) {
+				$oDocument = null;
+				$oDocument = new documentItem();
+				$oDocument->setAttribute($val, false);
+				$GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+			}
+			$result->data[$document_srl] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+		}
+		$this->setToAllDocumentExtraVars();
+
+		foreach($result->data as $document_srl => $val) {
+			$result->data[$document_srl] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Function to retrieve the key values of the extended variable document
+	 * $Form_include: writing articles whether to add the necessary extensions of the variable input form
+	 * @param int $module_srl
+	 * @return array
+	 */
+	function getExtraKeys($module_srl) {
+		if(is_null($GLOBALS['XE_EXTRA_KEYS'][$module_srl])) {
+			$oExtraVar = &ExtraVar::getInstance($module_srl);
+			$obj->module_srl = $module_srl;
+			$obj->sort_index = 'var_idx';
+			$obj->order = 'asc';
+			$output = executeQueryArray('document.getDocumentExtraKeys', $obj);
+
+			// correcting index order
+			$isFixed = FALSE;
+			if(is_array($output->data))
+			{
+				$prevIdx = 0;
+				foreach($output->data as $no => $value)
+=======
 				if($output)
+>>>>>>> refs/remotes/origin/hguhis
 				{
 					return $output;
 				}

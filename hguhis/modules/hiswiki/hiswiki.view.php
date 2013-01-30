@@ -360,6 +360,7 @@ class hiswikiView extends hiswiki {
 		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}
+>>>>>>> refs/remotes/origin/hguhis
 	/**
 	 * @function dispHiswikiTopicWrite
 	 * @brief topic 추가 설정중

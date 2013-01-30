@@ -1,7 +1,53 @@
 <!--현희-->
 <!-- 수정 by 인호 -->
 <!-- @modifier 바람꽃(wndflwr@gmail.com) -->
-<load target="css/hiswiki.css" />
+<!--//<load target="css/hiswiki.css" />-->
+
+<!--// 임시로 스타일 테그를 여기에. 나중에 통합하기-->
+<style>
+#front_page div.fl {
+	float:left;
+}
+#front_page div.clear {
+	clear:both;
+}
+#front_page div.width50p {
+	width:50%;
+}
+#front_page div.margin10px {
+	margin:0 5px 0 5px;
+}
+#front_page h3.h3 {
+	padding: 0 0 4px 10px;
+	margin: 10px 0 0 0;
+	background-color: transparent;
+	border-bottom: 2px solid #cccccc;
+}
+#front_page div.lists div.list ul {
+	height:190px;
+	overflow:hidden;
+	padding: 0;
+	list-style: none;
+	margin: 0 0 0 0;
+}
+#front_page div.lists div.list ul li {
+	height:18px;
+	overflow:hidden;
+	padding: 7px 0 5px 35px;
+	border-bottom:1px solid rgb(221, 221, 221);
+	background:url(modules/hiswiki/skins/default/img/dot_gray.png) no-repeat 18px;
+}
+#front_page div.lists div.list ul li a {
+	color:black;
+	text-decoration:none;
+}
+#front_page div.lists div.list ul li a:hover {
+	text-decoration:underline;
+}
+#front_page .fr {
+	float:right;
+}
+</style>
 
 <!--// 메시지가 있으면 여기에 출력 -->
 <div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
@@ -26,39 +72,52 @@
 		</div>
 	</div>
 	<div class="block lists">
-		<div class="list newest">
-			<ul>
-				<li loop="$newestDocList=>$val">
-					<a href="{getUrl('document_srl', $val->get('document_srl'))}" >
-						{$val->getTitleText(50)}
-					</a>
-				</li>
-			</ul>
+		<div class="fl list newest width50p">
+			<div class="margin10px">
+				<h3 class="h3">최근 등록 글</h3>
+				<ul>
+					<li loop="$newestDocList=>$val">
+						<a href="{getUrl('act', 'dispHiswikiTopicView', 'document_srl', $val->get('document_srl'))}" >{$val->getTitleText(50)}</a>
+						<span class="fr read_count">{$val->get('readed_count')}</span>
+						<div class="clear"></div>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div class="list best">
-			<ul>
-				<li loop="$popDocList=>$val">
-					<a href="{getUrl('document_srl', $val->get('document_srl'))}">
-						{$val->getTitleText(50)}
-					</a>
-				</li>
-			</ul>
+		<div class="fl list best width50p">
+			<div class="margin10px">
+				<h3 class="h3">최근 인기 글</h3>
+				<ul>
+					<li loop="$popDocList=>$val">
+						<a href="{getUrl('act', 'dispHiswikiTopicView', 'document_srl', $val->get('document_srl'))}">{$val->getTitleText(50)}</a>
+						<span class="fr read_count">{$val->get('readed_count')}</span>
+						<div class="clear"></div>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div class="list request">
-			<ul>
-				<li loop="$requestDocList=>$val">
-					<a href="{getUrl('document_srl', $val->get('document_srl'))}">
-						{$val->getTitleText(50)}
-					</a>
-				</li>
-			</ul>
+		<div class="fl list request width50p">
+			<div class="margin10px">
+				<h3 class="h3">최근 요청 글</h3>
+				<ul>
+					<li loop="$requestDocList=>$val">
+						<a href="{getUrl('document_srl', $val->get('document_srl'))}">{$val->getTitleText(50)}</a>
+						<span class="fr read_count">{$val->get('readed_count')}</span>
+						<div class="clear"></div>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div class="list best_tag">
-			<p>
-				<span>나중에 태그 검색기능 완성되면 태그들과 연결.</span>
-				<span loop="$popTagList=>$val" class="popLevel1"|cond="$val->tag>50">{$val->tag}</span>
-			</p>
+		<div class="fl list best_tag width50p">
+			<div class="margin10px">
+				<h3 class="h3">인기 태그</h3>
+				<p>
+					<span>나중에 태그 검색기능 완성되면 태그들과 연결.</span>
+					<span loop="$popTagList=>$val" class="popLevel1"|cond="$val->tag>50">{$val->tag}</span>
+				</p>
+			</div>
 		</div>
+		<div class="clear"></div>
 	</div>
 	<div class="btnArea">
 		<div class="write_button">
@@ -66,5 +125,4 @@
 		</div>
 		<a href="{getUrl('act', 'dispHiswikiAdminModuleInfo')}" cond="$logged_info->is_admin=='Y'">모듈 설정</a>
 	</div>
-	
 </div>

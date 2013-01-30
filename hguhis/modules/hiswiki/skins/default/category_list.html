@@ -37,6 +37,24 @@
 		margin: 0 0 15px 0;
 		line-height: 200%;
 	}
+	div.hiswiki_category div.current_path ul.category_path li {
+		cursor:pointer;
+	}
+	div.hiswiki_category div.current_path ul.category_path li:hover {
+		text-decoration:underline;
+	}
+	div.hiswiki_category div.current_path ul.category_path a {
+		text-decoration:none;
+		color:black;
+	}
+	div.hiswiki_category img.see_all_category {
+		height:13px;
+		width:13px;
+		background-color:#ffffff;
+		background-image: url(modules/hiswiki/skins/default/img/category_open.gif);
+		background-repeat: no-repeat;
+		background-position: center;
+	}
 </style>
 
 <div class="hiswiki_category" cond="$category_html">
@@ -48,7 +66,10 @@
 			<li loop="$category_path=>$val" class="fl">
 				&nbsp;&gt; <a href="{getUrl()}">{$val->text}</a>
 			</li>
-			<li class="fr"><a href="#category_list" id="see_all_category">카테고리 전체보기</a></li>
+			<li class="fr" id="see_all_category">
+				<a href="#category_list" class="see_all_category">카테고리 전체보기</a>
+				<img src="img/dummy.gif" class="see_all_category" />
+			</li>
 		</ul>
 		<div class="clear"></div>
 	</div>
@@ -63,10 +84,14 @@ jQuery(function($) {
 	$(document).ready(function() {
 		$('#see_all_category').click(function() {
 			var $category_list = $('div.category_list');
-			if ($category_list.css('display') == 'none')
+			if ($category_list.css('display') == 'none') {
 				$category_list.slideDown();
-			else
+				$('img.see_all_category').css('background-image', 'url(modules/hiswiki/skins/default/img/category_close.gif)');
+			}
+			else {
 				$category_list.slideUp();
+				$('img.see_all_category').css('background-image', 'url(modules/hiswiki/skins/default/img/category_open.gif)');
+			}
 			return false;
 		});
 	});

@@ -379,10 +379,25 @@ class hiswikiView extends hiswiki {
 		$option->enable_default_component = true;
 		$option->primary_key_name = 'document_srl';
 		$option->content_key_name = 'content';
-	
+		
+		$document_srl = Context::get('document_srl');
+		$oDocumentModel = &getModel('document');
+
+		// document_srl 이 있는 경우 update
+		if(isset($document_srl)) {
+			// hiswiki model에서 내용을 가져옴
+			$oHiswikiModel = &getModel('hiswiki');
+			$output->hiswiki = $oHiswikiModel->getHiswikiDoc($document_srl);
+			
+			$output->document = $oDocumentModel->getDocument($document_srl);
+		}else{
+			$output->document = $oDocumentModel->getDocument();
+		}
 		$editor = $oEditorModel->getEditor($upload_target_srl, $option);
 		Context::set('editor',$editor);
 		Context::set('module_info',$this->module_info);
+		Context::set('topic_info',$output->hiswiki);
+		Context::set('document_info',$output->document);
 	
 		// 내용 작성화면 템플릿 파일 지정 write.html
 		$this->setTemplateFile('write');
@@ -394,6 +409,7 @@ class hiswikiView extends hiswiki {
 	/**
 	 * @author 현희
 	 * @brief 토픽 뷰
+	 * @modifier 지희
 	 */
 	function dispHiswikiTopicView(){
 
@@ -405,13 +421,16 @@ class hiswikiView extends hiswiki {
 		
 		// document model을 가져옴
 		$oDocumentModel = &getModel('document');
-	
-		$document = $oDocumentModel->getDocument(Context::get('document_srl'));
-		
+		$document = $oDocumentModel->getDocument($document_srl);
+		// hiswiki model 을 가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($document_srl);
+
 		Context::set('document',$document);
+		Context::set('hiswiki_doc',$hiswiki_doc->data);
 		Context::set('module_info',$this->module_info);
 		$this->setTemplateFile('topic_view');
-		debugPrint($document,$this->module_info);
+		
 	}
 	
 	/**

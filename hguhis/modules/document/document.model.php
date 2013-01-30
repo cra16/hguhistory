@@ -289,8 +289,8 @@ class documentModel extends document {
 		}
 		//insert in cache
 		if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
-			
 		return $output;
+		
 	}
 
 	/**

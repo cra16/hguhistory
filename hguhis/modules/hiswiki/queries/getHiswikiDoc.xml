@@ -1,0 +1,12 @@
+<query id="getHiswikiDoc" action="select">
+<!--//지희: HiswikiDoc에 있던 데이터를 가져온다-->
+    <tables>
+        <table name="hiswiki_doc" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="document_srl" var="document_srl" filter="number" notnull="notnull" />
+    </conditions>
+</query>

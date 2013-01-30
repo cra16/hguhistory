@@ -5,7 +5,10 @@
  * @brief hiswiki 모듈의 view class
  **/
 class hiswikiView extends hiswiki {
-
+	
+	private $tmp;
+	private $current_pointer;
+	
 	/**
 	 * @brief 초기화
 	 **/
@@ -76,9 +79,6 @@ class hiswikiView extends hiswiki {
 		}
 		Context::set('popDocList', $popDocList);
 		
-		// 요청 리스트 불러오기
-		// TODO 연동작업 들어가기
-		
 		// 인기 태그 리스트 불러오기
 		$oTagModel = &getModel('tag');
 		$obj->list_count = 50; // 몇 개를 불러오는지 결정
@@ -86,24 +86,16 @@ class hiswikiView extends hiswiki {
 		$popTagList = $oTagModel->getTagList($obj);
 		Context::set('popTagList', $popTagList->data);
 		
+		// 요청 게시판의 리스트 불러오기
+		// 요청 게시판의 module_srl 받아오기
+		$obj->module_srl = $this->module_info->link_board;
+		$obj->sort_index = 'regdate';
+		$requestDocList = $oDocumentModel->getDocumentList($obj);
+		Context::set('requestDocList', $requestDocList->data);
 		
 		// 카테고리 리스트 불러오기
-		// 케시에 저장된 php 파일에서 데이터 구조 불러오기
-		$filename = sprintf("./files/cache/document_category/%s.php", $this->module_info->module_srl);
-		if (!file_exists($filename)) {
-			$oDocumentController = &getController('document');
-			!$oDocumentController->makeCategoryFile($module_srl);
-		}
-		@include($filename);
-
-		if ($menu->list) {
-			// HTML string을 만들어서 돌려주는 방식을 취해보기.
-			$category_html = "";
-			$category_html = $this->_makeHTMLMenu($menu->list);
-			Context::set('category_html', $category_html);
-		}
-		// 현재 문서가 위치한 카테고리 위치 불러오기 TODO
-
+		$this->getCategoryList();
+		
 		// 대문 내용(content) 던지기
 		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
 
@@ -113,10 +105,71 @@ class hiswikiView extends hiswiki {
 
 		// 권한 정보 던지기
 		Context::set('grant_info', $this->grant);
-
+		
+		// 모듈 정보 던지기
+		Context::set('module_info', $this->module_info);
 		
 		// 템플릿 파일 설정
 		$this->setTemplateFile('front_page');
+	}
+	
+	/**
+	 * @function getCategoryList
+	 * @authro 바람꽃 (wndflwr@gmail.com)
+	 * @brief 카테고리를 사용하기 전에 반드시 이 함수를 실행시키도록 한다.
+	 */
+	private function getCategoryList() {
+		// 케시에 저장된 php 파일에서 데이터 구조 불러오기
+		$filename = sprintf("./files/cache/document_category/%s.php", $this->module_info->module_srl);
+		if (!file_exists($filename)) {
+			$oDocumentController = &getController('document');
+			!$oDocumentController->makeCategoryFile($module_srl);
+		}
+		@include($filename);
+		
+		// 현재 문서가 위치한 카테고리 위치 불러오기 TODO
+		$category_now = Context::get('category_srl');
+		
+		if ($menu->list) {
+			
+			Context::set('test', $menu->list);
+			
+			// HTML string을 만들어서 돌려주는 방식을 취해보기.
+			// 전역변수 $tmp 에 현재 category_srl 입력
+			$this->tmp = $category_now;
+			$category_html = "";
+			$category_html = $this->_makeHTMLMenu($menu->list);
+			Context::set('category_html', $category_html);
+			
+			// 현재 카테고리의 위치를 추적하기
+			$category_path = array();
+			// flatten 된 category 리스트 불러오기
+			$oDocumentModel = &getModel('document');
+			$flat_list = $oDocumentModel->getCategoryList($this->module_info->module_srl);
+			if ($category_now) {
+				do {
+					$tmp = new stdClass();
+					$t = $this->current_pointer->category_srl;
+					$tmp->mid = $flat_list[$t]->mid;
+					$tmp->category_srl = $flat_list[$t]->category_srl;
+					$tmp->title = $flat_list[$t]->title;
+					$tmp->text = $flat_list[$t]->text;
+					$category_path[] = $tmp;
+					$this->current_pointer->parent_srl = $flat_list[$this->current_pointer->parent_srl]->parent_srl;
+					$this->current_pointer->category_srl = $flat_list[$this->current_pointer->category_srl]->parent_srl;
+				} while ($this->current_pointer->parent_srl);
+				
+				$tmp = new stdClass();
+				$t = $this->current_pointer->category_srl;
+				$tmp->mid = $flat_list[$t]->mid;
+				$tmp->category_srl = $flat_list[$t]->category_srl;
+				$tmp->title = $flat_list[$t]->title;
+				$tmp->text = $flat_list[$t]->text;
+				$category_path[] = $tmp;
+				
+				Context::set('category_path', array_reverse($category_path));
+			}
+		}
 	}
 
 	/**
@@ -127,7 +180,14 @@ class hiswikiView extends hiswiki {
 	private function _makeHTMLMenu($list) {
 		$str = "<ul>";
 		foreach ($list as $val) {
-			$str .= "<li>" . $val["text"] . "</li>";
+			$url = getUrl('act', 'dispHiswikiTopicList', 'category_srl', $val['category_srl']);
+			if ($val["category_srl"] == $this->tmp) {
+				$str .= "<li class=\"selected\"><a href=\"" . $url . "\">" . $val["text"] . "</a></li>";
+				$this->current_pointer->parent_srl = $val["parent_srl"];
+				$this->current_pointer->category_srl = $val["category_srl"];
+			} else {
+				$str .= "<li><a href=\"" . $url . "\">" . $val["text"] . "</a></li>";
+			}
 			if (count($val["list"])) {
 				$str .= $this->_makeHTMLMenu($val["list"]);
 			}
@@ -186,12 +246,13 @@ class hiswikiView extends hiswiki {
 	 **/
 	function dispHiswikiContentList(){
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
-//		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
+		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
 
 		// 접근권리가 있는지 확인
-//		if(!$this->grant->acess || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
 			
-/*		//카테고리 목록들을 불러온다
+		if(!$this->grant->acess || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
+			
+		//카테고리 목록들을 불러온다
 		$this->dispHiswikiCategoryList();
 			
 		// 검색창과 옵션들을 올린다
@@ -221,54 +282,13 @@ class hiswikiView extends hiswiki {
 			
 		/**
 		 * add javascript filters
-		 **
+		 **/
 		Context::addJsFilter($this->module_path.'tpl/filter', 'search.xml');
 			
 		$oSecurity = new Security();
 		$oSecurity->encodeHTML('search_option.');
 			
 		// setup the tmeplate file
-		$this->setTemplateFile('list');*/
-		
-		// 권한 확인
-		if(!$this->grant->access && !$this->grant->view) {
-			Context::set('document_list', array());
-			Context::set('total_count', 0);
-			Context::set('total_page', 1);
-			Context::set('page', 1);
-			Context::set('page_navigation', new PageHandler(0,0,1,10));
-			return new Object(-1, 'msg_not_permitted');
-		}
-		
-		// document 모델 불러오기
-		$oDocumentModel = &getModel('document');
-		
-		// 인수 구성
-		$args->module_srl = $this->module_info->module_srl;
-		$args->category_srl = Context::get('category_srl');
-		$args->list_count = 3;//Context::get('list_count');
-		$args->search_target = Context::get('search_target');
-		$args->search_keyword = Context::get('search_keyword');
-		$args->page = Context::get('page');
-		$args->sort_index = Context::get('sort_index');
-		$args->order_type = Context::get('order_type');
-
-//debugPrint($args);
-		
-		
-		// 결과값 전달
-		$output = $oDocumentModel->getDocumentList($args);
-		
-		// 결과값을 html 파일로 넘겨준다
-		Context::set('document_list', $output->data);
-		Context::set('total_count', $output->page_navigation->total_count);
-		Context::set('total_page', $output->page_navigation->total_page);
-		Context::set('page', $output->page_navigation->page);
-		Context::set('page_navigation', $output->page_navigation);
-		
-//debugPrint($output);
-	
-		// 템플릿 설정
 		$this->setTemplateFile('list');
 	}
 
@@ -278,28 +298,28 @@ class hiswikiView extends hiswiki {
 	 * @brief 정보를 입력받아 출력하는 페이지
 	 **/
 	function dispHiswikiSearchResult(){
-
+		
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		//if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-
+		
 		// check the grant
 		if(!$this->grant->access && !$this->grant->view) {
-			Context::set('document_list', array());
-			Context::set('total_count', 0);
-			Context::set('total_page', 1);
-			Context::set('page', 1);
-			Context::set('page_navigation', new PageHandler(0,0,1,10));
-			return new Object(-1, 'msg_not_permitted');
-		}
-
-		$oDocumentModel = &getModel('document');
-
+		Context::set('document_list', array());
+		Context::set('total_count', 0);
+					Context::set('total_page', 1);
+					Context::set('page', 1);
+					Context::set('page_navigation', new PageHandler(0,0,1,10));
+		return new Object(-1, 'msg_not_permitted');
+				}
+		
+				$oDocumentModel = &getModel('document');
+		
 		// setup module_srl/page number/ list number/ page count
 		$args->module_srl = $this->module_info->module_srl;
 		$args->page = Context::get('page');
 		$args->list_count = 20;
 		$args->page_count = Context::get('page_count');
-
+		
 		// get the keyword
 		$args->search_keyword = Context::get('search_keyword');
 		$args->tag = Context::get('search_keyword');
@@ -313,38 +333,34 @@ class hiswikiView extends hiswiki {
 		
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
-
+		
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_title', $output->data);
-
+		
 		// 2. get the keyword by content
 		$args->search_target = 'content';
 		
 		// 넘겨준 파라메터로 검색 결과 받아오기
 		$output = $oDocumentModel->getDocumentList($args);
-
+		
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
 		Context::set('search_results_content', $output->data);
 		
 		// 3. get the keyword by tags
 		$args->search_target = 'tags';
 		
-		$oTagModel = &getModel('tag');
+		$oDocumentModel = &getModel('tag');
 		
 		// 넘겨준 파라메터로 검색 결과 받아오기
-		$output = $oTagModel->getDocumentSrlByTag($args);
-		foreach ($output->data as $key => $val) {
-			$tagRes[$key] = $oDocumentModel->getDocument($val->document_srl);
-		}
-		
+		$output = $oDocumentModel->getDocumentSrlByTag($args);
 		
 		// 제목으로 검색한 결과 html 파일로 넘겨주기
-		Context::set('search_results_tags', $tagRes);
-
+		Context::set('search_results_tags', $output->data);
+		
 		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}
-	
+>>>>>>> refs/remotes/origin/hguhis
 	/**
 	 * @function dispHiswikiTopicWrite
 	 * @brief topic 추가 설정중
@@ -364,10 +380,25 @@ class hiswikiView extends hiswiki {
 		$option->enable_default_component = true;
 		$option->primary_key_name = 'document_srl';
 		$option->content_key_name = 'content';
-	
+		
+		$document_srl = Context::get('document_srl');
+		$oDocumentModel = &getModel('document');
+
+		// document_srl 이 있는 경우 update
+		if(isset($document_srl)) {
+			// hiswiki model에서 내용을 가져옴
+			$oHiswikiModel = &getModel('hiswiki');
+			$output->hiswiki = $oHiswikiModel->getHiswikiDoc($document_srl);
+			
+			$output->document = $oDocumentModel->getDocument($document_srl);
+		}else{
+			$output->document = $oDocumentModel->getDocument();
+		}
 		$editor = $oEditorModel->getEditor($upload_target_srl, $option);
 		Context::set('editor',$editor);
 		Context::set('module_info',$this->module_info);
+		Context::set('topic_info',$output->hiswiki);
+		Context::set('document_info',$output->document);
 	
 		// 내용 작성화면 템플릿 파일 지정 write.html
 		$this->setTemplateFile('write');
@@ -379,19 +410,28 @@ class hiswikiView extends hiswiki {
 	/**
 	 * @author 현희
 	 * @brief 토픽 뷰
+	 * @modifier 지희
 	 */
 	function dispHiswikiTopicView(){
-	
-		$oDocumentModel = &getModel('document');
-	
-		$document = $oDocumentModel->getDocument(Context::get('document_srl'));
-		//
-		Context::set('document',$document);
-		Context::set('module_info',$this->module_info);
+
+		$document_srl = Context::get('document_srl');
+		if(!$document_srl){
+			return new Object(-1, 'msg_invalid_request');
+		}
+		$page = Context::get('page');
 		
-		$this->setTemplatePath($this->module_path.'tpl');
-		$this->setTemplateFile('../skins/default/topic_view');
-	
+		// document model을 가져옴
+		$oDocumentModel = &getModel('document');
+		$document = $oDocumentModel->getDocument($document_srl);
+		// hiswiki model 을 가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($document_srl);
+
+		Context::set('document',$document);
+		Context::set('hiswiki_doc',$hiswiki_doc->data);
+		Context::set('module_info',$this->module_info);
+		$this->setTemplateFile('topic_view');
+		
 	}
 	
 	/**

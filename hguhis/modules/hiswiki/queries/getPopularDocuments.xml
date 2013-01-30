@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--// 장호. 최근 글들 중 read_count가 높은 녀석들을 불러온다. -->
 <query id="getPopularDocuments" action="select">
     <tables>
         <table name="documents" />

@@ -67,16 +67,25 @@ class hiswikiController extends hiswiki {
 		//if(!$this->grant->write_document) return new argsect(-1, 'msg_not_permitted');
 		//$logged_info = Context::get('logged_info');
 
-		$vars = Context::gets('content', 'title','module_srl','start_date','end_date','tags');
+		$vars = Context::gets('content', 'title','module_srl','start_date','end_date','tags','document_srl','version');
 		$oDocumentController = &getController('document');
-		$output = $oDocumentController->insertDocument($vars);
+		$oDocumentModel = &getModel('document');
+		$oDocument = $oDocumentModel->getDocument($vars->document_srl);
+		
+		if($oDocument->isExists()){
+			$output = $oDocumentController->updateDocument($oDocument,$vars);
+			$output = $this->_updateHiswikiDoc($vars);
+		}else{
+			$output = $oDocumentController->insertDocument($vars);
+			$output = $this->_insertHiswikiDoc($vars);
+		}
 		
 		if (!$output->toBool()) {
 			$this->setRedirectUrl(Context::get('error_return_url'));
 			return;
 		}
-		$vars->docment_srl = $output->get('document_srl');
 		$output = $this->_insertHiswikiDoc($vars);
+		$vars->docment_srl = $output->get('document_srl');
 		if ($output->toBool()) {
 			$this->setRedirectUrl(Context::get('success_return_url'));
 		}
@@ -89,7 +98,40 @@ class hiswikiController extends hiswiki {
 	function _insertHiswikiDoc($args) {
 		// Register it if no given document_srl exists
 		if(!$args->document_srl) return new Object(-1, 'error');
+		
+		// generate document module model object
+		$oDocumentModel = &getModel('document');
+		
+		// generate document module의 controller object
+		$oDocumentController = &getController('document');
+		
+		// check if the document is existed
+		$oDocument = $oDocumentModel->getDocument($obj->document_srl, $this->grant->manager);
 
+		//insert
+		$output = executeQuery('hiswiki.insertHiswikiDoc', $args);
+		if(!$output->toBool()) {
+			return $output;
+		}
+		return $output;
+	}
+	
+	/**
+	 * @author 지희
+	 * @param unknown_type $args
+	 * @brief 문서 수정
+	 */
+	function _updateHiswikiDoc($args){
+		// Register it if no given document_srl exists
+		if(!$args->document_srl) return new Object(-1, 'error');
+		
+		//hiswiki모델가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc(Context::get('document_srl'));
+		$hiswiki_doc->data[0]->version += 1;
+		$args->version = $hiswiki_doc->data[0]->version;
+		debugPrint($args);
+		
 		// generate document module model object
 		$oDocumentModel = &getModel('document');
 		
@@ -99,26 +141,13 @@ class hiswikiController extends hiswiki {
 		// check if the document is existed
 		$oDocument = $oDocumentModel->getDocument($obj->document_srl, $this->grant->manager);
 		
-		// update the document if it is existed
-		if($oDocument->isExists() && $oDocument->document_srl == $obj->document_srl) {
-			if(!$oDocument->isGranted()) return new Object(-1,'msg_not_permitted');
-			$output = $oDocumentController->updateDocument($oDocument, $obj);
-			$msg_code = 'success_updated';
-
-		// insert a new document otherwise
-		} else {
-			$output = $oDocumentController->insertDocument($obj, $bAnonymous);
-			$msg_code = 'success_registed';
-			$obj->document_srl = $output->get('document_srl');
-		}
 		//insert
-		$output = executeQuery('hiswiki.insertHiswikiDoc', $args);
+		$output = executeQuery('hiswiki.updateHiswikiDoc', $args);
 		if(!$output->toBool()) {
 			return $output;
 		}
-		return $output;
+		return $output;		
 	}
-	
 	/**
 	 *@author 현희
 	 *@ 토빅 뷰 컨트롤러

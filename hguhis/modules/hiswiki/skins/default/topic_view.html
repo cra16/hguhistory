@@ -49,9 +49,10 @@ div.clear {
 		<!--@if(count($tag_list))-->
 		<div class="tag">
 			<ul>
+				<li>태그:
 				<!--@for($i=0;$i<count($tag_list);$i++)-->
 				{@ $tag = $tag_list[$i]; }
-				<li>태그:<a
+				<a
 					href="{getUrl('search_target','tag','search_keyword',$tag,'document_srl','')}"
 					rel="tag">{htmlspecialchars($tag)}</a><!--@if($i<count($tag_list)-1)-->,&nbsp;<!--@end--> </li>
 				<!--@end-->

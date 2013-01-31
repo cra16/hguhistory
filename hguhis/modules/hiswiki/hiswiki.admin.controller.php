@@ -45,8 +45,8 @@ class hiswikiAdminController extends hiswiki {
 		// 먼저 삭제하고
 		$oDocumentController->deleteDocumentExtraKeys($output->get('module_srl'));
 		// 삽입
-		$oDocumentController->insertDocumentExtraKey($output->get('module_srl'), 1, 'date', 'N', 'Y', '', '', 'start_date');
-		$oDocumentController->insertDocumentExtraKey($output->get('module_srl'), 2, 'date', 'N', 'Y', '', '', 'end_date');
+		$oDocumentController->insertDocumentExtraKey($output->get('module_srl'), 1, '시작날짜', 'date', 'N', 'Y', '', '', 'start_date');
+		$oDocumentController->insertDocumentExtraKey($output->get('module_srl'), 2, '끝날짜', 'date', 'N', 'Y', '', '', 'end_date');
 
 		// 오류가 있으면 리턴
 		if(!$output->toBool()) return $output;

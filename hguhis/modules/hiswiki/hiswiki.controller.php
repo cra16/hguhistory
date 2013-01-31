@@ -84,8 +84,6 @@ class hiswikiController extends hiswiki {
 			$this->setRedirectUrl(Context::get('error_return_url'));
 			return;
 		}
-		$output = $this->_insertHiswikiDoc($vars);
-		$vars->docment_srl = $output->get('document_srl');
 		if ($output->toBool()) {
 			$this->setRedirectUrl(Context::get('success_return_url'));
 		}
@@ -115,7 +113,12 @@ class hiswikiController extends hiswiki {
 		}
 		return $output;
 	}
-	
+	/**
+	 * @author 지희
+	 * @param $args
+	 * @brief 헌문서는 남겨둔다
+	 */
+		
 	/**
 	 * @author 지희
 	 * @param unknown_type $args
@@ -130,7 +133,6 @@ class hiswikiController extends hiswiki {
 		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc(Context::get('document_srl'));
 		$hiswiki_doc->data[0]->version += 1;
 		$args->version = $hiswiki_doc->data[0]->version;
-		debugPrint($args);
 		
 		// generate document module model object
 		$oDocumentModel = &getModel('document');

@@ -2,12 +2,13 @@
 <style>
 div {
 align:left;"
-padding: 4px;
+padding: 5px;
 }
 div.document_view li {
 	list-style:none;
 	position:relative;
-	float:left;	
+	float:left;
+	padding-left:4px;	
 }
 div.clear {
 	clear:both;
@@ -25,31 +26,37 @@ div.clear {
 		<!--// 카테고리 리스트를 띄운다. -->
 		<include target="category_list.html" />
 	</div>
+	<hr style="color:black" height="1px">
+	</br>
 	<div class="document_view">
 		<!--올라온 글의 내용을 본다-->
 		<div>
-			<span>Start Date:</span> <span>{zdate($hiswiki_doc[0]->start_date."000000",'Y-m-d')}</span> 
+			<div class="title"><b>{$document->getTitle()}</b></div>
+			<hr style="color:black" height="1px">
+		<div class="s-e_date">
+			<span><b>Start Date:</b></span> <span>{zdate($hiswiki_doc[0]->start_date."000000",'Y-m-d')}</span> 
 			<span style="border: 0px">&nbsp;&nbsp;&nbsp;</span> 
-			<span>End Date:</span> 
+			<span><b>End Date:</b></span> 
 			<span>{zdate($hiswiki_doc[0]->end_date."000000",'Y-m-d')}</span>
-		</div>
-		<div>
-			<div class="content">Title: {$document->getTitle()}</div>
+		</div>			
 			<div align="right">
 				<span>글쓴이: {$document->getNickName()}</span> <span
 					style="border: 0px">&nbsp;&nbsp;&nbsp;</span> <span>등록일:
 					{$document->getRegdate()}</span>
 			</div>
-			<div class="content">{$document->getContent()}</div>
+
+			<div class="content" style="padding-left:10px" align="left">{$document->getContent()}</div>
 		</div>
 		</br>
-		</br>
+
+		<hr style="color:black" height="1px">
 
 		{@ $tag_list = $document->get('tag_list') }
 		<!--@if(count($tag_list))-->
 		<div class="tag">
 			<ul>
-				<li>태그:
+				<li>
+				<img src="./img/iconTag.gif" alt="{$lang->tag}" width="17" height="10" class="tagIcon" />
 				<!--@for($i=0;$i<count($tag_list);$i++)-->
 				{@ $tag = $tag_list[$i]; }
 				<a

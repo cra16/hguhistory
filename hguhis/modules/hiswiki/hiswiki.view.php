@@ -359,8 +359,7 @@ class hiswikiView extends hiswiki {
 		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}
-	
-	
+
 	/**
 	 * @function dispHiswikiTopicWrite
 	 * @brief topic 추가 설정중
@@ -389,17 +388,30 @@ class hiswikiView extends hiswiki {
 			// hiswiki model에서 내용을 가져옴
 			$oHiswikiModel = &getModel('hiswiki');
 			$output->hiswiki = $oHiswikiModel->getHiswikiDoc($document_srl);
-			
 			$output->document = $oDocumentModel->getDocument($document_srl);
 		}else{
 			$output->document = $oDocumentModel->getDocument();
 		}
+		$normal_category_list = $oDocumentModel->getCategoryList($this->module_srl);
+		if(count($normal_category_list)) {
+			foreach($normal_category_list as $category_srl => $category) {
+				$is_granted = true;
+				if($category->group_srls) {
+					$category_group_srls = explode(',',$category->group_srls);
+					$is_granted = false;
+					if(count(array_intersect($group_srls, $category_group_srls))) $is_granted = true;
+		
+				}
+				if($is_granted) $category_list[$category_srl] = $category;
+			}
+		}
 		$editor = $oEditorModel->getEditor($upload_target_srl, $option);
 		Context::set('editor',$editor);
+		Context::set('category_list', $category_list);
 		Context::set('module_info',$this->module_info);
 		Context::set('topic_info',$output->hiswiki);
 		Context::set('document_info',$output->document);
-	
+		//Context::set('category_list',)
 		// 내용 작성화면 템플릿 파일 지정 write.html
 		$this->setTemplateFile('write');
 	
@@ -430,6 +442,8 @@ class hiswikiView extends hiswiki {
 		Context::set('document',$document);
 		Context::set('hiswiki_doc',$hiswiki_doc->data);
 		Context::set('module_info',$this->module_info);
+		// 카테고리 리스트 불러오기
+		$this->getCategoryList();
 		$this->setTemplateFile('topic_view');
 		
 	}

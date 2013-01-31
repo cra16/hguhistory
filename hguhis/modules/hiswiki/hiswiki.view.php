@@ -61,7 +61,7 @@ class hiswikiView extends hiswiki {
 		$obj->page = 1;
 		$obj->list_count = 10; // 최신글 몇 개를 불러올 것인가? 기본 10개
 		$obj->page_count = 20;
-		$obj->order_type = 'asc';
+		$obj->order_type = 'desc';
 		
 		// 이 모듈 관리자가 설정한 대문(document 형식으로 저장되어있음) 불러오기
 
@@ -69,7 +69,6 @@ class hiswikiView extends hiswiki {
 		$obj->sort_index = 'regdate';
 		$newestDocList = $oDocumentModel->getDocumentList($obj, false, false);
 		Context::set('newestDocList', $newestDocList->data);
-		
 		
 		// 인기글 리스트 불러오기 (조회수)
 		$obj->regdate = date('YmdHis', time() - 2678400);
@@ -360,7 +359,8 @@ class hiswikiView extends hiswiki {
 		// 템플릿 파일 설정
 		$this->setTemplateFile('search_result');
 	}
->>>>>>> refs/remotes/origin/hguhis
+	
+	
 	/**
 	 * @function dispHiswikiTopicWrite
 	 * @brief topic 추가 설정중

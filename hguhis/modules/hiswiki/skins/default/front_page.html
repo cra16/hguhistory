@@ -2,6 +2,7 @@
 <!-- 수정 by 인호 -->
 <!-- @modifier 바람꽃(wndflwr@gmail.com) -->
 <!--//<load target="css/hiswiki.css" />-->
+<load target="js/MyMethodCall.js" />
 
 <!--// 임시로 스타일 테그를 여기에. 나중에 통합하기-->
 <style>
@@ -44,6 +45,14 @@
 #front_page div.lists div.list ul li a:hover {
 	text-decoration:underline;
 }
+#front_page div.front_page_content {
+	margin:10px 0 10px 0;
+}
+#front_page div.front_page_setting {
+	margin:0 0 25px 0;
+	text-align:right;
+}
+
 #front_page .fr {
 	float:right;
 }
@@ -67,7 +76,7 @@
 		<div class="front_page">
 			<div class="front_page_content">{$front_page}</div>
 			<div class="front_page_setting" cond="$grant_info->manager">
-				<a href="{getUrl('act', 'dispHiswikiModifyFrontPage', 'module_srl', $module_info->module_srl)}">페이지 설정</a>
+				<a href="{getUrl('act', 'dispHiswikiModifyFrontPage', 'module_srl', $module_info->module_srl)}" class="btn">페이지 설정</a>
 			</div>
 		</div>
 	</div>
@@ -98,7 +107,7 @@
 		</div>
 		<div class="fl list request width50p">
 			<div class="margin10px">
-				<h3 class="h3">최근 요청 글</h3>
+				<h3 class="h3">최근 등록 및 수정 요청 글</h3>
 				<ul>
 					<li loop="$requestDocList=>$val">
 						<a href="{getUrl('document_srl', $val->get('document_srl'))}">{$val->getTitleText(50)}</a>
@@ -120,9 +129,7 @@
 		<div class="clear"></div>
 	</div>
 	<div class="btnArea">
-		<div class="write_button">
-			<a href="{getUrl('act','dispHiswikiTopicWrite')}">글쓰기</a>
-		</div>
-		<a href="{getUrl('act', 'dispHiswikiAdminModuleInfo')}" cond="$logged_info->is_admin=='Y'">모듈 설정</a>
+		<a href="{getUrl('act','dispHiswikiTopicWrite')}" cond="$grant_info->write" class="btn fr">글쓰기</a>
+		<a href="{getUrl('act', 'dispHiswikiAdminModuleInfo')}" cond="$grant_info->manager" class="btn fr">모듈 설정</a>
 	</div>
 </div>

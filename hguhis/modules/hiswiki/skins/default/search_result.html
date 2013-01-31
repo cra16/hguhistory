@@ -1,5 +1,6 @@
-<!--#include("_header.html")-->
-<!--#include("search_box.html")-->
+<include target="_header.html" />
+<include target="search_box.html" />
+<include target="category_list.html" />
 <style type="text/css">
 .ResultDiv {
 	border: red solid 1px;
@@ -14,13 +15,13 @@
 				<div class="content">{$val->getSummary()}</div>
 			</a>
 			<div>
-				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> / 작성자 <span
-					class="regdate">{$val->getNickName()}</span> / 조회수 <span
-					class="regdate">{$val->get('readed_count')}</span> / 태그 
-					<span class="regdate">{$val->get('tags')}</span>
+				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> / 작성자 
+				<span class="regdate">{$val->getNickName()}</span> / 조회수 
+				<span class="regdate">{$val->get('readed_count')}</span> / 태그 
+				<span class="regdate">{$val->get('tags')}</span>
 			</div>
 		</div>
-		<span class="moreSearchResult"><a href="">더보기...</a></span>
+		<span class="moreSearchResult"><a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}">더보기...</a></span>
 	</div>
 	<div class="ResultDiv">
 		<span class="ResultHeading">내용 검색 결과</span>
@@ -30,12 +31,13 @@
 				<div class="content">{$val->getSummary()}</div>
 			</a>
 			<div>
-				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> / 작성자 <span
-					class="regdate">{$val->getNickName()}</span> / 조회수 <span
-					class="regdate">{$val->get('readed_count')}</span>
+				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> / 작성자 
+				<span class="regdate">{$val->getNickName()}</span> / 조회수 
+				<span class="regdate">{$val->get('readed_count')}</span> / 태그 
+				<span class="regdate">{$val->get('tags')}</span>
 			</div>
 		</div>
-		<span class="moreSearchResult"><a href="">더보기...</a></span>
+		<span class="moreSearchResult"><a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'content')}">더보기...</a></span>
 	</div>
 	<div class="ResultDiv">
 		<div class="ResultHeading">태그 검색 결과</div>
@@ -45,14 +47,15 @@
 				<div class="content">{$val->getSummary()}</div>
 			</a>
 			<div>
-				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> / 작성자 <span
-					class="regdate">{$val->getNickName()}</span> / 조회수 <span
-					class="regdate">{$val->get('readed_count')}</span><span
-					class="regdate">{$val->get('readed_count')}</span> / 태그 
+				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> / 작성자 
+				<span
+					class="regdate">{$val->getNickName()}</span> / 조회수 
+					<span class="regdate">{$val->get('readed_count')}</span>
+					<span class="regdate">{$val->get('readed_count')}</span> / 태그 
 					<span class="regdate">{$val->get('tags')}</span>
 			</div>
 		</div>
-		<span class="moreSearchResult"><a href="">더보기...</a></span>
+		<span class="moreSearchResult"><a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'tag')}">더보기...</a></span>
 	</div>
 </div>
-<!--#include("_footer.html")-->
+<include target="_footer.html" />

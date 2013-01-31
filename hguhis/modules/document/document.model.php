@@ -201,10 +201,8 @@
 				$cache_key = $oCacheHandler->getGroupKey('documentList', $object_key);
 				$output = $oCacheHandler->get($cache_key);
 
-<<<<<<< HEAD
-=======
+
 				if($output)
->>>>>>> refs/remotes/origin/hguhis
 				{
 					return $output;
 				}

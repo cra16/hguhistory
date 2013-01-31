@@ -67,7 +67,7 @@ class hiswikiController extends hiswiki {
 		//if(!$this->grant->write_document) return new argsect(-1, 'msg_not_permitted');
 		//$logged_info = Context::get('logged_info');
 
-		$vars = Context::gets('content', 'title','module_srl','start_date','end_date','tags','document_srl','version');
+		$vars = Context::gets('category_srl','content', 'title','module_srl','start_date','end_date','tags','document_srl','version');
 		$oDocumentController = &getController('document');
 		$oDocumentModel = &getModel('document');
 		$oDocument = $oDocumentModel->getDocument($vars->document_srl);

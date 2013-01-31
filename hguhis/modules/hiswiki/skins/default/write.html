@@ -9,26 +9,32 @@
 	<input type="hidden" name="success_return_url" value="{getUrl('act','dispHiswikiForntPage')}" />
 	<input type="hidden" name="error_return_url" value="{getUrl('act','procHiswikiTopicWrite')}" /> 
 	<div class="box category">
-	카테고리 <select name="category_srl" class="category">
-		<option value="">카테고리 선택</option>
-		<!--@foreach($category_list as $val)-->
-		<option value="{$val->category_srl}" selected="selected">
-			{str_repeat("&nbsp;&nbsp;",$val->depth)} {$val->title} ({$val->document_count})
-		</option>
-		<!--@endforeach-->
-	</select>
+		<span>카테고리</span>
+		<select name="category_srl" class="category">
+			<option value="0">카테고리 선택</option>
+			<option loop="$category_list=>$val"
+				value="{$val->category_srl}"
+				selected="selected"|cond="$document_info->get('category_srl')==$val->category_srl">
+				{str_repeat("&nbsp;&nbsp;",$val->depth)} {$val->title} ({$val->document_count})			
+			</option>
+		</select>
 	</div>
-	<div class="title"> 제목 <input type="text" name="title" size="100%" value="{$topic_info->data[0]->topic}"/></div>
+	<div class="title">
+		<span>제목 </span>
+		<input type="text" name="title" size="100%" value="{$topic_info->data[0]->topic}"/>
+	</div>
 	<div class="date">
 		<div class="box start_date">
-			시작연도 
-			<input type="hidden" name="start_date" class="start_date" value="{zdate($topic_info->data[0]->start_date."000000",'Y-m-d')}" />
-			<input type="text" class="cal startDate" value="{zdate($topic_info->data[0]->start_date."000000",'Y-m-d')}" />
+			<span>시작연도</span> 
+			<input type="hidden" name="start_date" class="start_date" value="{zdate($topic_info->data[0]->start_date.'000000','Y-m-d')}"|cond="$topic_info->data[0]->start_date" />
+			<input type="text" class="cal startDate" value="{zdate($topic_info->data[0]->start_date.'000000','Y-m-d')}"|cond="$topic_info->data[0]->start_date"/>
+			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</div>
 		<div class="box end_date">
-			종료연도 
-			<input type="hidden" name="end_date" class="end_date" value="{zdate($topic_info->data[0]->end_date."000000",'Y-m-d')}" />
-			<input type="text" class="cal endDate"  value="{zdate($topic_info->data[0]->end_date."000000",'Y-m-d')}" />
+			<span>종료연도</span> 
+			<input type="hidden" name="end_date" class="end_date" value="{zdate($topic_info->data[0]->end_date.'000000','Y-m-d')}"|cond="$topic_info->data[0]->end_date" />
+			<input type="text" class="cal endDate"  value="{zdate($topic_info->data[0]->end_date.'000000','Y-m-d')}"|cond="$topic_info->data[0]->end_date" />
+			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</div>
 		<script type="text/javascript">
 			(function($) {
@@ -37,7 +43,7 @@
 						changeMonth : true,
 						changeYear : true,
 						gotoCurrent : false,
-						yearRange : '1995:+5',
+						yearRange : '1900:+5',
 						dateFormat : 'yy-mm-dd',
 						onSelect : function() {
 
@@ -59,3 +65,10 @@
 		<input type="submit" />
 	</div>
 </form>
+<script type="text/javascript">
+	jQuery(function($){
+		$(".del_date").click(function(){
+			$(this).siblings("input").val("");
+		});
+	});
+</script>

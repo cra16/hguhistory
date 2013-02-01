@@ -45,6 +45,8 @@
         <action name="_insertHiswikiDoc" type="controller" standalone="true" />
         <action name="_updateHiswikiDoc" type="controller" standalone="true" />
         <action name="_deleteHiswikiDoc" type="controller" standalone="true" />
+        
+        <action name="getHiswikiSearchKeyword" type="model" standalone="true" />
     </actions>
 	<menus>
 	</menus>

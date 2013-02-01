@@ -38,7 +38,32 @@ class hiswikiModel extends hiswiki {
 		$output = executeQueryArray('hiswiki.getHiswikiDoc',$args);
 		return $output;
 	}
-
-
+	
+	/**
+	 * @function getHiswikiSearchKeyword
+	 * @author 바람꽃(wndflwr@gmail.com)
+	 * @param $search_keyword
+	 * @brief 검색어 완성기능에 사용하는 기능. 검색어 입력 시 태그와 topic 에서 비슷한 주제를
+	 * 포함하는 녀석들을 찾아서 결과로 뿌려준다.
+	 * hiswiki_doc 의 topic column 을 위주로 검색한다.
+	 * 여력이 되면 태그도 검색한다.
+	 */
+	function getHiswikiSearchKeyword() {
+		$search_keyword = Context::get('search_keyword');
+		$result = $this->_getSearchKeyword($search_keyword);
+		$this->add('result', $result);
+	}
+	/**
+	 * @function _getSearchKeyword
+	 * @author 바람꽃 (wndflwr@gmail.com)
+	 * @param string $search_keyword
+	 * @return array
+	 * @brief $this->getHiswikiSearchKeyword() 의 help function
+	 */
+	function _getSearchKeyword($search_keyword) {
+		$args->topic = "%".$search_keyword."%";
+		$output = executeQueryArray('hiswiki.getSearchHiswikiDoc', $args);
+		return $output->data;
+	}
 }
 ?>

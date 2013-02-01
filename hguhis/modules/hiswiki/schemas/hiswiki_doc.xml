@@ -14,12 +14,6 @@
     <!--// author_srl: 누가 이 문서를 작성했는가... member 테이블의 member_srl과 연결시킨다. -->
     <column name="author_srl" type="number" size="11" notnull="notnull" index="idx_author_srl" />
     
-    <!--// start_date: 이 사건이 언제 시작했는지 기록한다. -->
-    <column name="start_date" type="date" index="idx_start_date" />
-    
-    <!--// end_date: 이 사건의 종료일이 언제인지 기록한다. 사건의 시작일과 종료일은 없어도 된다. -->
-    <column name="end_date" type="date" index="idx_end_date" />
-    
     <!--// doc_status: 이 문서의 상태. ??? -->
     <column name="doc_status" type="varchar" size="1" />
     

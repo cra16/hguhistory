@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query id="getSearchHiswikiDoc" action="select">
+    <tables>
+        <table name="hiswiki_doc" />
+    </tables>
+    <columns>
+        <column name="topic" />
+    </columns>
+    <conditions>
+		<condition operation="like" column="topic" var="topic" />
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="topic" order="desc" />
+        <list_count var="list_count" default="10" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

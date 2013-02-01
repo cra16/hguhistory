@@ -9,8 +9,13 @@
 	<input type="hidden" name="success_return_url" value="{getUrl('act','dispHiswikiForntPage')}" />
 	<input type="hidden" name="error_return_url" value="{getUrl('act','procHiswikiTopicWrite')}" /> 
 	<div class="box category">
-	카테고리 <select>
+	카테고리 <select name="category_srl" class="category">
 		<option value="">카테고리 선택</option>
+		<!--@foreach($category_list as $val)-->
+		<option value="{$val->category_srl}" selected="selected">
+			{str_repeat("&nbsp;&nbsp;",$val->depth)} {$val->title} ({$val->document_count})
+		</option>
+		<!--@endforeach-->
 	</select>
 	</div>
 	<div class="title"> 제목 <input type="text" name="title" size="100%" value="{$topic_info->data[0]->topic}"/></div>

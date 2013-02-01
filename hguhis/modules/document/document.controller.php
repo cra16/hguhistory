@@ -262,6 +262,7 @@ class documentController extends document {
 		}
 		// Insert extra variables if the document successfully inserted.
 		$extra_keys = $oDocumentModel->getExtraKeys($obj->module_srl);
+		
 		if(count($extra_keys)) {
 			foreach($extra_keys as $idx => $extra_item) {
 				$value = '';

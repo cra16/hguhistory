@@ -19,7 +19,7 @@
 	}
 	
 	/*버튼 부분. 이 부분 나중에 적용시키기.*/
-	#hiswiki_searchbox .btn {
+	.btn {
 		border: 1px solid #919191;
 		cursor: pointer;
 		box-shadow: inset 0 0 1px #fff;
@@ -34,6 +34,10 @@
 		text-decoration:none;
 		background: #eee -webkit-gradient(linear,0% 0%,0% 100%,from(#fff),to(#ddd));
 	}
+	.hiswiki_qsbox{
+		background-color:white;
+		border:1px solid black;
+	}
 </style>
 
 <div id="hiswiki_searchbox" class="search_box">
@@ -42,8 +46,67 @@
 		
 		<a href="#" class="fr btn" >상세 검색</a>
 		<input type="submit" value="검색" class="fr btn" />
-		<input type="text" name="search_keyword" class="fr" value="{$search_keyword}" />
-		
+		<input type="text" name="search_keyword" class="fr" id="hiswiki_search_keyword" value="{$search_keyword}" />
 		<div class="clear"></div>
 	</form>
 </div>
+
+<div class="dummy" style="display:none;">
+	<div class="hiswiki_qsbox" id="hiswiki_qsbox" style="position:absolute;">
+		<ul>
+			<li>검색 결과</li>
+		</ul>
+		<div class="hiswiki_close_window">결과 창 닫기</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+jQuery(function($) {
+	var t;
+	
+	function searchNdisplay(obj) {
+		var mc = new MyMethodCall('hiswiki', 'getHiswikiSearchKeyword');
+		mc.addElement('search_keyword', $(obj).val());
+		mc.callAjax(function(data) {
+			$('.hiswiki_qsbox_clone').remove();
+			var hiswiki_qsbox = $('#hiswiki_qsbox').clone(true);
+			$(data).find('item').each(function() {
+				var li = $('<li/>', {
+					text:$(this).find('topic').text()
+				});
+				hiswiki_qsbox.find('ul').append(li);
+			});
+			
+			hiswiki_qsbox.removeAttr('id');
+			hiswiki_qsbox.width(obj.width());
+			var pos = obj.offset();
+			hiswiki_qsbox.css('top', (pos.top + obj.height() + 5) + 'px')
+			hiswiki_qsbox.css('left', pos.left + 'px').css('z-index', 999);
+			hiswiki_qsbox.addClass('hiswiki_qsbox_clone');
+			
+			$('body').append(hiswiki_qsbox);
+		});
+	}
+	
+	$(document).ready(function() {
+		// 검색 박스에 검색어 입력 시 연관항목 리스트로 보여주기
+		/*
+		$('#hiswiki_search_keyword').click(function() {
+			searchNdisplay($(this));
+		});
+		*/
+		// 검색을 하면 몇 초 간격 뒤에 검색 실행
+		$('#hiswiki_search_keyword').keyup(function() {
+			clearTimeout(t);
+			var $search_keyword = this
+			t = setTimeout(function() {
+				searchNdisplay($($search_keyword));
+			}, 1000);
+		});
+		
+		$('.hiswiki_close_window').click(function() {
+			$('.hiswiki_qsbox_clone').remove();
+		});
+	});
+});
+</script>

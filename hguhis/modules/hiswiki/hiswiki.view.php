@@ -389,7 +389,7 @@ class hiswikiView extends hiswiki {
 		//	return new Object(-1, 'msg_not_permitted');
 		//if(!$this->grant->write) return $this->dispHiswikiTopic W('msg_not_permitted');
 		$oEditorModel = &getModel('editor');
-
+	
 		//editor option 설정
 		$option->allow_fileupload = true;
 		$option->enable_autosave = true;
@@ -397,7 +397,7 @@ class hiswikiView extends hiswiki {
 		$option->enable_default_component = true;
 		$option->primary_key_name = 'document_srl';
 		$option->content_key_name = 'content';
-
+		
 		$document_srl = Context::get('document_srl');
 		$oDocumentModel = &getModel('document');
 
@@ -406,39 +406,52 @@ class hiswikiView extends hiswiki {
 			// hiswiki model에서 내용을 가져옴
 			$oHiswikiModel = &getModel('hiswiki');
 			$output->hiswiki = $oHiswikiModel->getHiswikiDoc($document_srl);
-
 			$output->document = $oDocumentModel->getDocument($document_srl);
 			$document_extra_vars = $oDocumentModel->getExtraVars($this->module_srl,$document_srl);
 		}else{
 			$output->document = $oDocumentModel->getDocument();
 		}
+		$normal_category_list = $oDocumentModel->getCategoryList($this->module_srl);
+		if(count($normal_category_list)) {
+			foreach($normal_category_list as $category_srl => $category) {
+				$is_granted = true;
+				if($category->group_srls) {
+					$category_group_srls = explode(',',$category->group_srls);
+					$is_granted = false;
+					if(count(array_intersect($group_srls, $category_group_srls))) $is_granted = true;
+		
+				}
+				if($is_granted) $category_list[$category_srl] = $category;
+			}
+		}
 		$editor = $oEditorModel->getEditor($upload_target_srl, $option);
 		Context::set('editor',$editor);
+		Context::set('category_list', $category_list);
 		Context::set('module_info',$this->module_info);
 		Context::set('topic_info',$output->hiswiki);
 		Context::set('document_info',$output->document);
 		Context::set('extra_vars',$document_extra_vars);
-
+		//Context::set('category_list',)
 		// 내용 작성화면 템플릿 파일 지정 write.html
 		$this->setTemplateFile('write');
-
+	
 		return;
-
+	
 	}
-
+	
 	/**
 	 * @author 현희
 	 * @brief 토픽 뷰
 	 * @modifier 지희
 	 */
-	function dispHiswikiTopicVew(){
+	function dispHiswikiTopicView(){
 
 		$document_srl = Context::get('document_srl');
 		if(!$document_srl){
 			return new Object(-1, 'msg_invalid_request');
 		}
 		$page = Context::get('page');
-
+		
 		// document model을 가져옴
 		$oDocumentModel = &getModel('document');
 		$document = $oDocumentModel->getDocument($document_srl);
@@ -451,10 +464,12 @@ class hiswikiView extends hiswiki {
 		Context::set('hiswiki_doc',$hiswiki_doc->data);
 		Context::set('module_info',$this->module_info);
 		Context::set('extra_vars',$document_extra_vars);
+		// 카테고리 리스트 불러오기
+		$this->getCategoryList();
 		$this->setTemplateFile('topic_view');
-
+		
 	}
-
+	
 
 	/**
 	 * @function dispHiswikiTopicList

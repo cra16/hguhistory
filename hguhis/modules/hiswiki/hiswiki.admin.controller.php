@@ -23,9 +23,11 @@ class hiswikiAdminController extends hiswiki {
 		$oModuleModel = &getModel('module');
 
 		// request 값을 모두 받음 // getRequestVars() 를 사용하면 필요 없는 값까지 받아져서 DB 낭비하게 된다. gets()를 사용하길.
-		$args = Context::gets('module_srl', 'module_category', 'layout_srl', 'use_mobile', 'mlayout_srl', 'menu_srl', 'site_srl', 'mid', 'is_skin_fix', 'mskin', 'browser_title', 'description', 'is_default', 'content', 'mcontent', 'open_rss', 'header_text', 'footer_text', 'link_board');
+		$args = Context::gets('module_srl', 'module_category', 'layout_srl', 'use_mobile', 'mlayout_srl', 'menu_srl', 'site_srl', 'mid', 'is_skin_fix', 'mskin', 'browser_title', 'description', 'is_default', 'content', 'mcontent', 'open_rss', 'header_text', 'footer_text', 'link_board', 'front_page_srl');
 		$args->module = 'hiswiki';
-
+		if (!$args->front_page_srl) {
+			$args->front_page_srl = getNextSequence();
+		}
 		// module_srl이 넘어오면 원 모듈이 있는지 확인
 		if($args->module_srl) {
 			$module_info = $oModuleModel->getModuleInfoByModuleSrl($args->module_srl);
@@ -40,8 +42,19 @@ class hiswikiAdminController extends hiswiki {
 			$output = $oModuleController->updateModule($args);
 			$msg_code = 'success_updated';
 		}
-		// Extra_keys 삭제한다.
+		
+		// module_info 가 성공적으로 들어가면 document 삽입
 		$oDocumentController = &getController('document');
+		$oDocumentModel = &getModel('document');
+		if ($output->toBool()) {
+			$doc = $oDocumentModel->getDocument($args->front_page_srl);
+			if (!$doc->isExists()) {
+				$obj->title = $this->module_info->browser_title;
+				$obj->content = '<p>여기에 대문을 꾸며주세요.</p>';
+				$oDocumentController->insertDocument($obj);
+			}
+		}
+		// Extra_keys
 		// 먼저 삭제하고
 		$oDocumentController->deleteDocumentExtraKeys($output->get('module_srl'));
 		// 삽입

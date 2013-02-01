@@ -200,15 +200,6 @@
 				$object_key = 'object:'.$obj->module_srl.'_category_srl:'.$obj->category_srl.'_list_count:'.$obj->list_count.'_search_target:'.$obj->search_target.'_search_keyword:'.$obj->search_keyword.'_page'.$obj->page.'_sort_index:'.$obj->sort_index.'_order_type:'.$obj->order_type;
 				$cache_key = $oCacheHandler->getGroupKey('documentList', $object_key);
 				$output = $oCacheHandler->get($cache_key);
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> refs/remotes/origin/hguhis
->>>>>>> refs/remotes/origin/hguhis
 				if($output)
 				{
 					return $output;

@@ -465,7 +465,6 @@ class hiswikiView extends hiswiki {
 		Context::set('module_info',$this->module_info);
 		Context::set('extra_vars',$document_extra_vars);
 		// 카테고리 리스트 불러오기
-		$this->getCategoryList();
 		$this->setTemplateFile('topic_view');
 		
 	}

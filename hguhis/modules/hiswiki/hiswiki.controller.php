@@ -76,11 +76,13 @@ class hiswikiController extends hiswiki {
 			$output = $oDocumentController->updateDocument($oDocument,$vars);
 			$output = $this->_updateHiswikiDoc($vars);
 		}else{
+			$vars->extra_vars1 = $vars->start_date;
+			$vars->extra_vars2 = $vars->end_date;
+			
 			$output = $oDocumentController->insertDocument($vars);
+			$vars->document_srl = $output->get('document_srl');
 			$output = $this->_insertHiswikiDoc($vars);
 		}
-		$oDocumentController->insertDocumentExtraVar($vars->module_srl,$vars->document_srl,1,$vars->start_date,'start_date','');
-		$oDocumentController->insertDocumentExtraVar($vars->module_srl,$vars->document_srl,2,$vars->end_date,'end_date','');
 		if (!$output->toBool()) {
 			$this->setRedirectUrl(Context::get('error_return_url'));
 			return;
@@ -97,7 +99,6 @@ class hiswikiController extends hiswiki {
 	function _insertHiswikiDoc($args) {
 		// Register it if no given document_srl exists
 		if(!$args->document_srl) return new Object(-1, 'error');
-		
 		// generate document module model object
 		$oDocumentModel = &getModel('document');
 		
@@ -112,16 +113,8 @@ class hiswikiController extends hiswiki {
 		if(!$output->toBool()) {
 			return $output;
 		}
-		$oDocumentController->insertDocumentExtraVar($args->module_srl,$args->document_srl,1,$args->start_date,'start_date','');
-		$oDocumentController->insertDocumentExtraVar($args->module_srl,$args->document_srl,2,$args->end_date,'end_date','');
-		
 		return $output;
 	}
-	/**
-	 * @author 지희
-	 * @param $args
-	 * @brief 헌문서는 남겨둔다
-	 */
 		
 	/**
 	 * @author 지희
@@ -135,7 +128,7 @@ class hiswikiController extends hiswiki {
 		//hiswiki모델가져옴
 		$oHiswikiModel = &getModel('hiswiki');
 		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc(Context::get('document_srl'));
-		$hiswiki_doc->data[0]->version += 1;
+		$hiswiki_doc->data[0]->version++;
 		$args->version = $hiswiki_doc->data[0]->version;
 		
 		// generate document module model object
@@ -145,17 +138,18 @@ class hiswikiController extends hiswiki {
 		$oDocumentController = &getController('document');
 		
 		// check if the document is existed
-		$oDocument = $oDocumentModel->getDocument($obj->document_srl, $this->grant->manager);
+		$oDocument = $oDocumentModel->getDocument($args->document_srl, $this->grant->manager);
 		
-		//insert
+		//update
 		$output = executeQuery('hiswiki.updateHiswikiDoc', $args);
 		if(!$output->toBool()) {
 			return $output;
 		}
-		
-		$oDocumentController->insertDocumentExtraVar($args->module_srl,$args->document_srl,1,$args->start_date,'start_date','');
-		$oDocumentController->insertDocumentExtraVar($args->module_srl,$args->document_srl,2,$args->end_date,'end_date','');
-		debugPrint($oDocumentController->insertDocumentExtraVar('','','','','',''));
+		// Remove all extra variables
+		$oDocumentController->deleteDocumentExtraVars($args->module_srl, $args->document_srl, null, Context::getLangType());
+		// Insert extra variables if the document successfully inserted.
+		$oDocumentController->insertDocumentExtraVar($args->module_srl, $args->document_srl, 1, $args->start_date, 'start_date', Context::getLangType());
+		$oDocumentController->insertDocumentExtraVar($args->module_srl, $args->document_srl, 2, $args->end_date, 'end_date', Context::getLangType());
 		return $output;		
 		
 	}

@@ -21,19 +21,19 @@
 	</div>
 	<div class="title">
 		<span>제목 </span>
-		<input type="text" name="title" size="100%" value="{$topic_info->data[0]->topic}"/>
+		<input type="text" name="title" size="100%" value="{$document_info->getTitle()}"/>
 	</div>
 	<div class="date">
 		<div class="box start_date">
 			<span>시작연도</span> 
-			<input type="hidden" name="start_date" class="start_date" value="{zdate($topic_info->data[0]->start_date.'000000','Y-m-d')}"|cond="$topic_info->data[0]->start_date" />
-			<input type="text" class="cal startDate" value="{zdate($topic_info->data[0]->start_date.'000000','Y-m-d')}"|cond="$topic_info->data[0]->start_date"/>
+			<input type="hidden" name="start_date" class="start_date" value="{zdate($extra_vars[1]->value.'000000','Y-m-d')}"|cond="$topic_info->data[0]->start_date" />
+			<input type="text" class="cal startDate" value="{zdate($extra_vars[1]->value.'000000','Y-m-d')}"|cond="$topic_info->data[0]->start_date"/>
 			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</div>
 		<div class="box end_date">
 			<span>종료연도</span> 
-			<input type="hidden" name="end_date" class="end_date" value="{zdate($topic_info->data[0]->end_date.'000000','Y-m-d')}"|cond="$topic_info->data[0]->end_date" />
-			<input type="text" class="cal endDate"  value="{zdate($topic_info->data[0]->end_date.'000000','Y-m-d')}"|cond="$topic_info->data[0]->end_date" />
+			<input type="hidden" name="end_date" class="end_date" value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$topic_info->data[0]->end_date" />
+			<input type="text" class="cal endDate"  value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$topic_info->data[0]->end_date" />
 			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</div>
 		<script type="text/javascript">

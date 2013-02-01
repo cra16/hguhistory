@@ -1,0 +1,17 @@
+@CHARSET "EUC-KR";
+/*버튼 부분.*/
+.btn {
+	border: 1px solid #919191;
+	cursor: pointer;
+	box-shadow: inset 0 0 1px #fff;
+	background-color: #666;
+	color: #333 !important;
+	background-color: #eee;
+	text-shadow: 1px 1px 0 #fff;
+	padding: 0 8px;
+	line-height: 22px;
+	margin: 0 2px 0 2px;
+	font-weight: bold !important;
+	text-decoration:none;
+	background: #eee -webkit-gradient(linear,0% 0%,0% 100%,from(#fff),to(#ddd));
+}

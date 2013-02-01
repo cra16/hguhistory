@@ -38,14 +38,6 @@
 		margin: 0 0 15px 0;
 		line-height: 200%;
 	}
-	/*
-	div.hiswiki_category div.current_path ul.category_path li {
-		cursor:pointer;
-	}
-	div.hiswiki_category div.current_path ul.category_path li:hover {
-		text-decoration:underline;
-	}
-	*/
 	div.hiswiki_category a:link {
 		text-decoration:none;
 		color:black;
@@ -71,7 +63,7 @@
 	<div class="current_path">
 		<ul class="category_path">
 			<li class="fl">
-				<a href="{getUrl()}">전체분류</a>
+				<a href="{getUrl('category_srl', '')}">전체분류</a>
 			</li>
 			<li loop="$category_path=>$val" class="fl">
 				&nbsp;&gt; <a href="{getUrl()}">{$val->text}</a>

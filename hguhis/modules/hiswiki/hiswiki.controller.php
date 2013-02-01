@@ -79,7 +79,8 @@ class hiswikiController extends hiswiki {
 			$output = $oDocumentController->insertDocument($vars);
 			$output = $this->_insertHiswikiDoc($vars);
 		}
-		
+		$oDocumentController->insertDocumentExtraVar($vars->module_srl,$vars->document_srl,1,$vars->start_date,'start_date','');
+		$oDocumentController->insertDocumentExtraVar($vars->module_srl,$vars->document_srl,2,$vars->end_date,'end_date','');
 		if (!$output->toBool()) {
 			$this->setRedirectUrl(Context::get('error_return_url'));
 			return;
@@ -111,6 +112,9 @@ class hiswikiController extends hiswiki {
 		if(!$output->toBool()) {
 			return $output;
 		}
+		$oDocumentController->insertDocumentExtraVar($args->module_srl,$args->document_srl,1,$args->start_date,'start_date','');
+		$oDocumentController->insertDocumentExtraVar($args->module_srl,$args->document_srl,2,$args->end_date,'end_date','');
+		
 		return $output;
 	}
 	/**
@@ -148,7 +152,12 @@ class hiswikiController extends hiswiki {
 		if(!$output->toBool()) {
 			return $output;
 		}
+		
+		$oDocumentController->insertDocumentExtraVar($args->module_srl,$args->document_srl,1,$args->start_date,'start_date','');
+		$oDocumentController->insertDocumentExtraVar($args->module_srl,$args->document_srl,2,$args->end_date,'end_date','');
+		debugPrint($oDocumentController->insertDocumentExtraVar('','','','','',''));
 		return $output;		
+		
 	}
 	/**
 	 *@author 현희

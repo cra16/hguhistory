@@ -70,7 +70,6 @@ class hiswikiView extends hiswiki {
 		$newestDocList = $oDocumentModel->getDocumentList($obj, false, false);
 		Context::set('newestDocList', $newestDocList->data);
 
-
 		// 인기글 리스트 불러오기 (조회수)
 		$obj->regdate = date('YmdHis', time() - 2678400);
 		$popular_doc = executeQueryArray('hiswiki.getPopularDocuments', $obj);
@@ -409,7 +408,6 @@ class hiswikiView extends hiswiki {
 			// hiswiki model에서 내용을 가져옴
 			$oHiswikiModel = &getModel('hiswiki');
 			$output->hiswiki = $oHiswikiModel->getHiswikiDoc($document_srl);
-
 			$output->document = $oDocumentModel->getDocument($document_srl);
 		}else{
 			$output->document = $oDocumentModel->getDocument();

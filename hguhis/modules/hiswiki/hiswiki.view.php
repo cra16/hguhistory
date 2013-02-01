@@ -92,9 +92,6 @@ class hiswikiView extends hiswiki {
 		$requestDocList = $oDocumentModel->getDocumentList($obj);
 		Context::set('requestDocList', $requestDocList->data);
 		
-		// 카테고리 리스트 불러오기
-		$this->getCategoryList();
-		
 		// 대문 내용(content) 던지기
 		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
 
@@ -117,7 +114,7 @@ class hiswikiView extends hiswiki {
 	 * @authro 바람꽃 (wndflwr@gmail.com)
 	 * @brief 카테고리를 사용하기 전에 반드시 이 함수를 실행시키도록 한다.
 	 */
-	private function getCategoryList() {
+	function getCategoryList() {
 		// 케시에 저장된 php 파일에서 데이터 구조 불러오기
 		$filename = sprintf("./files/cache/document_category/%s.php", $this->module_info->module_srl);
 		if (!file_exists($filename)) {

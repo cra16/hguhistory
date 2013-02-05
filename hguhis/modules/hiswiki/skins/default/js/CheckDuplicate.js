@@ -13,17 +13,17 @@ jQuery(function($) {
 			$(".warning").hide();
 			var item = $(data).find('item');
 			var topic = item.find('topic');
-			topic.each(function(){
-				if ($(this).text()==title){
-					//alert('존재하는 제목입니다.');
-					$(".warning").show();
-					$(".submit").click(function() {
-						alert("존재하는 제목입니다. 다른제목을 작성해주세요");
-						return false;
-					});
-					return false;					
-				}
-			});
+			console.log(data);
+			if (topic.length) {
+				$(".warning").show();
+				$(".submit").click(function() {
+					alert("존재하는 제목입니다. 다른제목을 작성해주세요");
+					return false;
+				});
+			} else {
+				$(".warning").hide();
+				$(".submit").unbind();
+			}
 		});
 	}
 		

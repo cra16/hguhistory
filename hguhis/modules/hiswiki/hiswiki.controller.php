@@ -81,11 +81,11 @@ class hiswikiController extends hiswiki {
 			
 			$oHiswikiModel = &getModel('hiswiki');
 			$getHiswikiTitle = $oHiswikiModel->_getHiswikiTitle($vars->title);
-			foreach($getHiswikiTitle as $topic){
-				if($topic==$vars->title){
-					return new Object(-1);
-				};				
-			};
+			if($getHiswikiTitle){
+				$this->setError(-1);
+				$this->setMessage('msg_invalid_request');
+				return new Object(-1, 'msg_invalid_request');
+			}
 			
 			$output = $oDocumentController->insertDocument($vars);
 			$vars->document_srl = $output->get('document_srl');

@@ -84,8 +84,8 @@ class hiswikiModel extends hiswiki {
 	 * @brief $this->getHiswikiTitle의 helper
 	 */
 	function _getHiswikiTitle($title){
-		$args->topic = "%".$title."%";
-		$output = executeQueryArray('hiswiki.getHiswikiTitle');
+		$args->topic = $title;
+		$output = executeQueryArray('hiswiki.getHiswikiTitle',$args);
 		return $output->data;
 	}
 }

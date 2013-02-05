@@ -1,24 +1,27 @@
-<include target="_header.html" />
-<include target="search_box.html" />
-<include target="category_list.html" />
+<include target="header.html" />
+<style type="text/css">
+	.listHeading .num {
+	
+	}
+</style>
 <div class="outerDiv">
 	<table class="contentList">
 		<thead class="">
-			<tr class="">
-				<th class="no">No</th>
+			<tr class="listHeading">
+				<th class="num">No</th>
 				<th class="title">Title</th>
 				<th class="regdate">Regdate</th>
-				<th class="nick_name">Nick Name</th>
-				<th class="read_count">Read</th>
+				<th class="nickName">Nick Name</th>
+				<th class="readCount">Read</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr loop="$document_list=>$key, $val">
+			<tr class="document_list" loop="$document_list=>$key, $val">
 				<td class="num">{$key}</td>
 				<td class="title"><a href="{$val->getPermanentUrl()}">{$val->getTitle()}</a></td>
 				<td class="regdate">{$val->getRegdate('Y.m.d')}</td>
-				<td class="nick_name">{$val->getNickName()}</td>
-				<td class="read_count">{$val->get('readed_count')}</td>
+				<td class="nickName">{$val->getNickName()}</td>
+				<td class="readCount">{$val->get('readed_count')}</td>
 			</tr>
 		</tbody>
 	</table>

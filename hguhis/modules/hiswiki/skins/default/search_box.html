@@ -54,6 +54,7 @@ jQuery(function($) {
 			$('.hiswiki_qsbox_clone').remove();
 			var hiswiki_qsbox = $('#hiswiki_qsbox').clone(true);
 			$(data).find('item').each(function() {
+				console.log($(data));
 				var li = $('<li/>', {
 					text:$(this).find('topic').text()
 				});

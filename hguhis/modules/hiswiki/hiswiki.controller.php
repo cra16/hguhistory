@@ -79,15 +79,21 @@ class hiswikiController extends hiswiki {
 			$vars->extra_vars1 = $vars->start_date;
 			$vars->extra_vars2 = $vars->end_date;
 			
+			$oHiswikiModel = &getModel('hiswiki');
+			$getHiswikiTitle = $oHiswikiModel->_getHiswikiTitle($vars->title);
+			foreach($getHiswikiTitle as $topic){
+				if($topic==$vars->title){
+					return new Object(-1);
+				};				
+			};
+			
 			$output = $oDocumentController->insertDocument($vars);
 			$vars->document_srl = $output->get('document_srl');
 			$output = $this->_insertHiswikiDoc($vars);
 		}
 		if (!$output->toBool()) {
 			$this->setRedirectUrl(Context::get('error_return_url'));
-			return;
-		}
-		if ($output->toBool()) {
+		} else {
 			$this->setRedirectUrl(Context::get('success_return_url'));
 		}
 	}

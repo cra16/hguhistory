@@ -168,6 +168,14 @@ class hiswikiController extends hiswiki {
 	}
 	
 	/**
+	 * @author 인호
+	 * @brief 연도별 
+	 */
+	function procHiswikiYearView(){
+		
+	}
+	
+	/**
 	 * @author 지희
 	 * @brief 문서를 삭제한다
 	 */

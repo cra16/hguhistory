@@ -1,22 +1,39 @@
 <include target="header.html" />
 <style type="text/css">
-.contentList .listHeading,.document_list {
-	margin: 5px 5px 5px 5px;
-	padding: 6px 12px 6px 12px;
-	font-weight: inherit;
-	font-size: 100%;
-	font-family: inherit;
-	vertical-align: baseline;
-	background-color: whitesmoke;
-	border: 1px dotted rgb(209, 209, 209);
-}
-.contentList .listHeading{font-size:13pt;}
-.document_list{font-size:11pt;}
 
+.outerDiv {
+	margin: 20px 20px 20px 20px;
+}
+
+
+.contentList  .listHeading {
+
+	font-size:12pt;
+	border: 1px dotted rgb(220, 220, 220);
+	background-color: whitesmoke;
+	
+	}
+	
+
+.num,.title,.regdate,.nickName,.readCount{
+
+	padding: 5px 5px 5px 5px;
+	text-align: center;
+}
+
+.hwTable .num{width:10px;}
+.hwTable .title{width:280px;}
+.hwTable .regdate{width:150px;}
+.hwTable .nickName{width:150px;}
+.hwTable .readCount{width:5px;}
+
+.hwTable .document_list .title{text-decoration:none;}
+
+.pageDiv{align:center;}
 </style>
 <div class="outerDiv">
 	<table class="contentList">
-		<thead class="">
+		<thead class="hwTable">
 			<tr class="listHeading">
 				<th class="num">No</th>
 				<th class="title">Title</th>
@@ -37,8 +54,8 @@
 	</table>
 
 	<!-- page navigation -->
-	<div class="pageDiv">
-		<a href="{getUrl('page','','document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="prevEnd">처음</a>
+	<div class="pageDiv" align="center";>
+		<a href="{getUrl('page','','document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="btn">처음</a>
 		<!--@while($page_no = $page_navigation->getNextPage())-->
 			<!--@if($page == $page_no)-->
 				<strong>{$page_no}</strong>
@@ -46,7 +63,7 @@
 				<a href="{getUrl('page',$page_no,'document_srl','','division',$division,'last_division',$last_division,'entry','')}">{$page_no}</a>
 			<!--@end-->
 		<!--@end-->
-		<a href="{getUrl('page',$page_navigation->last_page,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="nextEnd">맨끝</a>
+		<a href="{getUrl('page',$page_navigation->last_page,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="btn">맨끝</a>
 	</div>
 </div>
 

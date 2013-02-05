@@ -75,7 +75,10 @@ class hiswikiAdminView extends hiswiki {
 	 * @brief 모듈의 정보를 삽입한다.
 	 * @author 현희
 	 */
+
+
 	function dispHiswikiAdminModuleInsert() {
+
 		// 스킨 목록을 구해옴
 		$oModuleModel = &getModel('module');
 		$skin_list = $oModuleModel->getSkins($this->module_path);
@@ -98,6 +101,7 @@ class hiswikiAdminView extends hiswiki {
 
 		// 템플릿 파일 지정
 		$this->setTemplateFile('module_insert');
+
 	}
 
 	/**

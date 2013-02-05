@@ -37,7 +37,6 @@
 <div class="dummy" style="display:none;">
 	<div class="hiswiki_qsbox" id="hiswiki_qsbox" style="position:absolute;">
 		<ul>
-			<li>검색 결과</li>
 		</ul>
 		<div class="hiswiki_close_window">결과 창 닫기</div>
 	</div>
@@ -54,6 +53,7 @@ jQuery(function($) {
 			$('.hiswiki_qsbox_clone').remove();
 			var hiswiki_qsbox = $('#hiswiki_qsbox').clone(true);
 			$(data).find('item').each(function() {
+				console.log($(data));
 				var li = $('<li/>', {
 					text:$(this).find('topic').text()
 				});
@@ -72,12 +72,7 @@ jQuery(function($) {
 	}
 	
 	$(document).ready(function() {
-		// 검색 박스에 검색어 입력 시 연관항목 리스트로 보여주기
-		/*
-		$('#hiswiki_search_keyword').click(function() {
-			searchNdisplay($(this));
-		});
-		*/
+		// 
 		// 검색을 하면 몇 초 간격 뒤에 검색 실행
 		$('#hiswiki_search_keyword').keyup(function() {
 			clearTimeout(t);

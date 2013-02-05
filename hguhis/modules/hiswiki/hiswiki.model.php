@@ -65,5 +65,28 @@ class hiswikiModel extends hiswiki {
 		$output = executeQueryArray('hiswiki.getSearchHiswikiDoc', $args);
 		return $output->data;
 	}
+	
+	/**
+	 * @function getHiswikiTitle
+	 * @author 지희
+	 * @param $title
+	 * @brief 타이틀을 찾아 사용하는 기능
+	 **/
+	function getHiswikiTitle(){
+		$title = Context::get('title');
+		$result = $this->_getHiswikiTitle($title);
+		$this->add('result',$result);
+	}
+	/**
+	 * @function _getSearch Title
+	 * @author 지희
+	 * @param string $title
+	 * @brief $this->getHiswikiTitle의 helper
+	 */
+	function _getHiswikiTitle($title){
+		$args->topic = "%".$title."%";
+		$output = executeQueryArray('hiswiki.getHiswikiTitle');
+		return $output->data;
+	}
 }
 ?>

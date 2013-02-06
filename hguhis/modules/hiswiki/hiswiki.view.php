@@ -240,7 +240,6 @@ class hiswikiView extends hiswiki {
 	 * @function dispHiswikiContentList
 	 * @author 인호
 	 * @brief 컨텐츠 + 검색
-	 * 아오 진짜 이거 때문에 삽질 제대로 함 -_-;
 	 **/
 	function dispHiswikiContentList(){
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
@@ -498,7 +497,15 @@ class hiswikiView extends hiswiki {
 		// template_file을 topic_list.html로 지정
 		$this->setTemplateFile('topic_list');
 	}
-
+	
+	/**
+	 * @author 인호
+	 * @brief 연도별
+	 */
+	function dispHiswikiYearView(){
+		
+		$this->setTemplateFile('year_list_view');
+	}
 
 	/**
 	 * @author 현희

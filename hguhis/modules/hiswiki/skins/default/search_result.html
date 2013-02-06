@@ -2,17 +2,18 @@
 
 <style type="text/css">
 .ResultDiv {
-	padding: 13px;
+	padding: 1px 15px 19px 15px;
 	border: rgb(238, 238, 238) solid 11px;
 }
 
 .ResultHeading {
 	font-size: 13pt;
+	margin: 13px 11px 12px 2px;
 }
 
-.ResultViewDiv {
-	margin: 5px 5px 5px 5px;
-	padding: 6px 12px 6px 12px;
+.outerDiv .ResultViewDiv {
+	margin: 5px 5px 5px 2px;
+	padding: 4px 10px 16px 17px;
 	font-weight: inherit;
 	font-size: 100%;
 	font-family: inherit;
@@ -20,93 +21,81 @@
 	background-color: whitesmoke;
 	border: 1px dotted rgb(209, 209, 209);
 }
+.ResultViewDiv:hover {
+	background-color:rgb(220, 220, 220);
+	cursor:pointer;
+}
+.ResultViewDiv:actived {
+	font-color:
+}
+
+.ResultViewDiv:visited {
+	font-color:red;
+}
+
+.documentLink {text-decoration: none;}
 
 .hwTitle {
+	font-size: 12pt;
+	font-style: bold;
+	margin: 8px 5px 3px -1px;
+	
+}
+
+.hwContent {
 	font-size: 11pt;
 }
 
-.hwContent{
-	font-size: 10pt;
-}
-
-.regdate{
+.regdate {
 	font-size: 9pt;
 }
-html,body {
-	scrollbar-face-color: #d2d2d2;
-	scrollbar-shadow-color: #d2d2d2;
-	scrollbar-highlight-color: #d2d2d2;
-	scrollbar-3dlight-color: #ffffff;
-	scrollbar-darkshadow-color: #ffffff;
-	scrollbar-track-color: #ffffff;
-	scrollbar-arrow-color: #ffffff;
-}
 
-.moreSearchResult {
-	border: 1px solid #919191;
-	cursor: pointer;
-	box-shadow: inset 0 0 1px #fff;
-	background-color: #666;
-	color: #333 !important;
-	background-color: #eee;
-	text-shadow: 1px 1px 0 #fff;
-	padding: 5px 5px 5px 5px;
-	line-height: 29px;
-	margin: 0 2px 0 2px;
-	font-weight: bold !important;
-	text-decoration:none;
-	background: #eee -webkit-gradient(linear,0% 0%,0% 100%,from(#fff),to(#ddd));
-}
 </style>
 
 <div class="outerDiv">
 	<div class="ResultDiv">
-		<span class="ResultHeading">표제어 검색 결과</span>
-		<div class="ResultViewDiv" loop="$search_results_title=>$val">
-			<a class="documentLink" href="{$val->getPermanentUrl()}">
-				<div class="hwTitle">{$val->getTitle()}</div>
-				<div class="hwContent">{$val->getSummary()}</div>
-			</a>
-			<div class="ResultContent">
-				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
-				<span class="regdate">/ 작성자 {$val->getNickName()}</span>
-				<span class="regdate">/ 조회수 {$val->get('readed_count')}</span> 
-				<span class="regdate">/ 태그 {$val->get('tags')}</span>
+		<h3 class="ResultHeading">표제어 검색 결과</h3>					
+			<div class="ResultViewDiv" loop="$search_results_title=>$val">
+				<h3 class="hwTitle"><a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getTitle()}</a></h3>
+				<div class="hwContent"><a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getSummary()}</a></div>
+				<div class="ResultContent">
+					<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
+					<span class="regdate">| 작성자 {$val->getNickName()}</span>
+					<span class="regdate">| 조회수 {$val->get('readed_count')}</span> 
+					<span class="regdate">| 태그 {$val->get('tags')}</span>
+				</div>
 			</div>
-		</div>
-		<span class="moreSearchResult"><a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}">더보기</a></span>
+		<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}" class="btn">더보기</a>
 	</div>
 	<div class="ResultDiv">
-		<span class="ResultHeading">내용 검색 결과</span>
+		<h3 class="ResultHeading">내용 검색 결과</h3>
 		<div class="ResultViewDiv" loop="$search_results_content=>$val">
 			<a class="documentLink" href="{$val->getPermanentUrl()}">
-				<div class="hwTitle">{$val->getTitle()}</div>
+				<h3 class="hwTitle">{$val->getTitle()}</h3>
 				<div class="hwContent">{$val->getSummary()}</div>
-			</a>
 			<div>
 				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
-				<span class="regdate">/ 작성자 {$val->getNickName()}</span> 
-				<span class="regdate">/ 조회수 {$val->get('readed_count')}</span> 
-				<span class="regdate">/ 태그 {$val->get('tags')}</span>
-			</div>
+				<span class="regdate">| 작성자 {$val->getNickName()}</span> 
+				<span class="regdate">| 조회수 {$val->get('readed_count')}</span> 
+				<span class="regdate">| 태그 {$val->get('tags')}</span>
+			</div></a>
 		</div>
-		<span class="moreSearchResult"><a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'content')}">더보기</a></span>
+			<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'content')}" class="btn">더보기</a>
 	</div>
 	<div class="ResultDiv">
-		<div class="ResultHeading">태그 검색 결과</div>
+		<h3 class="ResultHeading"><h3>태그 검색 결과</h3>
 		<div class="ResultViewDiv" loop="$search_results_tags=>$val">
 			<a class="documentLink" href="{$val->getPermanentUrl()}">
-				<div class="hwTitle">{$val->getTitle()}</div>
+				<h3 class="hwTitle">{$val->getTitle()}</h3>
 				<div class="hwContent">{$val->getSummary()}</div>
-			</a>
 			<div>
 				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
-				<span class="regdate">/ 작성자 {$val->getNickName()}</span> 
-				<span class="regdate">/ 조회수 {$val->get('readed_count')}</span> 
-				<span class="regdate">/ 태그 {$val->get('tags')}</span>
-			</div>
+				<span class="regdate">| 작성자 {$val->getNickName()}</span> 
+				<span class="regdate">| 조회수 {$val->get('readed_count')}</span> 
+				<span class="regdate">| 태그 {$val->get('tags')}</span>
+			</div></a>
 		</div>
-		<span class="moreSearchResult"><a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'tag')}">더보기</a></span>
+		<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'tag')}" class="btn">더보기</a>
 	</div>
 </div>
 <include target="_footer.html" />

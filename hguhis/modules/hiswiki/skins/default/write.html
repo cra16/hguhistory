@@ -1,8 +1,8 @@
 <!--// datepicker javascript plugin load -->
 <!--%load_js_plugin("ui")-->
 <!--%load_js_plugin("ui.datepicker")-->
-
-<form action="./" method="post">
+<load target="js/MyMethodCall.js"/>
+<form action="./" method="post" id="write">
 	<input type="hidden" name="document_srl" value="{$document_info->get('document_srl')}" />
 	<input type="hidden" name="content" value="{$document_info->getContentText()}"/>
 	<input type="hidden" name="act" value="procHiswikiTopicWrite" />
@@ -21,7 +21,8 @@
 	</div>
 	<div class="title">
 		<span>제목 </span>
-		<input type="text" name="title" size="100%" value="{$document_info->getTitle()}"/>
+		<input id="title" type="text" name="title" size="100%" value="{$document_info->getTitle()}"/>
+		<span style="display:none; color:red;" class="warning">존재하는 제목입니다.</span>
 	</div>
 	<div class="date">
 		<span>
@@ -65,14 +66,8 @@
 	<div class="tag_box">
 		태그검색어 입력 <input type="text" name="tags" class="tags" value="{htmlspecialchars($document_info->get('tags'))}"/> 쉼표(,)로 구분하여 여러개 입력가능 </div>
 	</br>
-	<div class="submit_btn" align="center">
-		<input type="submit" style="font-size:14pt;"/>
+	<div class="submit_btn">
+		<input type="submit" class="submit"/>
 	</div>
 </form>
-<script type="text/javascript">
-	jQuery(function($){
-		$(".del_date").click(function(){
-			$(this).siblings("input").val("");
-		});
-	});
-</script>
+<load target="js/CheckDuplicate.js" />

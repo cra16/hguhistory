@@ -1,0 +1,12 @@
+<!--지희 역사를 기록하는 쿼리-->
+<query id="insertHiswikiTrace" action="insert" priority="LOW">
+	<tables>
+		<table name="hiswiki_trace" />
+	</tables>
+	<columns>
+        <column name="document_srl" var="document_srl" filter="number" notnull="notnull" />
+        <column name="trace_srl" var="trace_srl" filter="number" default="0" />
+    	<column name="version" var="version" filter="number"/>
+        <column name="reg_date" var="reg_date" filter="number" default="" />
+	</columns>
+</query>

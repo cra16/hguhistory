@@ -53,6 +53,7 @@ class hiswikiModel extends hiswiki {
 		$result = $this->_getSearchKeyword($search_keyword);
 		$this->add('result', $result);
 	}
+	
 	/**
 	 * @function _getSearchKeyword
 	 * @author 바람꽃 (wndflwr@gmail.com)

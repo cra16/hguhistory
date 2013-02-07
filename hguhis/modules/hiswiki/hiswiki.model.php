@@ -89,5 +89,9 @@ class hiswikiModel extends hiswiki {
 		$output = executeQueryArray('hiswiki.getHiswikiTitle',$args);
 		return $output->data;
 	}
+	
+	function getHiswikiYearViewList() {
+		$;
+	}
 }
 ?>

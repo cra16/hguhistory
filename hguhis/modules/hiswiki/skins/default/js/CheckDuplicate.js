@@ -1,6 +1,6 @@
 /**
  * @author 지희
- * @brief write의 제목이 겹
+ * @brief write의 제목이 겹치지 않도록 한다
  */
 jQuery(function($) {
 	var t;
@@ -13,12 +13,11 @@ jQuery(function($) {
 			$(".warning").hide();
 			var item = $(data).find('item');
 			var topic = item.find('topic');
-			console.log(data);
 			if (topic.length) {
 				$(".warning").show();
 				$(".submit").click(function() {
 					alert("존재하는 제목입니다. 다른제목을 작성해주세요");
-					return false;
+					return false;ㅍ
 				});
 			} else {
 				$(".warning").hide();
@@ -27,6 +26,10 @@ jQuery(function($) {
 		});
 	}
 		
+	$(".hiswiki_history").click(function() {
+		alert('hey');
+		$(".topic_history").show();
+	});
 	
 	$(".del_date").click(function(){
 		$(this).siblings("input").val("");
@@ -44,6 +47,8 @@ jQuery(function($) {
 			checkTitle($($(this)));
 		});
 	});
+	
+
 	
 	
 });

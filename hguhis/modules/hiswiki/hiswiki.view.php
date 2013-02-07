@@ -503,6 +503,9 @@ class hiswikiView extends hiswiki {
 	 * @brief 연도별
 	 */
 	function dispHiswikiYearView(){
+		$year = Context::get("year");
+		$month = Context::get("month");
+		
 		
 		$this->setTemplateFile('year_list_view');
 	}

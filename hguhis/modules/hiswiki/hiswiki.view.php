@@ -454,7 +454,6 @@ class hiswikiView extends hiswiki {
 		// hiswiki model 을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
 		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($document_srl);
-
 		Context::set('document',$document);
 		Context::set('hiswiki_doc',$hiswiki_doc->data);
 		Context::set('module_info',$this->module_info);

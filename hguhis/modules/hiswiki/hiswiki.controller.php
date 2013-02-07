@@ -68,17 +68,20 @@ class hiswikiController extends hiswiki {
 		//$logged_info = Context::get('logged_info');
 
 		$vars = Context::gets('category_srl','content', 'title','module_srl','start_date','end_date','tags','document_srl','version');
+		$args=$vars;
 		$oDocumentController = &getController('document');
 		$oDocumentModel = &getModel('document');
 		$oDocument = $oDocumentModel->getDocument($vars->document_srl);
 		
 		if($oDocument->isExists()){
+			$output = $this->_copyHiswikiDoc($args);
 			$output = $oDocumentController->updateDocument($oDocument,$vars);
 			$output = $this->_updateHiswikiDoc($vars);
 		}else{
 			$vars->extra_vars1 = $vars->start_date;
 			$vars->extra_vars2 = $vars->end_date;
 			
+			//제목중복방지
 			$oHiswikiModel = &getModel('hiswiki');
 			$getHiswikiTitle = $oHiswikiModel->_getHiswikiTitle($vars->title);
 			if($getHiswikiTitle){
@@ -121,7 +124,53 @@ class hiswikiController extends hiswiki {
 		}
 		return $output;
 	}
+
+	/**
+	 * @function _copyHiswikiDoc($args)
+	 * @author 지희
+	 * @brief 문서를 저장하기 전에 전 내용을 미리 저장한다
+	 */
+	function _copyHiswikiDoc($args){
+		//만일 문서가 들어오지 않으면 하지않는다
+		$vars = Context::gets('regdate','content', 'title','module_srl','start_date','end_date','tags','document_srl','version','trace_srl');
+		if (!$args->document_srl) return new Object(-1,'error');
 		
+		//모델 불러옴		
+		$oDocumentModel = &getModel('document');
+		$oDocument = $oDocumentModel->getDocument($args->document_srl);
+		$oExtraVars = $oDocumentModel->getExtraVars($args->module_srl, $args->document_srl);
+		$vars->trace_srl = $args->document_srl;
+		$vars->content = $oDocument->getContentText();
+		$vars->title = $oDocument->getTitle();
+		$vars->tags = $oDocument->get('tags');
+		$vars->start_date = $oExtraVars[1]->value;
+		$vars->end_date = $oExtraVars[2]->value;
+		$vars->reg_date = $oDocument->getRegdateTime();
+		
+		//hiswiki모델가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($args->document_srl);
+		$vars->version = $hiswiki_doc->data[0]->version;		
+		
+		//document controller 불러옴
+		$oDocumentController = &getController('document');
+		
+		//다른 document_srl,module_srl을 가지도록 한채 문서를 등록시킨다.
+		$vars->document_srl = getNextSequence();
+		$vars->module_srl = -($args->module_srl);
+		$output = $oDocumentController->insertDocument($vars);		
+		$oDocumentController->insertDocumentExtraVar($vars->module_srl, $vars->document_srl, 1, $vars->start_date, 'start_date', Context::getLangType());
+		$oDocumentController->insertDocumentExtraVar($vars->module_srl, $vars->document_srl, 2, $vars->end_date, 'end_date', Context::getLangType());
+		
+		//hiswiki_trace에 저장한다
+		$output = executeQuery('hiswiki.insertHiswikiTrace', $vars);
+		if(!$output->toBool()) {
+			return $output;
+		}
+		return $output;		
+		
+	}
+	
 	/**
 	 * @author 지희
 	 * @param unknown_type $args

@@ -288,14 +288,13 @@ class hiswikiView extends hiswiki {
 			}
 			// 제목으로 검색한 결과 html 파일로 넘겨주기
 			Context::set('document_list', $tagDocumentList);
-		} else {
+		} else {	
 			// 아니면 그냥 값 전달
 			Context::set('document_list', $output->data);
 		}
 		
 		// 템플릿 파일 지정
 		$this->setTemplateFile('list');
-		
 		Context::set('page_navigation', $output->page_navigation);
 	}
 
@@ -324,7 +323,7 @@ class hiswikiView extends hiswiki {
 		// setup module_srl/page number/ list number/ page count
 		$args->module_srl = $this->module_info->module_srl;
 		$args->page = Context::get('page');
-		$args->list_count = 20;
+		$args->list_count = 5;
 		$args->page_count = Context::get('page_count');
 
 		// get the keyword
@@ -455,7 +454,6 @@ class hiswikiView extends hiswiki {
 		// hiswiki model 을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
 		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($document_srl);
-
 		Context::set('document',$document);
 		Context::set('hiswiki_doc',$hiswiki_doc->data);
 		Context::set('module_info',$this->module_info);
@@ -504,6 +502,9 @@ class hiswikiView extends hiswiki {
 	 * @brief 연도별
 	 */
 	function dispHiswikiYearView(){
+		$year = Context::get("year");
+		$month = Context::get("month");
+		
 		
 		$this->setTemplateFile('year_list_view');
 	}

@@ -481,6 +481,7 @@ class hiswikiView extends hiswiki {
 		$oDocumentModel = &getModel('document');
 		//변수선언
 		Context::set('hiswikiHistory',$hiswikiHistory);
+		Context::set('origin',$trace_srl);
 		$this->setTemplateFile('topic_history');
 	}
 

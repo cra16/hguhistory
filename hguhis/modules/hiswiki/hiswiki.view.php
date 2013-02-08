@@ -463,7 +463,27 @@ class hiswikiView extends hiswiki {
 		$this->setTemplateFile('topic_view');
 		
 	}
-	
+	/**
+	 * @function dispHiswikiHistoryView
+	 * @author 지희
+	 * @brief 수정되기전의 문서를 보여준다
+	 */
+	function dispHiswikiHistoryView(){
+		$document_srl = Context::get('document_srl');
+		if(!$document_srl){
+			return new Object(-1, 'msg_invalid_request');
+		}
+		$page = Context::get('page');
+		//hiswiki model을 가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		$trace_srl = $document_srl;
+		$hiswikiHistory = $oHiswikiModel->getHiswikiTrace($trace_srl);
+		//document model 가져옴
+		$oDocumentModel = &getModel('document');
+		//변수선언
+		Context::set('hiswikiHistory',$hiswikiHistory);
+		$this->setTemplateFile('topic_history');
+	}
 
 	/**
 	 * @function dispHiswikiTopicList

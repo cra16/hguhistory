@@ -140,7 +140,7 @@ class hiswikiController extends hiswiki {
 		$oDocument = $oDocumentModel->getDocument($args->document_srl);
 		$oExtraVars = $oDocumentModel->getExtraVars($args->module_srl, $args->document_srl);
 		$vars->trace_srl = $args->document_srl;
-		$vars->content = $oDocument->getContentText();
+		$vars->content = $oDocument->getContent(false,false,false,false,false);
 		$vars->title = $oDocument->getTitle();
 		$vars->tags = $oDocument->get('tags');
 		$vars->start_date = $oExtraVars[1]->value;

@@ -25,11 +25,6 @@ jQuery(function($) {
 			}
 		});
 	}
-		
-	$(".hiswiki_history").click(function() {
-		alert('hey');
-		$(".topic_history").show();
-	});
 	
 	$(".del_date").click(function(){
 		$(this).siblings("input").val("");

@@ -90,8 +90,26 @@ class hiswikiModel extends hiswiki {
 		return $output->data;
 	}
 	
+	function getHiswikiTrace($trace_srl){
+		$args->trace_srl = $trace_srl;
+		$output = executeQueryArray('hiswiki.getHiswikiTrace',$args);
+		return $output;
+	}
+	/**
+	 * @function getHiswikiExtraVars
+	 * @author 지희
+	 * @param $document_srl
+	 * @brief extravars 불러오기
+	 **/
+	function getHiswikiExtraVars($document_srl){
+		if(!document_srl) return new Object(-1);
+		$args->document_srl = $document_srl;
+		$output = executeQueryArray('hiswiki.getHiswikiExtraVars',$args);
+		return $output;
+	}
+	
 	function getHiswikiYearViewList() {
-		$;
+		
 	}
 }
 ?>

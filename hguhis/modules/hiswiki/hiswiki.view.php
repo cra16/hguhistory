@@ -6,7 +6,6 @@
  **/
 class hiswikiView extends hiswiki {
 
-	// 카테고리 관련 연산때 필요한 전역변수. @author 바람꽃(wndflwr@gmail.com)
 	private $tmp;
 	private $current_pointer;
 
@@ -14,6 +13,7 @@ class hiswikiView extends hiswiki {
 	 * @brief 초기화
 	 **/
 	function init() {
+			
 		// module_srl이 있으면 미리 체크하여 존재하는 모듈이면 module_info 세팅
 		$module_srl = Context::get('module_srl');
 		if(!$module_srl && $this->module_srl) {
@@ -124,7 +124,7 @@ class hiswikiView extends hiswiki {
 		}
 		@include($filename);
 
-		// 현재 문서가 위치한 카테고리 위치 불러오기
+		// 현재 문서가 위치한 카테고리 위치 불러오기 TODO
 		$category_now = Context::get('category_srl');
 
 		if ($menu->list) {
@@ -227,9 +227,8 @@ class hiswikiView extends hiswiki {
 		$editorOpt->enable_component = true;
 		$editorOpt->disable_html = false;
 		$editorOpt->enable_autosave = false;
-		
 		Context::set('modify_front_editor', $oEditorModel->getEditor($this->module_info->front_page_srl, $editorOpt));
-		
+
 		// 모듈 정보 넘긴다.
 		Context::set('module_info', $this->module_info);
 

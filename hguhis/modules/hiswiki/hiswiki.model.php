@@ -36,6 +36,7 @@ class hiswikiModel extends hiswiki {
 	function getHiswikiDoc($document_srl) {
 		$args->document_srl = $document_srl;
 		$output = executeQueryArray('hiswiki.getHiswikiDoc',$args);
+		debugPrint($output);
 		return $output;
 	}
 	
@@ -53,6 +54,7 @@ class hiswikiModel extends hiswiki {
 		$result = $this->_getSearchKeyword($search_keyword);
 		$this->add('result', $result);
 	}
+	
 	/**
 	 * @function _getSearchKeyword
 	 * @author 바람꽃 (wndflwr@gmail.com)
@@ -63,7 +65,17 @@ class hiswikiModel extends hiswiki {
 	function _getSearchKeyword($search_keyword) {
 		$args->topic = "%".$search_keyword."%";
 		$output = executeQueryArray('hiswiki.getSearchHiswikiDoc', $args);
-		return $output->data;
+		
+		$result = array();
+		$oDocumentModel = &getModel('document');
+		foreach ($output->data as $key => $val) {
+			$tmp = $oDocumentModel->getDocument($val->document_srl);
+			$result[$key]->topic = $val->topic;
+			$result[$key]->document_srl = $val->document_srl;
+			$result[$key]->permanent_url = $tmp->getPermanentUrl();
+			$result[$key]->summary = $tmp->getSummary(80, '...');
+		}
+		return $result;
 	}
 	
 	/**
@@ -84,9 +96,31 @@ class hiswikiModel extends hiswiki {
 	 * @brief $this->getHiswikiTitle의 helper
 	 */
 	function _getHiswikiTitle($title){
-		$args->topic = "%".$title."%";
-		$output = executeQueryArray('hiswiki.getHiswikiTitle');
+		$args->topic = $title;
+		$output = executeQueryArray('hiswiki.getHiswikiTitle',$args);
 		return $output->data;
+	}
+	
+	function getHiswikiTrace($trace_srl){
+		$args->trace_srl = $trace_srl;
+		$output = executeQueryArray('hiswiki.getHiswikiTrace',$args);
+		return $output;
+	}
+	/**
+	 * @function getHiswikiExtraVars
+	 * @author 지희
+	 * @param $document_srl
+	 * @brief extravars 불러오기
+	 **/
+	function getHiswikiExtraVars($document_srl){
+		if(!document_srl) return new Object(-1);
+		$args->document_srl = $document_srl;
+		$output = executeQueryArray('hiswiki.getHiswikiExtraVars',$args);
+		return $output;
+	}
+	
+	function getHiswikiYearViewList() {
+		
 	}
 }
 ?>

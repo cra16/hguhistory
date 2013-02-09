@@ -5,6 +5,7 @@
     </tables>
     <columns>
         <column name="topic" />
+        <column name="document_srl" />
     </columns>
     <conditions>
 		<condition operation="like" column="topic" var="topic" />

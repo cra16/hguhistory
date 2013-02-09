@@ -241,7 +241,6 @@ class hiswikiView extends hiswiki {
 	 * @function dispHiswikiContentList
 	 * @author 인호
 	 * @brief 컨텐츠 + 검색
-	 * 아오 진짜 이거 때문에 삽질 제대로 함 -_-;
 	 **/
 	function dispHiswikiContentList(){
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
@@ -290,14 +289,13 @@ class hiswikiView extends hiswiki {
 			}
 			// 제목으로 검색한 결과 html 파일로 넘겨주기
 			Context::set('document_list', $tagDocumentList);
-		} else {
+		} else {	
 			// 아니면 그냥 값 전달
 			Context::set('document_list', $output->data);
 		}
 		
 		// 템플릿 파일 지정
 		$this->setTemplateFile('list');
-		
 		Context::set('page_navigation', $output->page_navigation);
 	}
 
@@ -326,7 +324,7 @@ class hiswikiView extends hiswiki {
 		// setup module_srl/page number/ list number/ page count
 		$args->module_srl = $this->module_info->module_srl;
 		$args->page = Context::get('page');
-		$args->list_count = 20;
+		$args->list_count = 5;
 		$args->page_count = Context::get('page_count');
 
 		// get the keyword
@@ -457,7 +455,6 @@ class hiswikiView extends hiswiki {
 		// hiswiki model 을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
 		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($document_srl);
-
 		Context::set('document',$document);
 		Context::set('hiswiki_doc',$hiswiki_doc->data);
 		Context::set('module_info',$this->module_info);
@@ -466,7 +463,28 @@ class hiswikiView extends hiswiki {
 		$this->setTemplateFile('topic_view');
 		
 	}
-	
+	/**
+	 * @function dispHiswikiHistoryView
+	 * @author 지희
+	 * @brief 수정되기전의 문서를 보여준다
+	 */
+	function dispHiswikiHistoryView(){
+		$document_srl = Context::get('document_srl');
+		if(!$document_srl){
+			return new Object(-1, 'msg_invalid_request');
+		}
+		$page = Context::get('page');
+		//hiswiki model을 가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		$trace_srl = $document_srl;
+		$hiswikiHistory = $oHiswikiModel->getHiswikiTrace($trace_srl);
+		//document model 가져옴
+		$oDocumentModel = &getModel('document');
+		//변수선언
+		Context::set('hiswikiHistory',$hiswikiHistory);
+		Context::set('origin',$trace_srl);
+		$this->setTemplateFile('topic_history');
+	}
 
 	/**
 	 * @function dispHiswikiTopicList
@@ -500,7 +518,18 @@ class hiswikiView extends hiswiki {
 		// template_file을 topic_list.html로 지정
 		$this->setTemplateFile('topic_list');
 	}
-
+	
+	/**
+	 * @author 인호
+	 * @brief 연도별
+	 */
+	function dispHiswikiYearView(){
+		$year = Context::get("year");
+		$month = Context::get("month");
+		
+		
+		$this->setTemplateFile('year_list_view');
+	}
 
 	/**
 	 * @author 현희

@@ -7,6 +7,6 @@
 		<column name="topic" />
 	</columns>
     <conditions>
-		<condition operation="like" column="topic" var="topic" />
+		<condition operation="equal" column="topic" var="topic" />
     </conditions>
 </query>

@@ -1,0 +1,136 @@
+<!--지희 히스토리 목록들을 본다-->
+<load target="js/MyMethodCall.js"/>
+<load target="css/hiswiki.css" />
+<load target="css/hiswiki_common.css"/>
+
+<style>
+div.document_view li {
+	list-style: none;
+	position: relative;
+	float: left;
+	padding-left: 4px;
+}
+
+div.clear {
+	clear: both;
+}
+
+.hwRegdate {
+	font-size: 9pt;
+	margin: 10px 2px 7px 0px;
+}
+
+.hwTitle {
+	font-size: 15pt;
+	margin: 8px 3px 8px 3px;
+}
+
+.hwBlock {
+	margin: 5px 2px 5px 2px;
+	padding: 4px 10px 16px 17px;
+	font-size: 100%;
+	vertical-align: baseline;
+	background-color: whitesmoke;
+	border: 2px dotted rgb(209, 209, 209);
+}
+
+.tag {
+	margin: 3px 5px 3px -30px;
+}
+
+.tag:link {
+	font-color: black;
+}
+
+.s-e_date {
+	margin: 7px 5px 5px 4px;
+	font-size: 10pt;
+}
+
+.hwContent {
+	padding: 10px 15px 5px 15px;
+	font-size: 10pt;
+	align: left;
+}
+.data_version{
+	color:blue;text-decoration:underline;cursor:pointer;
+}
+.fold{
+	color:blue;text-decoration:underline;cursor:pointer;
+	align:right;
+}
+</style>
+
+
+<div class="versions">
+	<!--@if(!count($hiswikiHistory->data))-->
+		<h2>히스토리가 존재하지 않는 문서입니다</h2>
+	<!--@end-->	
+	<!--@if(count($hiswikiHistory->data))-->
+	<span>버젼:</span>	
+	<!--@for($i=0;$i<count($hiswikiHistory->data);$i++)-->
+		<span class="data_version" version="{$i}">{$hiswikiHistory->data[$i]->version}&nbsp;</span>
+	<!--@end-->
+	<!--@end-->
+	<br/>
+	<br/>
+
+	<hr color="black">
+	<!--@for($i=0;$i<count($hiswikiHistory->data);$i++)-->
+			{@$documentModel = &getModel('document');}
+			{@$document=$documentModel->getDocument($hiswikiHistory->data[$i]->document_srl,false)}
+			{@$hiswikiModel = &getModel('hiswiki');}
+			{@$extra_vars = $hiswikiModel->getHiswikiExtraVars($document->get('document_srl'))->data}
+	<div class="history_view" version="{$i}" style="display:none">
+		<div id="topic_view">
+			</br>
+			<div class="document_view">
+				<!--올라온 글의 내용을 본다-->
+				<div>
+				<div>
+					<h4>버젼:{$hiswikiHistory->data[$i]->version}</h4>
+				</div>
+				<div class="hwBlock">
+					<h3 class="hwTitle"><b>{$document->getTitle()}</h3>
+				<div class="s-e_date">
+					<span cond="$extra_vars[0]->value">Start Date:</span> 
+					<span cond="$extra_vars[0]->value">{zdate($extra_vars[0]->value."000000",'Y-m-d')}</span> 
+					<span cond="$extra_vars[0]->value&&$extra_vars[1]->value">|</span> 
+					<span cond="$extra_vars[1]->value">End Date:</span> 
+					<span cond="$extra_vars[1]->value">{zdate($extra_vars[1]->value."000000",'Y-m-d')}</span>
+				</div>
+				</div>			
+					<div class="hwRegdate" align="right">
+						<span>글쓴이: {$document->getNickName()}&nbsp;|</span>
+						<span></span><span>등록일:
+							{$document->getRegdate()}</span>
+					</div>
+					<div class="hwContent">{$document->getContent(false,false,false,false,false)}</div>
+				</div>
+				</br>
+				<div class="fold" version="{$i}" align="right">접기</div>		
+				<hr style="color:black" height="1px">
+			</div>
+		</div>
+	</div>
+	<!--@end-->
+	<div align="right">
+		<a class="btn" href="{getUrl('act','dispHiswikiTopicView','document_srl',$origin,'')}">뒤로가기</a>
+	</div>
+</div>
+
+
+
+
+<script type="text/javascript">
+jQuery(function($) {
+	$(".data_version").click(function() {
+		var version = $(this).attr('version');
+		$(".history_view[version='" + version + "']").show();
+	});
+	$(".fold").click(function(){
+		var version = $(this).attr('version');
+		$(".history_view[version='" + version + "']").hide();
+	});
+});
+</script>

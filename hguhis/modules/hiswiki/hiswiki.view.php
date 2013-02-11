@@ -31,7 +31,7 @@ class hiswikiView extends hiswiki {
 			$this->module_info = $module_info;
 			Context::set('module_info',$module_info);
 		}
-
+		
 		// 스킨 경로를 미리 template_path 라는 변수로 설정함
 		// 스킨이 존재하지 않는다면 default로 변경
 		$template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
@@ -442,7 +442,8 @@ class hiswikiView extends hiswiki {
 
 		$document_srl = Context::get('document_srl');
 		if(!$document_srl){
-			return new Object(-1, 'msg_invalid_request');
+			$this->dispHiswikiFrontPage();
+			return;
 		}
 		$page = Context::get('page');
 		

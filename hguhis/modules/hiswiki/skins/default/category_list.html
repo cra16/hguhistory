@@ -63,7 +63,7 @@
 	<div class="current_path">
 		<ul class="category_path">
 			<li class="fl">
-				<a href="{getUrl('category_srl', '')}">전체분류</a>
+				<a href="{getUrl('act', 'dispHiswikiContentList', 'category_srl', '0')}">전체분류</a>
 			</li>
 			<li loop="$category_path=>$val" class="fl">
 				&nbsp;&gt; <a href="{getUrl('act', 'dispHiswikiContentList', 'category_srl', $val->category_srl)}">{$val->text}</a>

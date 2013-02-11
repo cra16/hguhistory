@@ -377,6 +377,7 @@ class hiswikiView extends hiswiki {
 	 * @function dispHiswikiTopicWrite
 	 * @brief topic 추가 설정중
 	 * @author 현희
+	 * @modifier 바람꽃(wndflwr@gmail.com) 에디터에 자동링크기능 추가
 	 **/
 	function dispHiswikiTopicWrite() {
 		// 쓰기 권한 체크
@@ -454,6 +455,7 @@ class hiswikiView extends hiswiki {
 		// hiswiki model 을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
 		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($document_srl);
+		Context::set('category_srl', $document->get('category_srl'));
 		Context::set('document',$document);
 		Context::set('hiswiki_doc',$hiswiki_doc->data);
 		Context::set('module_info',$this->module_info);

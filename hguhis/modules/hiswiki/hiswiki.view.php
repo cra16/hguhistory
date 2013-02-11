@@ -158,12 +158,13 @@ class hiswikiView extends hiswiki {
 
 				$tmp = new stdClass();
 				$t = $this->current_pointer->category_srl;
-				$tmp->mid = $flat_list[$t]->mid;
-				$tmp->category_srl = $flat_list[$t]->category_srl;
-				$tmp->title = $flat_list[$t]->title;
-				$tmp->text = $flat_list[$t]->text;
-				$category_path[] = $tmp;
-
+				if ($flat_list[$t]->category_srl) {
+					$tmp->mid = $flat_list[$t]->mid;
+					$tmp->category_srl = $flat_list[$t]->category_srl;
+					$tmp->title = $flat_list[$t]->title;
+					$tmp->text = $flat_list[$t]->text;
+					$category_path[] = $tmp;
+				}
 				Context::set('category_path', array_reverse($category_path));
 			}
 		}

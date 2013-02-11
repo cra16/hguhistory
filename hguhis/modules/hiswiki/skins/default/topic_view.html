@@ -54,7 +54,7 @@ div.clear {
 		<!--올라온 글의 내용을 본다-->
 		<div>
 		<div class="hwBlock">
-			<h3 class="hwTitle"><b>{$document->getTitle()}</h3>
+			<h3 class="hwTitle">{$document->getTitle()}</h3>
 		<div class="s-e_date">
 			<span cond="$extra_vars[1]->value">Start Date:</span> 
 			<span cond="$extra_vars[1]->value">{zdate($extra_vars[1]->value."000000",'Y-m-d')}</span> 

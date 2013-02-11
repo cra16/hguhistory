@@ -61,16 +61,15 @@ class hiswikiView extends hiswiki {
 		$obj->page = 1;
 		$obj->list_count = 10; // 최신글 몇 개를 불러올 것인가? 기본 10개
 		$obj->page_count = 20;
-		$obj->order_type = 'asc';
+		$obj->order_type = 'desc';
 
 		// 이 모듈 관리자가 설정한 대문(document 형식으로 저장되어있음) 불러오기
 
-		// 최신 글 리스트 불러오기
+		// 최근 등록 글 리스트 불러오기
 		$obj->sort_index = 'regdate';
 		$newestDocList = $oDocumentModel->getDocumentList($obj, false, false);
 		Context::set('newestDocList', $newestDocList->data);
-
-
+		
 		// 인기글 리스트 불러오기 (조회수)
 		$obj->regdate = date('YmdHis', time() - 2678400);
 		$popular_doc = executeQueryArray('hiswiki.getPopularDocuments', $obj);
@@ -178,7 +177,7 @@ class hiswikiView extends hiswiki {
 	private function _makeHTMLMenu($list) {
 		$str = "<ul>";
 		foreach ($list as $val) {
-			$url = getUrl('act', 'dispHiswikiTopicList', 'category_srl', $val['category_srl']);
+			$url = getUrl('act', 'dispHiswikiContentList', 'category_srl', $val['category_srl']);
 			if ($val["category_srl"] == $this->tmp) {
 				$str .= "<li class=\"selected\"><a href=\"" . $url . "\">" . $val["text"] . "</a></li>";
 				$this->current_pointer->parent_srl = $val["parent_srl"];
@@ -197,7 +196,8 @@ class hiswikiView extends hiswiki {
 	/**
 	 * @function dispHiswikiModifyFrontPage
 	 * @author 바람꽃 (wndflwr@gmail.com)
-	 * @brief 싸이트 관리자일 경우 이 모듈의 대문(front_page)에 대한 수정 권한을 가지도록 한다.
+	 * @brief 대문(front_page) 수정 기능
+	 * 싸이트 관리자일 경우 이 모듈의 대문(front_page)에 대한 수정 권한을 가지도록 한다.
 	 */
 	function dispHiswikiModifyFrontPage() {
 		// 비정상적인 방법으로 접근할 경우 거부
@@ -245,10 +245,7 @@ class hiswikiView extends hiswiki {
 	function dispHiswikiContentList(){
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-
-		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
-		//if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-
+		
 		// check the grant
 		if(!$this->grant->access && !$this->grant->view) {
 			Context::set('document_list', array());

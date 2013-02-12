@@ -1,0 +1,39 @@
+<!--지희-->
+<include target="header.html"/>
+<div class="deleteTopic">
+	<div>삭제할 문서를 고르시오</div>
+	<br/>
+	<form action="./" method="post" class="delete">
+		{@$documentModel = &getModel('document');}
+		<!--@for($i=0; $i<count($hiswikiHistory->data);$i++)-->
+			{@$document = $documentModel->getDocument($hiswikiHistory->data[$i]->document_srl,false)}			
+			<div class="delete_sel">
+				<input type="checkbox" name="ver_sel" value="{$hiswikiHistory->data[$i]->document_srl}"/>버젼 {$hiswikiHistory->data[$i]->version}
+				<div class="title">{$document->getTitle()}</div>
+				<div class="summary">{$document->getSummary()}</div>
+				<div class="info">
+					<span class="regdate">작성일 {$document->getRegdate('Y.m.d')}</span>
+					<span class="author">| 작성자 {$document->getNickName()}</span>
+					<span class="view_count">| 조회수 {$document->get('readed_count')}</span> 
+					<span class="tag">| 태그 {$document->get('tags')}</span>				
+				</div>
+				<br/>
+			</div>
+		<!--@end-->
+		<div>
+			<input type="checkbox" name="ver_sel" value="{$origin->data[0]->document_srl}" />버젼 {$origin->data[0]->version} (최신 글)
+			{@$document = $documentModel->getDocument($origin->data[0]->document_srl,false)}			
+			<div class="title">{$document->getTitle()}</div>
+			<div class="summary">{$document->getSummary()}</div>
+			<div class="info">
+				<span class="regdate">작성일 {$document->getRegdate('Y.m.d')}</span>
+				<span class="author">| 작성자 {$document->getNickName()}</span>
+				<span class="view_count">| 조회수 {$document->get('readed_count')}</span> 
+				<span class="tag">| 태그 {$document->get('tags')}</span>
+			</div>					
+		</div>
+		<div align="right">
+			<input type="submit" value="삭제"/>
+		</div>		
+	</form>
+</div>

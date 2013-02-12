@@ -36,7 +36,6 @@ class hiswikiModel extends hiswiki {
 	function getHiswikiDoc($document_srl) {
 		$args->document_srl = $document_srl;
 		$output = executeQueryArray('hiswiki.getHiswikiDoc',$args);
-		debugPrint($output);
 		return $output;
 	}
 	

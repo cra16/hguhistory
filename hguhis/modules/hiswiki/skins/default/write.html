@@ -1,8 +1,22 @@
+<!--// @author 지희 -->
+<!--// @modifier 바람꽃 (wndflwr@gmail.com): 자동링크기능 추가 -->
 <!--// datepicker javascript plugin load -->
 <!--%load_js_plugin("ui")-->
 <!--%load_js_plugin("ui.datepicker")-->
-<load target="js/MyMethodCall.js"/>
-<form action="./" method="post" id="write">
+<load target="js/MyMethodCall.js" />
+<load target="js/CheckDuplicate.js" />
+<load target="js/rangy-core.js" />
+<load target="js/autoLink.js" />
+
+<!--// 자바스크립트에서 사용할 상수(언어 등)들 선언-->
+<script type="text/javascript">
+var autoLinkPack = {
+		dispHiswikiTopicWrite: "{getUrl('act', 'dispHiswikiTopicWrite')}",
+		no_topic_searched: '검색된 주제가 없습니다.'
+};
+</script>
+
+<form ruleset="topicWrite" action="./" method="post" id="write">
 	<input type="hidden" name="document_srl" value="{$document_info->get('document_srl')}" />
 	<input type="hidden" name="content" value="{$document_info->getContentText()}"/>
 	<input type="hidden" name="act" value="procHiswikiTopicWrite" />
@@ -11,7 +25,7 @@
 	<div class="box category&title">
 		<span>카테고리</span>
 		<select name="category_srl" class="category">
-			<option value="0">카테고리 선택</option>
+			<option value="">카테고리 선택</option>
 			<option loop="$category_list=>$val"
 				value="{$val->category_srl}"
 				selected="selected"|cond="$document_info->get('category_srl')==$val->category_srl">
@@ -60,14 +74,28 @@
 			})(jQuery);
 		</script>
 	</div>
-	<input type="hidden" name="module_srl"
-		value="{$module_info->module_srl}" />
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	
+	<p>단어 선택 후 Ctrl+J 를 이용하여 해당되는 주제에 빠르게 링크를 거세요.</p>
+	
 	<div class="editor">{$document_info->getEditor()}</div>
 	<div class="tag_box">
 		태그검색어 입력 <input type="text" name="tags" class="tags" value="{htmlspecialchars($document_info->get('tags'))}"/> 쉼표(,)로 구분하여 여러개 입력가능 </div>
-	</br>
+	<br/>
 	<div class="submit_btn">
 		<input type="submit" class="submit"/>
 	</div>
 </form>
-<load target="js/CheckDuplicate.js" />
+
+<style>
+#topicResultBox {
+	background-color:white;
+	border:1px solid balck;
+	position:absolute;
+}
+#topicResultBox ul {
+	list-style:none;
+	padding:0 0 0 0;
+	margin:0 0 0 0;
+}
+</style>

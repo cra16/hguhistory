@@ -28,7 +28,7 @@
         <action name="procHiswikiAdminModuleDelete" type="controller" standalone="true" />
         <action name="procHiswikiTopicWrite" type="controller" standalone="true" />
         
-        <action name="dispHiswikiFrontPage" type="view" standalone="true" index="true" />
+        <action name="dispHiswikiFrontPage" type="view" standalone="true" />
         <action name="dispHiswikiContentList" type="view" standalone="true" />
         <action name="dispHiswikiCategory" type="view" standalone="true" />
         <action name="dispHiswikiMessage" type="view" standalone="true" />
@@ -43,7 +43,7 @@
         <action name="procHiswikiAdminTopicDelete" type="controller" standalone="true" />
         <action name="dispHiswikiTopicDelete" type="view" standalone="true" />
         <action name="dispHiswikiTopicList" type="view" standalone="true" />
-        <action name="dispHiswikiTopicView" type="view" standalone="true" />
+        <action name="dispHiswikiTopicView" type="view" standalone="true" index="true" />
         <action name="procHiswikiTopicView" type="controller" standalone="true" />        
         <action name="getHiswikiSearchKeyword" type="model" standalone="true" />
         <action name="getHiswikiTitle" type="model" standalone="true" />

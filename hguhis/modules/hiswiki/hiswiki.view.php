@@ -31,7 +31,7 @@ class hiswikiView extends hiswiki {
 			$this->module_info = $module_info;
 			Context::set('module_info',$module_info);
 		}
-
+		
 		// 스킨 경로를 미리 template_path 라는 변수로 설정함
 		// 스킨이 존재하지 않는다면 default로 변경
 		$template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
@@ -61,16 +61,15 @@ class hiswikiView extends hiswiki {
 		$obj->page = 1;
 		$obj->list_count = 10; // 최신글 몇 개를 불러올 것인가? 기본 10개
 		$obj->page_count = 20;
-		$obj->order_type = 'asc';
+		$obj->order_type = 'desc';
 
 		// 이 모듈 관리자가 설정한 대문(document 형식으로 저장되어있음) 불러오기
 
-		// 최신 글 리스트 불러오기
+		// 최근 등록 글 리스트 불러오기
 		$obj->sort_index = 'regdate';
 		$newestDocList = $oDocumentModel->getDocumentList($obj, false, false);
 		Context::set('newestDocList', $newestDocList->data);
-
-
+		
 		// 인기글 리스트 불러오기 (조회수)
 		$obj->regdate = date('YmdHis', time() - 2678400);
 		$popular_doc = executeQueryArray('hiswiki.getPopularDocuments', $obj);
@@ -158,12 +157,13 @@ class hiswikiView extends hiswiki {
 
 				$tmp = new stdClass();
 				$t = $this->current_pointer->category_srl;
-				$tmp->mid = $flat_list[$t]->mid;
-				$tmp->category_srl = $flat_list[$t]->category_srl;
-				$tmp->title = $flat_list[$t]->title;
-				$tmp->text = $flat_list[$t]->text;
-				$category_path[] = $tmp;
-
+				if ($flat_list[$t]->category_srl) {
+					$tmp->mid = $flat_list[$t]->mid;
+					$tmp->category_srl = $flat_list[$t]->category_srl;
+					$tmp->title = $flat_list[$t]->title;
+					$tmp->text = $flat_list[$t]->text;
+					$category_path[] = $tmp;
+				}
 				Context::set('category_path', array_reverse($category_path));
 			}
 		}
@@ -177,7 +177,7 @@ class hiswikiView extends hiswiki {
 	private function _makeHTMLMenu($list) {
 		$str = "<ul>";
 		foreach ($list as $val) {
-			$url = getUrl('act', 'dispHiswikiTopicList', 'category_srl', $val['category_srl']);
+			$url = getUrl('act', 'dispHiswikiContentList', 'category_srl', $val['category_srl']);
 			if ($val["category_srl"] == $this->tmp) {
 				$str .= "<li class=\"selected\"><a href=\"" . $url . "\">" . $val["text"] . "</a></li>";
 				$this->current_pointer->parent_srl = $val["parent_srl"];
@@ -196,7 +196,8 @@ class hiswikiView extends hiswiki {
 	/**
 	 * @function dispHiswikiModifyFrontPage
 	 * @author 바람꽃 (wndflwr@gmail.com)
-	 * @brief 싸이트 관리자일 경우 이 모듈의 대문(front_page)에 대한 수정 권한을 가지도록 한다.
+	 * @brief 대문(front_page) 수정 기능
+	 * 싸이트 관리자일 경우 이 모듈의 대문(front_page)에 대한 수정 권한을 가지도록 한다.
 	 */
 	function dispHiswikiModifyFrontPage() {
 		// 비정상적인 방법으로 접근할 경우 거부
@@ -244,10 +245,7 @@ class hiswikiView extends hiswiki {
 	function dispHiswikiContentList(){
 		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
 		if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-
-		// 비정상적인 방법으로 접근할 경우 거부(by 인호)
-		//if ($this->module_info->module != 'hiswiki') return new Object(-1, "msg_invalid_request");
-
+		
 		// check the grant
 		if(!$this->grant->access && !$this->grant->view) {
 			Context::set('document_list', array());
@@ -377,6 +375,7 @@ class hiswikiView extends hiswiki {
 	 * @function dispHiswikiTopicWrite
 	 * @brief topic 추가 설정중
 	 * @author 현희
+	 * @modifier 바람꽃(wndflwr@gmail.com) 에디터에 자동링크기능 추가
 	 **/
 	function dispHiswikiTopicWrite() {
 		// 쓰기 권한 체크
@@ -443,7 +442,8 @@ class hiswikiView extends hiswiki {
 
 		$document_srl = Context::get('document_srl');
 		if(!$document_srl){
-			return new Object(-1, 'msg_invalid_request');
+			$this->dispHiswikiFrontPage();
+			return;
 		}
 		$page = Context::get('page');
 		
@@ -454,6 +454,7 @@ class hiswikiView extends hiswiki {
 		// hiswiki model 을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
 		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($document_srl);
+		Context::set('category_srl', $document->get('category_srl'));
 		Context::set('document',$document);
 		Context::set('hiswiki_doc',$hiswiki_doc->data);
 		Context::set('module_info',$this->module_info);

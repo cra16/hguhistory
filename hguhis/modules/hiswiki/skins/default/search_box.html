@@ -1,31 +1,5 @@
-<style>
-	#hiswiki_searchbox input {
-	}
-	#hiswiki_searchbox .fr {
-		float:right;
-	}
-	#hiswiki_searchbox .clear {
-		clear:both;
-	}
-	#hiswiki_searchbox input[type="text"] {
-		width:250px;
-		border-top: 1px solid #919191;
-		border-left: 1px solid #919191;
-		border-bottom: 1px solid #D4D4D4;
-		border-right: 1px solid #D4D4D4;
-		line-height:22px;
-		height:20px;
-		margin:0 2px 0 2px;
-	}
-	.hiswiki_qsbox{
-		background-color:white;
-		border:1px solid black;
-	}
-</style>
-
 <div id="hiswiki_searchbox" class="search_box">
 	<form method="get" action="./">
-		<a href="#" class="fr btn" >상세 검색</a>
 		<input type="submit" value="검색" class="fr btn" />
 		<input type="text" name="search_keyword" class="fr" id="hiswiki_search_keyword" value="{$search_keyword}" />
 		<div class="clear"></div>

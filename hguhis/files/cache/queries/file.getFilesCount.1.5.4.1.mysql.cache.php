@@ -4,18 +4,18 @@ $query->setQueryId("getFilesCount");
 $query->setAction("select");
 $query->setPriority("");
 if(isset($args->upload_target_srl)) {
-${'upload_target_srl1_argument'} = new ConditionArgument('upload_target_srl', $args->upload_target_srl, 'equal');
-${'upload_target_srl1_argument'}->checkFilter('number');
-${'upload_target_srl1_argument'}->createConditionValue();
-if(!${'upload_target_srl1_argument'}->isValid()) return ${'upload_target_srl1_argument'}->getErrorMessage();
+${'upload_target_srl18_argument'} = new ConditionArgument('upload_target_srl', $args->upload_target_srl, 'equal');
+${'upload_target_srl18_argument'}->checkFilter('number');
+${'upload_target_srl18_argument'}->createConditionValue();
+if(!${'upload_target_srl18_argument'}->isValid()) return ${'upload_target_srl18_argument'}->getErrorMessage();
 } else
-${'upload_target_srl1_argument'} = null;if(${'upload_target_srl1_argument'} !== null) ${'upload_target_srl1_argument'}->setColumnType('number');
+${'upload_target_srl18_argument'} = null;if(${'upload_target_srl18_argument'} !== null) ${'upload_target_srl18_argument'}->setColumnType('number');
 if(isset($args->regDate)) {
-${'regDate2_argument'} = new ConditionArgument('regDate', $args->regDate, 'like_prefix');
-${'regDate2_argument'}->createConditionValue();
-if(!${'regDate2_argument'}->isValid()) return ${'regDate2_argument'}->getErrorMessage();
+${'regDate19_argument'} = new ConditionArgument('regDate', $args->regDate, 'like_prefix');
+${'regDate19_argument'}->createConditionValue();
+if(!${'regDate19_argument'}->isValid()) return ${'regDate19_argument'}->getErrorMessage();
 } else
-${'regDate2_argument'} = null;if(${'regDate2_argument'} !== null) ${'regDate2_argument'}->setColumnType('date');
+${'regDate19_argument'} = null;if(${'regDate19_argument'} !== null) ${'regDate19_argument'}->setColumnType('date');
 
 $query->setColumns(array(
 new SelectExpression('count(*)', '`count`')
@@ -25,8 +25,8 @@ new Table('`xe_files`', '`files`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`upload_target_srl`',$upload_target_srl1_argument,"equal")
-,new ConditionWithArgument('`regdate`',$regDate2_argument,"like_prefix", 'and')))
+new ConditionWithArgument('`upload_target_srl`',$upload_target_srl18_argument,"equal")
+,new ConditionWithArgument('`regdate`',$regDate19_argument,"like_prefix", 'and')))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

@@ -4,11 +4,11 @@ $query->setQueryId("getModuleSkinDotList");
 $query->setAction("select");
 $query->setPriority("");
 
-${'skin23_argument'} = new ConditionArgument('skin', $args->skin, 'like');
-${'skin23_argument'}->ensureDefaultValue('.');
-${'skin23_argument'}->createConditionValue();
-if(!${'skin23_argument'}->isValid()) return ${'skin23_argument'}->getErrorMessage();
-if(${'skin23_argument'} !== null) ${'skin23_argument'}->setColumnType('varchar');
+${'skin2_argument'} = new ConditionArgument('skin', $args->skin, 'like');
+${'skin2_argument'}->ensureDefaultValue('.');
+${'skin2_argument'}->createConditionValue();
+if(!${'skin2_argument'}->isValid()) return ${'skin2_argument'}->getErrorMessage();
+if(${'skin2_argument'} !== null) ${'skin2_argument'}->setColumnType('varchar');
 
 $query->setColumns(array(
 new SelectExpression('`module`')
@@ -19,7 +19,7 @@ new Table('`xe_modules`', '`modules`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`skin`',$skin23_argument,"like")))
+new ConditionWithArgument('`skin`',$skin2_argument,"like")))
 ));
 $query->setGroups(array(
 '`skin`' ));

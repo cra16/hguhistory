@@ -1,68 +1,83 @@
 <include target="header.html" />
 <!-- 현희 -->
 <style type="text/css">
-
 .outerDiv {
 	margin: 20px 20px 20px 20px;
 }
 
+.outerDiv .contentList{border-collapse:collapse;}
 
-.contentList  .listHeading {
-	
-	font-size:14pt;
-	border: 1px dotted rgb(220, 220, 220);
-	background-image: url("{geturl()}modules/hiswiki/skins/default/img/rockywall.png");
-	
-	}
-	
-
-.document_list {
-
-	padding: 5px 5px 5px 5px;
-	font-size: 10pt;
-	font-family: 바탕;
-	text-align: center;
+.pageDiv {
+	margin: 20px;
 }
 
+.hwTable .listHeading {
+	width: 400px;
+}
+
+.hwTable .listHeading th {
+	color:#696969;
+	text-align:center;
+	border-top-width: 2px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	font-weight: normal;
+	font-size: 11px;
+	font-family: 돋움, dotum, sans-serif;
+	letter-spacing: -1px;
+	border-color: #d5d5d5;
+	padding: 6px 9px 4px 9px;
+	border-collapse: collapse;
+}
+
+.hwTable .document_list {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-color: #d5d5d5;
+}
+
+.document_list td.alignCenter{text-align:center;}
+
+.document_list td.title{text-align:left;padding-top:3px;padding-bottom:3px;}
+
+.document_list td.decoNone {text-decoration:none;}
+
+.document_list td {border-bottom-width:1px;border-collapse: collapse;}
 
 
-.hwTable .num{width:40px;}
-.hwTable .title{width:250px;}
-.hwTable .regdate{width:150px;}
-.hwTable .nickName{width:150px;}
-.hwTable .readCount{width:50px;}
+a:link {text-decoration:none;color:black;}
+a:visited {color:rgb(73, 73, 73);}
+a:hover {color:#A9A9A9;}
 
-.hwTable .document_list .num, .title, .regdate, .nickName, .readCount {text-decoration:none; padding:3px 5px 3px 5px;}
-
-.pageDiv{margin:15px;}
 
 
 </style>
 <div class="outerDiv">
-	<table class="contentList">
+	<table class="contentList" width="100%">
 		<thead class="hwTable">
 			<tr class="listHeading">
-				<th class="num">No</th>
-				<th class="title">Title</th>
-				<th class="regdate">Regdate</th>
-				<th class="nickName">Author</th>
-				<th class="readCount">Read</th>
+				<th class="num" width="10%">번호</th>
+				<th class="title" width="50%">제목</th>
+				<th class="regdate" width="15%">작성일</th>
+				<th class="nickName" width="15%">글쓴이</th>
+				<th class="readCount" width="10%">조회</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr class="document_list" loop="$document_list=>$key, $val">
-				<td class="num">{$key}</td>
+				<td class="num alignCenter">{$key}</td>
 				<td class="title"><a href="{$val->getPermanentUrl()}">{$val->getTitle()}</a></td>
-				<td class="regdate">{$val->getRegdate('Y.m.d')}</td>
-				<td class="nickName">{$val->getNickName()}</td>
-				<td class="readCount">{$val->get('readed_count')}</td>
+				<td class="regdate alignCenter">{$val->getRegdate('Y.m.d')}</td>
+				<td class="nickName alignCenter member_{$val->get('member_srl')}">{$val->getNickName()}</td>
+				<td class="readCount alignCenter">{$val->get('readed_count')}</td>
 			</tr>
 		</tbody>
 	</table>
 
 	<!-- page navigation -->
-	<div class="pageDiv" align="center";>
-		<a href="{getUrl('page','','document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="btn">처음</a>
+	<div class="pageDiv" align="center">
+		<a href="{getUrl('page','','document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="firstPage">처음</a>
 		<!--@while($page_no = $page_navigation->getNextPage())-->
 			<!--@if($page == $page_no)-->
 				<strong>{$page_no}</strong>
@@ -70,7 +85,7 @@
 				<a href="{getUrl('page',$page_no,'document_srl','','division',$division,'last_division',$last_division,'entry','')}">{$page_no}</a>
 			<!--@end-->
 		<!--@end-->
-		<a href="{getUrl('page',$page_navigation->last_page,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="btn">맨끝</a>
+		<a href="{getUrl('page',$page_navigation->last_page,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="lastPage">끝</a>
 	</div>
 </div>
 

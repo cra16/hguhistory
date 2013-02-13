@@ -4,88 +4,88 @@ $query->setQueryId("insertMenuItem");
 $query->setAction("insert");
 $query->setPriority("");
 
-${'menu_item_srl1_argument'} = new Argument('menu_item_srl', $args->{'menu_item_srl'});
-${'menu_item_srl1_argument'}->checkFilter('number');
-${'menu_item_srl1_argument'}->checkNotNull();
-if(!${'menu_item_srl1_argument'}->isValid()) return ${'menu_item_srl1_argument'}->getErrorMessage();
-if(${'menu_item_srl1_argument'} !== null) ${'menu_item_srl1_argument'}->setColumnType('number');
+${'menu_item_srl70_argument'} = new Argument('menu_item_srl', $args->{'menu_item_srl'});
+${'menu_item_srl70_argument'}->checkFilter('number');
+${'menu_item_srl70_argument'}->checkNotNull();
+if(!${'menu_item_srl70_argument'}->isValid()) return ${'menu_item_srl70_argument'}->getErrorMessage();
+if(${'menu_item_srl70_argument'} !== null) ${'menu_item_srl70_argument'}->setColumnType('number');
 
-${'parent_srl2_argument'} = new Argument('parent_srl', $args->{'parent_srl'});
-${'parent_srl2_argument'}->checkFilter('number');
-${'parent_srl2_argument'}->ensureDefaultValue('0');
-if(!${'parent_srl2_argument'}->isValid()) return ${'parent_srl2_argument'}->getErrorMessage();
-if(${'parent_srl2_argument'} !== null) ${'parent_srl2_argument'}->setColumnType('number');
+${'parent_srl71_argument'} = new Argument('parent_srl', $args->{'parent_srl'});
+${'parent_srl71_argument'}->checkFilter('number');
+${'parent_srl71_argument'}->ensureDefaultValue('0');
+if(!${'parent_srl71_argument'}->isValid()) return ${'parent_srl71_argument'}->getErrorMessage();
+if(${'parent_srl71_argument'} !== null) ${'parent_srl71_argument'}->setColumnType('number');
 
-${'menu_srl3_argument'} = new Argument('menu_srl', $args->{'menu_srl'});
-${'menu_srl3_argument'}->checkFilter('number');
-${'menu_srl3_argument'}->checkNotNull();
-if(!${'menu_srl3_argument'}->isValid()) return ${'menu_srl3_argument'}->getErrorMessage();
-if(${'menu_srl3_argument'} !== null) ${'menu_srl3_argument'}->setColumnType('number');
+${'menu_srl72_argument'} = new Argument('menu_srl', $args->{'menu_srl'});
+${'menu_srl72_argument'}->checkFilter('number');
+${'menu_srl72_argument'}->checkNotNull();
+if(!${'menu_srl72_argument'}->isValid()) return ${'menu_srl72_argument'}->getErrorMessage();
+if(${'menu_srl72_argument'} !== null) ${'menu_srl72_argument'}->setColumnType('number');
 
-${'name4_argument'} = new Argument('name', $args->{'name'});
-${'name4_argument'}->checkNotNull();
-if(!${'name4_argument'}->isValid()) return ${'name4_argument'}->getErrorMessage();
-if(${'name4_argument'} !== null) ${'name4_argument'}->setColumnType('text');
+${'name73_argument'} = new Argument('name', $args->{'name'});
+${'name73_argument'}->checkNotNull();
+if(!${'name73_argument'}->isValid()) return ${'name73_argument'}->getErrorMessage();
+if(${'name73_argument'} !== null) ${'name73_argument'}->setColumnType('text');
 if(isset($args->url)) {
-${'url5_argument'} = new Argument('url', $args->{'url'});
-if(!${'url5_argument'}->isValid()) return ${'url5_argument'}->getErrorMessage();
+${'url74_argument'} = new Argument('url', $args->{'url'});
+if(!${'url74_argument'}->isValid()) return ${'url74_argument'}->getErrorMessage();
 } else
-${'url5_argument'} = null;if(${'url5_argument'} !== null) ${'url5_argument'}->setColumnType('varchar');
+${'url74_argument'} = null;if(${'url74_argument'} !== null) ${'url74_argument'}->setColumnType('varchar');
 if(isset($args->open_window)) {
-${'open_window6_argument'} = new Argument('open_window', $args->{'open_window'});
-if(!${'open_window6_argument'}->isValid()) return ${'open_window6_argument'}->getErrorMessage();
+${'open_window75_argument'} = new Argument('open_window', $args->{'open_window'});
+if(!${'open_window75_argument'}->isValid()) return ${'open_window75_argument'}->getErrorMessage();
 } else
-${'open_window6_argument'} = null;if(${'open_window6_argument'} !== null) ${'open_window6_argument'}->setColumnType('char');
+${'open_window75_argument'} = null;if(${'open_window75_argument'} !== null) ${'open_window75_argument'}->setColumnType('char');
 if(isset($args->expand)) {
-${'expand7_argument'} = new Argument('expand', $args->{'expand'});
-if(!${'expand7_argument'}->isValid()) return ${'expand7_argument'}->getErrorMessage();
+${'expand76_argument'} = new Argument('expand', $args->{'expand'});
+if(!${'expand76_argument'}->isValid()) return ${'expand76_argument'}->getErrorMessage();
 } else
-${'expand7_argument'} = null;if(${'expand7_argument'} !== null) ${'expand7_argument'}->setColumnType('char');
+${'expand76_argument'} = null;if(${'expand76_argument'} !== null) ${'expand76_argument'}->setColumnType('char');
 if(isset($args->normal_btn)) {
-${'normal_btn8_argument'} = new Argument('normal_btn', $args->{'normal_btn'});
-if(!${'normal_btn8_argument'}->isValid()) return ${'normal_btn8_argument'}->getErrorMessage();
+${'normal_btn77_argument'} = new Argument('normal_btn', $args->{'normal_btn'});
+if(!${'normal_btn77_argument'}->isValid()) return ${'normal_btn77_argument'}->getErrorMessage();
 } else
-${'normal_btn8_argument'} = null;if(${'normal_btn8_argument'} !== null) ${'normal_btn8_argument'}->setColumnType('varchar');
+${'normal_btn77_argument'} = null;if(${'normal_btn77_argument'} !== null) ${'normal_btn77_argument'}->setColumnType('varchar');
 if(isset($args->hover_btn)) {
-${'hover_btn9_argument'} = new Argument('hover_btn', $args->{'hover_btn'});
-if(!${'hover_btn9_argument'}->isValid()) return ${'hover_btn9_argument'}->getErrorMessage();
+${'hover_btn78_argument'} = new Argument('hover_btn', $args->{'hover_btn'});
+if(!${'hover_btn78_argument'}->isValid()) return ${'hover_btn78_argument'}->getErrorMessage();
 } else
-${'hover_btn9_argument'} = null;if(${'hover_btn9_argument'} !== null) ${'hover_btn9_argument'}->setColumnType('varchar');
+${'hover_btn78_argument'} = null;if(${'hover_btn78_argument'} !== null) ${'hover_btn78_argument'}->setColumnType('varchar');
 if(isset($args->active_btn)) {
-${'active_btn10_argument'} = new Argument('active_btn', $args->{'active_btn'});
-if(!${'active_btn10_argument'}->isValid()) return ${'active_btn10_argument'}->getErrorMessage();
+${'active_btn79_argument'} = new Argument('active_btn', $args->{'active_btn'});
+if(!${'active_btn79_argument'}->isValid()) return ${'active_btn79_argument'}->getErrorMessage();
 } else
-${'active_btn10_argument'} = null;if(${'active_btn10_argument'} !== null) ${'active_btn10_argument'}->setColumnType('varchar');
+${'active_btn79_argument'} = null;if(${'active_btn79_argument'} !== null) ${'active_btn79_argument'}->setColumnType('varchar');
 if(isset($args->group_srls)) {
-${'group_srls11_argument'} = new Argument('group_srls', $args->{'group_srls'});
-if(!${'group_srls11_argument'}->isValid()) return ${'group_srls11_argument'}->getErrorMessage();
+${'group_srls80_argument'} = new Argument('group_srls', $args->{'group_srls'});
+if(!${'group_srls80_argument'}->isValid()) return ${'group_srls80_argument'}->getErrorMessage();
 } else
-${'group_srls11_argument'} = null;if(${'group_srls11_argument'} !== null) ${'group_srls11_argument'}->setColumnType('text');
+${'group_srls80_argument'} = null;if(${'group_srls80_argument'} !== null) ${'group_srls80_argument'}->setColumnType('text');
 
-${'listorder12_argument'} = new Argument('listorder', $args->{'listorder'});
-${'listorder12_argument'}->checkNotNull();
-if(!${'listorder12_argument'}->isValid()) return ${'listorder12_argument'}->getErrorMessage();
-if(${'listorder12_argument'} !== null) ${'listorder12_argument'}->setColumnType('number');
+${'listorder81_argument'} = new Argument('listorder', $args->{'listorder'});
+${'listorder81_argument'}->checkNotNull();
+if(!${'listorder81_argument'}->isValid()) return ${'listorder81_argument'}->getErrorMessage();
+if(${'listorder81_argument'} !== null) ${'listorder81_argument'}->setColumnType('number');
 
-${'regdate13_argument'} = new Argument('regdate', $args->{'regdate'});
-${'regdate13_argument'}->ensureDefaultValue(date("YmdHis"));
-if(!${'regdate13_argument'}->isValid()) return ${'regdate13_argument'}->getErrorMessage();
-if(${'regdate13_argument'} !== null) ${'regdate13_argument'}->setColumnType('date');
+${'regdate82_argument'} = new Argument('regdate', $args->{'regdate'});
+${'regdate82_argument'}->ensureDefaultValue(date("YmdHis"));
+if(!${'regdate82_argument'}->isValid()) return ${'regdate82_argument'}->getErrorMessage();
+if(${'regdate82_argument'} !== null) ${'regdate82_argument'}->setColumnType('date');
 
 $query->setColumns(array(
-new InsertExpression('`menu_item_srl`', ${'menu_item_srl1_argument'})
-,new InsertExpression('`parent_srl`', ${'parent_srl2_argument'})
-,new InsertExpression('`menu_srl`', ${'menu_srl3_argument'})
-,new InsertExpression('`name`', ${'name4_argument'})
-,new InsertExpression('`url`', ${'url5_argument'})
-,new InsertExpression('`open_window`', ${'open_window6_argument'})
-,new InsertExpression('`expand`', ${'expand7_argument'})
-,new InsertExpression('`normal_btn`', ${'normal_btn8_argument'})
-,new InsertExpression('`hover_btn`', ${'hover_btn9_argument'})
-,new InsertExpression('`active_btn`', ${'active_btn10_argument'})
-,new InsertExpression('`group_srls`', ${'group_srls11_argument'})
-,new InsertExpression('`listorder`', ${'listorder12_argument'})
-,new InsertExpression('`regdate`', ${'regdate13_argument'})
+new InsertExpression('`menu_item_srl`', ${'menu_item_srl70_argument'})
+,new InsertExpression('`parent_srl`', ${'parent_srl71_argument'})
+,new InsertExpression('`menu_srl`', ${'menu_srl72_argument'})
+,new InsertExpression('`name`', ${'name73_argument'})
+,new InsertExpression('`url`', ${'url74_argument'})
+,new InsertExpression('`open_window`', ${'open_window75_argument'})
+,new InsertExpression('`expand`', ${'expand76_argument'})
+,new InsertExpression('`normal_btn`', ${'normal_btn77_argument'})
+,new InsertExpression('`hover_btn`', ${'hover_btn78_argument'})
+,new InsertExpression('`active_btn`', ${'active_btn79_argument'})
+,new InsertExpression('`group_srls`', ${'group_srls80_argument'})
+,new InsertExpression('`listorder`', ${'listorder81_argument'})
+,new InsertExpression('`regdate`', ${'regdate82_argument'})
 ));
 $query->setTables(array(
 new Table('`xe_menu_item`', '`menu_item`')

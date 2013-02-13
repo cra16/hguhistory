@@ -4,11 +4,11 @@ $query->setQueryId("getMemberCountByDate");
 $query->setAction("select");
 $query->setPriority("");
 if(isset($args->regDate)) {
-${'regDate1_argument'} = new ConditionArgument('regDate', $args->regDate, 'like_prefix');
-${'regDate1_argument'}->createConditionValue();
-if(!${'regDate1_argument'}->isValid()) return ${'regDate1_argument'}->getErrorMessage();
+${'regDate7_argument'} = new ConditionArgument('regDate', $args->regDate, 'like_prefix');
+${'regDate7_argument'}->createConditionValue();
+if(!${'regDate7_argument'}->isValid()) return ${'regDate7_argument'}->getErrorMessage();
 } else
-${'regDate1_argument'} = null;if(${'regDate1_argument'} !== null) ${'regDate1_argument'}->setColumnType('date');
+${'regDate7_argument'} = null;if(${'regDate7_argument'} !== null) ${'regDate7_argument'}->setColumnType('date');
 
 $query->setColumns(array(
 new SelectExpression('count(*)', '`count`')
@@ -18,7 +18,7 @@ new Table('`xe_member`', '`member`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`regdate`',$regDate1_argument,"like_prefix")))
+new ConditionWithArgument('`regdate`',$regDate7_argument,"like_prefix")))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

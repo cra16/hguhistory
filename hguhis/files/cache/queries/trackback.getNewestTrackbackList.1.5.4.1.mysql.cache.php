@@ -4,27 +4,27 @@ $query->setQueryId("getNewestTrackbackList");
 $query->setAction("select");
 $query->setPriority("");
 if(isset($args->site_srl)) {
-${'site_srl16_argument'} = new ConditionArgument('site_srl', $args->site_srl, 'equal');
-${'site_srl16_argument'}->checkFilter('number');
-${'site_srl16_argument'}->createConditionValue();
-if(!${'site_srl16_argument'}->isValid()) return ${'site_srl16_argument'}->getErrorMessage();
+${'site_srl57_argument'} = new ConditionArgument('site_srl', $args->site_srl, 'equal');
+${'site_srl57_argument'}->checkFilter('number');
+${'site_srl57_argument'}->createConditionValue();
+if(!${'site_srl57_argument'}->isValid()) return ${'site_srl57_argument'}->getErrorMessage();
 } else
-${'site_srl16_argument'} = null;if(${'site_srl16_argument'} !== null) ${'site_srl16_argument'}->setColumnType('number');
+${'site_srl57_argument'} = null;if(${'site_srl57_argument'} !== null) ${'site_srl57_argument'}->setColumnType('number');
 if(isset($args->module_srl)) {
-${'module_srl17_argument'} = new ConditionArgument('module_srl', $args->module_srl, 'in');
-${'module_srl17_argument'}->checkFilter('number');
-${'module_srl17_argument'}->createConditionValue();
-if(!${'module_srl17_argument'}->isValid()) return ${'module_srl17_argument'}->getErrorMessage();
+${'module_srl58_argument'} = new ConditionArgument('module_srl', $args->module_srl, 'in');
+${'module_srl58_argument'}->checkFilter('number');
+${'module_srl58_argument'}->createConditionValue();
+if(!${'module_srl58_argument'}->isValid()) return ${'module_srl58_argument'}->getErrorMessage();
 } else
-${'module_srl17_argument'} = null;if(${'module_srl17_argument'} !== null) ${'module_srl17_argument'}->setColumnType('number');
+${'module_srl58_argument'} = null;if(${'module_srl58_argument'} !== null) ${'module_srl58_argument'}->setColumnType('number');
 
-${'list_count19_argument'} = new Argument('list_count', $args->{'list_count'});
-${'list_count19_argument'}->ensureDefaultValue('20');
-if(!${'list_count19_argument'}->isValid()) return ${'list_count19_argument'}->getErrorMessage();
+${'list_count60_argument'} = new Argument('list_count', $args->{'list_count'});
+${'list_count60_argument'}->ensureDefaultValue('20');
+if(!${'list_count60_argument'}->isValid()) return ${'list_count60_argument'}->getErrorMessage();
 
-${'sort_index18_argument'} = new Argument('sort_index', $args->{'sort_index'});
-${'sort_index18_argument'}->ensureDefaultValue('trackbacks.list_order');
-if(!${'sort_index18_argument'}->isValid()) return ${'sort_index18_argument'}->getErrorMessage();
+${'sort_index59_argument'} = new Argument('sort_index', $args->{'sort_index'});
+${'sort_index59_argument'}->ensureDefaultValue('trackbacks.list_order');
+if(!${'sort_index59_argument'}->isValid()) return ${'sort_index59_argument'}->getErrorMessage();
 
 $query->setColumns(array(
 new SelectExpression('`trackbacks`.*')
@@ -35,13 +35,13 @@ new Table('`xe_trackbacks`', '`trackbacks`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`modules`.`site_srl`',$site_srl16_argument,"equal", 'and')
-,new ConditionWithArgument('`modules`.`module_srl`',$module_srl17_argument,"in", 'and')
+new ConditionWithArgument('`modules`.`site_srl`',$site_srl57_argument,"equal", 'and')
+,new ConditionWithArgument('`modules`.`module_srl`',$module_srl58_argument,"in", 'and')
 ,new ConditionWithoutArgument('`trackbacks`.`module_srl`','`modules`.`module_srl`',"equal", 'and')))
 ));
 $query->setGroups(array());
 $query->setOrder(array(
-new OrderByColumn(${'sort_index18_argument'}, "asc")
+new OrderByColumn(${'sort_index59_argument'}, "asc")
 ));
-$query->setLimit(new Limit(${'list_count19_argument'}));
+$query->setLimit(new Limit(${'list_count60_argument'}));
 return $query; ?>

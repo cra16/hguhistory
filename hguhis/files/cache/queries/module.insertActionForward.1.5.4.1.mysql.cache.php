@@ -4,25 +4,25 @@ $query->setQueryId("insertActionForward");
 $query->setAction("insert");
 $query->setPriority("");
 
-${'act27_argument'} = new Argument('act', $args->{'act'});
-${'act27_argument'}->checkNotNull();
-if(!${'act27_argument'}->isValid()) return ${'act27_argument'}->getErrorMessage();
-if(${'act27_argument'} !== null) ${'act27_argument'}->setColumnType('varchar');
+${'act21_argument'} = new Argument('act', $args->{'act'});
+${'act21_argument'}->checkNotNull();
+if(!${'act21_argument'}->isValid()) return ${'act21_argument'}->getErrorMessage();
+if(${'act21_argument'} !== null) ${'act21_argument'}->setColumnType('varchar');
 
-${'module28_argument'} = new Argument('module', $args->{'module'});
-${'module28_argument'}->checkNotNull();
-if(!${'module28_argument'}->isValid()) return ${'module28_argument'}->getErrorMessage();
-if(${'module28_argument'} !== null) ${'module28_argument'}->setColumnType('varchar');
+${'module22_argument'} = new Argument('module', $args->{'module'});
+${'module22_argument'}->checkNotNull();
+if(!${'module22_argument'}->isValid()) return ${'module22_argument'}->getErrorMessage();
+if(${'module22_argument'} !== null) ${'module22_argument'}->setColumnType('varchar');
 
-${'type29_argument'} = new Argument('type', $args->{'type'});
-${'type29_argument'}->checkNotNull();
-if(!${'type29_argument'}->isValid()) return ${'type29_argument'}->getErrorMessage();
-if(${'type29_argument'} !== null) ${'type29_argument'}->setColumnType('varchar');
+${'type23_argument'} = new Argument('type', $args->{'type'});
+${'type23_argument'}->checkNotNull();
+if(!${'type23_argument'}->isValid()) return ${'type23_argument'}->getErrorMessage();
+if(${'type23_argument'} !== null) ${'type23_argument'}->setColumnType('varchar');
 
 $query->setColumns(array(
-new InsertExpression('`act`', ${'act27_argument'})
-,new InsertExpression('`module`', ${'module28_argument'})
-,new InsertExpression('`type`', ${'type29_argument'})
+new InsertExpression('`act`', ${'act21_argument'})
+,new InsertExpression('`module`', ${'module22_argument'})
+,new InsertExpression('`type`', ${'type23_argument'})
 ));
 $query->setTables(array(
 new Table('`xe_action_forward`', '`action_forward`')

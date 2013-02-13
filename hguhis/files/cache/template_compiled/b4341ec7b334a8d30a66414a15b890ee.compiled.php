@@ -2,7 +2,6 @@
 <!-- 현희 -->
 <style>
 div.document_view li {
-	list-style:none;
 	position:relative;
 	float:left;
 	padding-left:4px;	
@@ -16,7 +15,7 @@ div.clear {
 }
 .hwTitle {
 	font-size: 15pt;
-	margin: 8px 3px 8px 3px;
+	margin: 8px 3px 0px 3px;
 }
 .hwBlock {
 	margin: 5px 2px 5px 2px;
@@ -27,9 +26,9 @@ div.clear {
 	border: 1px dotted rgb(209, 209, 209);
 }
 .tag{margin: 3px 5px 3px -30px;}
-.tag:link{font-color:black;}
+.a:link{font-color:rgb(0, 0, 255);text-decoration:none;}
 .tagIcon{padding:0px 3px 0px 0px;}
-.s-e_date {margin: 7px 5px 5px 4px;font-size:10pt;}
+.s-e_date {margin:5px 5px 5px 4px;font-size:10pt;color:#808080;}
 .hwContent{padding: 10px 15px 5px 15px;font-size: 10pt;align:left;}
 </style>
 <?php $__tpl=TemplateHandler::getInstance();echo $__tpl->compile('modules/hiswiki/skins/default','header.html') ?>

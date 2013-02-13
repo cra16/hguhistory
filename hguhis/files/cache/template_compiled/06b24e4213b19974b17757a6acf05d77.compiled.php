@@ -15,7 +15,7 @@ var autoLinkPack = {
 	<input type="hidden" name="document_srl" value="<?php echo $__Context->document_info->get('document_srl') ?>" />
 	<input type="hidden" name="content" value="<?php echo $__Context->document_info->getContentText() ?>"/>
 	<input type="hidden" name="act" value="procHiswikiTopicWrite" />
-	<input type="hidden" name="success_return_url" value="<?php echo getUrl('act','dispHiswikiForntPage') ?>" />
+	<input type="hidden" name="success_return_url" value="<?php echo getUrl('act','dispHiswikiFrontPage') ?>" />
 	<input type="hidden" name="error_return_url" value="<?php echo getUrl('act','procHiswikiTopicWrite') ?>" /> 
 	<div class="box category&title">
 		<span>카테고리</span>
@@ -36,8 +36,8 @@ var autoLinkPack = {
 	<div class="date">
 		<span>
 			<span>시작연도</span> 
-			<input type="hidden" name="start_date" class="start_date"<?php if($__Context->topic_info->data[0]->start_date){ ?> value="<?php echo zdate($__Context->extra_vars[1]->value.'000000','Y-m-d') ?>"<?php } ?> />
-			<input type="text" class="cal startDate"<?php if($__Context->topic_info->data[0]->start_date){ ?> value="<?php echo zdate($__Context->extra_vars[1]->value.'000000','Y-m-d') ?>"<?php } ?>/>
+			<input type="hidden" name="start_date" class="start_date"<?php if($__Context->extra_vars[1]->value){ ?> value="<?php echo zdate($__Context->extra_vars[1]->value.'000000','Y-m-d') ?>"<?php } ?> />
+			<input type="text" class="cal startDate"<?php if($__Context->extra_vars[1]->value){ ?> value="<?php echo zdate($__Context->extra_vars[1]->value.'000000','Y-m-d') ?>"<?php } ?>/>
 			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</span>
 		
@@ -45,8 +45,8 @@ var autoLinkPack = {
 		
 		<span>
 			<span>종료연도</span> 
-			<input type="hidden" name="end_date" class="end_date"<?php if($__Context->topic_info->data[0]->end_date){ ?> value="<?php echo zdate($__Context->extra_vars[2]->value.'000000','Y-m-d') ?>"<?php } ?> />
-			<input type="text" class="cal endDate" <?php if($__Context->topic_info->data[0]->end_date){ ?> value="<?php echo zdate($__Context->extra_vars[2]->value.'000000','Y-m-d') ?>"<?php } ?> />
+			<input type="hidden" name="end_date" class="end_date"<?php if($__Context->extra_vars[2]->value){ ?> value="<?php echo zdate($__Context->extra_vars[2]->value.'000000','Y-m-d') ?>"<?php } ?> />
+			<input type="text" class="cal endDate" <?php if($__Context->extra_vars[2]->value){ ?> value="<?php echo zdate($__Context->extra_vars[2]->value.'000000','Y-m-d') ?>"<?php } ?> />
 			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</span>
 		<script type="text/javascript">

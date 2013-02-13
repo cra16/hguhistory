@@ -4,11 +4,11 @@ $query->setQueryId("getPackageSqlByPath");
 $query->setAction("select");
 $query->setPriority("");
 
-${'path25_argument'} = new ConditionArgument('path', $args->path, 'equal');
-${'path25_argument'}->checkNotNull();
-${'path25_argument'}->createConditionValue();
-if(!${'path25_argument'}->isValid()) return ${'path25_argument'}->getErrorMessage();
-if(${'path25_argument'} !== null) ${'path25_argument'}->setColumnType('varchar');
+${'path1_argument'} = new ConditionArgument('path', $args->path, 'equal');
+${'path1_argument'}->checkNotNull();
+${'path1_argument'}->createConditionValue();
+if(!${'path1_argument'}->isValid()) return ${'path1_argument'}->getErrorMessage();
+if(${'path1_argument'} !== null) ${'path1_argument'}->setColumnType('varchar');
 
 $query->setColumns(array(
 new SelectExpression('`package_srl`')
@@ -18,7 +18,7 @@ new Table('`xe_autoinstall_packages`', '`autoinstall_packages`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`path`',$path25_argument,"equal")))
+new ConditionWithArgument('`path`',$path1_argument,"equal")))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

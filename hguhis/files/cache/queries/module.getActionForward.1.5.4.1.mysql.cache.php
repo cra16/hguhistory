@@ -4,11 +4,11 @@ $query->setQueryId("getActionForward");
 $query->setAction("select");
 $query->setPriority("");
 if(isset($args->act)) {
-${'act24_argument'} = new ConditionArgument('act', $args->act, 'equal');
-${'act24_argument'}->createConditionValue();
-if(!${'act24_argument'}->isValid()) return ${'act24_argument'}->getErrorMessage();
+${'act51_argument'} = new ConditionArgument('act', $args->act, 'equal');
+${'act51_argument'}->createConditionValue();
+if(!${'act51_argument'}->isValid()) return ${'act51_argument'}->getErrorMessage();
 } else
-${'act24_argument'} = null;if(${'act24_argument'} !== null) ${'act24_argument'}->setColumnType('varchar');
+${'act51_argument'} = null;if(${'act51_argument'} !== null) ${'act51_argument'}->setColumnType('varchar');
 
 $query->setColumns(array(
 new StarExpression()
@@ -18,7 +18,7 @@ new Table('`xe_action_forward`', '`action_forward`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`act`',$act24_argument,"equal")))
+new ConditionWithArgument('`act`',$act51_argument,"equal")))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

@@ -4,12 +4,12 @@ $query->setQueryId("getDocument");
 $query->setAction("select");
 $query->setPriority("");
 
-${'document_srl28_argument'} = new ConditionArgument('document_srl', $args->document_srl, 'equal');
-${'document_srl28_argument'}->checkFilter('number');
-${'document_srl28_argument'}->checkNotNull();
-${'document_srl28_argument'}->createConditionValue();
-if(!${'document_srl28_argument'}->isValid()) return ${'document_srl28_argument'}->getErrorMessage();
-if(${'document_srl28_argument'} !== null) ${'document_srl28_argument'}->setColumnType('number');
+${'document_srl20_argument'} = new ConditionArgument('document_srl', $args->document_srl, 'equal');
+${'document_srl20_argument'}->checkFilter('number');
+${'document_srl20_argument'}->checkNotNull();
+${'document_srl20_argument'}->createConditionValue();
+if(!${'document_srl20_argument'}->isValid()) return ${'document_srl20_argument'}->getErrorMessage();
+if(${'document_srl20_argument'} !== null) ${'document_srl20_argument'}->setColumnType('number');
 
 $query->setColumns(array(
 new StarExpression()
@@ -19,7 +19,7 @@ new Table('`xe_documents`', '`documents`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`document_srl`',$document_srl28_argument,"equal")))
+new ConditionWithArgument('`document_srl`',$document_srl20_argument,"equal")))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

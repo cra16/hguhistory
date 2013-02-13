@@ -1,26 +1,47 @@
 <!--지희-->
 <style>
-.topic_info{
-	padding: 10px;
-	border: 1px gray solid;
+.title {
+	font-size: 16pt;
+	font-weight: bold;
+	padding: 0 0 0 0;
 }
-.title{
-	font-size:16pt;
-	font-weight:bold;
+
+.summary {
+	font-size: 13pt;
 }
-.summary{
-	font-size:13pt;
+
+.btn {
+	background: none;
+	border: none;
+	padding: 0pt;
+	align: right;
 }
-.btn{
-background: none;
-border: none;
-padding:0pt;
-align:right;
+
+.topic_info:hover {
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/pw_maze_white.png");
+	cursor: pointer;
+}
+
+.topic_info {
+	margin: 10px 10px 0px 10px;
+	padding: 15px 10px 15px 20px;
+	font-weight: inherit;
+	font-size: 100%;
+	font-family: 돋움, dotum, sans-serif;
+	vertical-align: baseline;
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/ecailles.png");
+	border: 1px dotted rgb(202, 202, 202);
+}
+
+.btnPadding {
+	margin: 0px 0px 10px 10px;
 }
 </style>
 <include target="header.html"/>
 <div class="deleteTopic">
-	<div>이 글을 삭제하겠습니까?</div>
+	<div>이 글을 삭제하시겠습니까?</div>
 	<br/>
 		{@$documentModel = &getModel('document');}
 		<div class="topic_info">
@@ -41,7 +62,7 @@ align:right;
 			<input type="hidden" name="act" value="procHiswikiTopicDelete" />
 			<input type="hidden" name="success_return_url" value="{getUrl('act','dispHiswikiFrontPage')}" />
 			<input type="hidden" name="error_return_url" value="{getUrl('act','procHiswikiTopicDelete')}" />			
-			<span class="btn"><input type="submit" value="삭제" /></span>
-			<span class="btn"><a href="{getUrl('act','')}">취소</a></span>
+			<span class="btn btnPadding"><input type="submit" value="삭제" /></span>
+			<span class="btn btnPadding"><a href="{getUrl('act','')}">취소</a></span>
 		</form>		
 </div>

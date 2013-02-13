@@ -4,15 +4,15 @@ $query->setQueryId("getModuleCategories");
 $query->setAction("select");
 $query->setPriority("");
 if(isset($args->moduleCategorySrl)) {
-${'moduleCategorySrl1_argument'} = new ConditionArgument('moduleCategorySrl', $args->moduleCategorySrl, 'in');
-${'moduleCategorySrl1_argument'}->createConditionValue();
-if(!${'moduleCategorySrl1_argument'}->isValid()) return ${'moduleCategorySrl1_argument'}->getErrorMessage();
+${'moduleCategorySrl5_argument'} = new ConditionArgument('moduleCategorySrl', $args->moduleCategorySrl, 'in');
+${'moduleCategorySrl5_argument'}->createConditionValue();
+if(!${'moduleCategorySrl5_argument'}->isValid()) return ${'moduleCategorySrl5_argument'}->getErrorMessage();
 } else
-${'moduleCategorySrl1_argument'} = null;if(${'moduleCategorySrl1_argument'} !== null) ${'moduleCategorySrl1_argument'}->setColumnType('number');
+${'moduleCategorySrl5_argument'} = null;if(${'moduleCategorySrl5_argument'} !== null) ${'moduleCategorySrl5_argument'}->setColumnType('number');
 
-${'sort_index2_argument'} = new Argument('sort_index', $args->{'sort_index'});
-${'sort_index2_argument'}->ensureDefaultValue('title');
-if(!${'sort_index2_argument'}->isValid()) return ${'sort_index2_argument'}->getErrorMessage();
+${'sort_index6_argument'} = new Argument('sort_index', $args->{'sort_index'});
+${'sort_index6_argument'}->ensureDefaultValue('title');
+if(!${'sort_index6_argument'}->isValid()) return ${'sort_index6_argument'}->getErrorMessage();
 
 $query->setColumns(array(
 new StarExpression()
@@ -22,11 +22,11 @@ new Table('`xe_module_categories`', '`module_categories`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`module_category_srl`',$moduleCategorySrl1_argument,"in")))
+new ConditionWithArgument('`module_category_srl`',$moduleCategorySrl5_argument,"in")))
 ));
 $query->setGroups(array());
 $query->setOrder(array(
-new OrderByColumn(${'sort_index2_argument'}, "asc")
+new OrderByColumn(${'sort_index6_argument'}, "asc")
 ));
 $query->setLimit();
 return $query; ?>

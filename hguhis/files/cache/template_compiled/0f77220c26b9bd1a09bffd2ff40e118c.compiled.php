@@ -1,6 +1,7 @@
 <?php if(!defined("__XE__"))exit;?><!--현희-->
 <!-- 수정 by 인호 -->
 <!-- @modifier 바람꽃(wndflwr@gmail.com) -->
+<!-- 현희 수정  -->
 <style>
 #front_page div.fl {
 	float:left;
@@ -54,6 +55,8 @@
 #front_page .fr {
 	float:right;
 }
+a:link {text-decoration:none;color:#0000FF;}
+a:visited {color:#8B008B;}
 </style>
 <?php if($__Context->XE_VALIDATOR_MESSAGE){ ?><div class="message <?php echo $__Context->XE_VALIDATOR_MESSAGE_TYPE ?>">
 	<p><?php echo $__Context->XE_VALIDATOR_MESSAGE ?></p>
@@ -99,7 +102,7 @@
 				<h3 class="h3">최근 등록 및 수정 요청 글</h3>
 				<ul>
 					<?php if($__Context->requestDocList&&count($__Context->requestDocList))foreach($__Context->requestDocList as $__Context->val){ ?><li>
-						<a href="<?php echo getUrl('document_srl', $__Context->val->get('document_srl')) ?>"><?php echo $__Context->val->getTitleText(50) ?></a>
+						<a href="<?php echo getUrl('', 'document_srl', $__Context->val->get('document_srl')) ?>"><?php echo $__Context->val->getTitleText(50) ?></a>
 						<span class="fr read_count"><?php echo $__Context->val->get('readed_count') ?></span>
 						<div class="clear"></div>
 					</li><?php } ?>

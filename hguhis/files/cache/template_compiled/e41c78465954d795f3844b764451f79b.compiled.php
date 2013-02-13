@@ -71,7 +71,7 @@
 				<img src="/git/hguhistory/hguhis/modules/hiswiki/skins/default/img/dummy.gif" class="see_all_category" />
 			</li>
 			<li class="fr">
-				<a href="<?php echo getUrl('act', 'dispHiswikiFrontPage') ?>">메인</a>
+				<a href="<?php echo getUrl('', 'mid', $__Context->module_info->mid) ?>">메인 페이지로</a>
 			</li>
 		</ul>
 		<div class="clear"></div>

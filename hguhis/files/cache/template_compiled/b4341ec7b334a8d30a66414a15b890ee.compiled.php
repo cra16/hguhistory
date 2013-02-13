@@ -20,14 +20,15 @@ div.clear {
 }
 .hwBlock {
 	margin: 5px 2px 5px 2px;
-	padding: 0px 17px 6px 15px;
+	padding: 3px 20px 12px 18px;
 	font-size: 100%;
 	vertical-align: baseline;
-	background-color: whitesmoke;
-	border: 2px dotted rgb(209, 209, 209);
+	background-image: url("<?php echo geturl() ?>modules/hiswiki/skins/default/img/rockywall.png");
+	border: 1px dotted rgb(209, 209, 209);
 }
 .tag{margin: 3px 5px 3px -30px;}
 .tag:link{font-color:black;}
+.tagIcon{padding:0px 3px 0px 0px;}
 .s-e_date {margin: 7px 5px 5px 4px;font-size:10pt;}
 .hwContent{padding: 10px 15px 5px 15px;font-size: 10pt;align:left;}
 </style>
@@ -61,21 +62,20 @@ div.clear {
 		</br>
 		<hr style="color:black" height="1px">
 		<?php  $__Context->tag_list = $__Context->document->get('tag_list')  ?>
-		<?php if(count($__Context->tag_list)){ ?>
-		<div class="tag">
+		<?php if($__Context->tag_list){ ?><div class="tag">
 			<ul>
 				<li>
-				<img src="/git/hguhistory/hguhis/modules/hiswiki/skins/default/img/iconTag.gif" alt="<?php echo $__Context->lang->tag ?>" width="17" height="10" class="tagIcon" />
-				<?php for($__Context->i=0;$__Context->i<count($__Context->tag_list);$__Context->i++){ ?>
-				<?php  $__Context->tag = $__Context->tag_list[$__Context->i];  ?>
-				<a
-					href="<?php echo getUrl('search_target','tag','search_keyword',$__Context->tag,'document_srl','') ?>"
-					rel="tag"><?php echo htmlspecialchars($__Context->tag) ?></a><?php if($__Context->i<count($__Context->tag_list)-1){ ?>,&nbsp;<?php } ?> </li>
-				<?php } ?>
+					<img src="/git/hguhistory/hguhis/modules/hiswiki/skins/default/img/Tag_icon.png" alt="<?php echo $__Context->lang->tag ?>" width="20" height="15" class="tagIcon" />
+				</li>
+				<?php if($__Context->tag_list&&count($__Context->tag_list))foreach($__Context->tag_list as $__Context->key=>$__Context->val){ ?><li>
+					<?php if($__Context->key){ ?>,<?php } ?>
+					<a href="<?php echo getUrl('act', 'dispHiswikiContentList', 'search_target', 'tag', 'search_keyword', $__Context->val) ?>" rel="tag">
+						<?php echo htmlspecialchars($__Context->val) ?>
+					</a>
+				</li><?php } ?>
 			</ul>
 			<div class="clear"></div>
-		</div>
-		<?php } ?>
+		</div><?php } ?>
 		<div class="btnArea">
 			<a class="btn" href="<?php echo getUrl('act','dispHiswikiHistoryView','document_srl',$__Context->document->document_srl,'') ?>">히스토리</a>
 			<a class="btn" href="<?php echo getUrl('document_srl','') ?>">목록

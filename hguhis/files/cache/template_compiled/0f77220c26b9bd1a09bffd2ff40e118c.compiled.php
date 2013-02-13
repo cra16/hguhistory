@@ -48,6 +48,9 @@
 	margin:0 0 25px 0;
 	text-align:right;
 }
+#front_page p.tag_collection {
+	margin:10px;
+}
 #front_page .fr {
 	float:right;
 }
@@ -106,16 +109,18 @@
 		<div class="fl list best_tag width50p">
 			<div class="margin10px">
 				<h3 class="h3">인기 태그</h3>
-				<p>
-					<span>나중에 태그 검색기능 완성되면 태그들과 연결.</span>
-					<?php if($__Context->popTagList&&count($__Context->popTagList))foreach($__Context->popTagList as $__Context->val){ ?><span<?php if($__Context->val->tag>50){ ?> class="popLevel1"<?php } ?>><?php echo $__Context->val->tag ?></span><?php } ?>
+				<p class="tag_collection">
+					<?php if($__Context->popTagList&&count($__Context->popTagList))foreach($__Context->popTagList as $__Context->key=>$__Context->val){ ?>
+						<?php if($__Context->key){ ?><span>, </span><?php } ?>
+						<a href="<?php echo getUrl('act', 'dispHiswikiContentList', 'search_target', 'tag', 'search_keyword', $__Context->val->tag) ?>"<?php if($__Context->val->count>9&&$__Context->val->count<20){ ?> class="tagLv10"<?php } ?>><?php echo $__Context->val->tag ?></a>
+					<?php } ?>
 				</p>
 			</div>
 		</div>
 		<div class="clear"></div>
 	</div>
 	<div class="btnArea">
-		<?php if($__Context->grant_info->write){ ?><a href="<?php echo getUrl('act','dispHiswikiTopicWrite', 'document_srl', '') ?>" class="btn fr">글쓰기</a><?php } ?>
+		<?php if($__Context->grant_info->write){ ?><a href="<?php echo getUrl('act','dispHiswikiTopicWrite', 'document_srl', '') ?>" class="btn fr">새 주제 등록</a><?php } ?>
 		<?php if($__Context->grant_info->manager){ ?><a href="<?php echo getUrl('act', 'dispHiswikiAdminModuleInfo') ?>" class="btn fr">모듈 설정</a><?php } ?>
 	</div>
 </div>

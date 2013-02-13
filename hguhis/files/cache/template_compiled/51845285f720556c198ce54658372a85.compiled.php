@@ -6,23 +6,26 @@ $__tpl=TemplateHandler::getInstance();echo $__tpl->compile('modules/hiswiki/skin
 	margin: 20px 20px 20px 20px;
 }
 .contentList  .listHeading {
-	font-size:12pt;
+	
+	font-size:14pt;
 	border: 1px dotted rgb(220, 220, 220);
-	background-color: whitesmoke;
+	background-image: url("<?php echo geturl() ?>modules/hiswiki/skins/default/img/rockywall.png");
 	
 	}
 	
-.num,.title,.regdate,.nickName,.readCount{
+.document_list {
 	padding: 5px 5px 5px 5px;
+	font-size: 10pt;
+	font-family: 바탕;
 	text-align: center;
 }
-.hwTable .num{width:10px;}
-.hwTable .title{width:280px;}
+.hwTable .num{width:40px;}
+.hwTable .title{width:250px;}
 .hwTable .regdate{width:150px;}
 .hwTable .nickName{width:150px;}
-.hwTable .readCount{width:5px;}
-.hwTable .document_list .title{text-decoration:none;}
-.pageDiv{align:center;}
+.hwTable .readCount{width:50px;}
+.hwTable .document_list .num, .title, .regdate, .nickName, .readCount {text-decoration:none; padding:3px 5px 3px 5px;}
+.pageDiv{margin:15px;}
 </style>
 <div class="outerDiv">
 	<table class="contentList">
@@ -31,7 +34,7 @@ $__tpl=TemplateHandler::getInstance();echo $__tpl->compile('modules/hiswiki/skin
 				<th class="num">No</th>
 				<th class="title">Title</th>
 				<th class="regdate">Regdate</th>
-				<th class="nickName">Nick Name</th>
+				<th class="nickName">Author</th>
 				<th class="readCount">Read</th>
 			</tr>
 		</thead>

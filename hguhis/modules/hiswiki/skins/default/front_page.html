@@ -50,7 +50,9 @@
 	margin:0 0 25px 0;
 	text-align:right;
 }
-
+#front_page p.tag_collection {
+	margin:10px;
+}
 #front_page .fr {
 	float:right;
 }
@@ -112,9 +114,11 @@
 		<div class="fl list best_tag width50p">
 			<div class="margin10px">
 				<h3 class="h3">인기 태그</h3>
-				<p>
-					<span>나중에 태그 검색기능 완성되면 태그들과 연결.</span>
-					<span loop="$popTagList=>$val" class="popLevel1"|cond="$val->tag>50">{$val->tag}</span>
+				<p class="tag_collection">
+					<block loop="$popTagList=>$key,$val">
+						<span cond="$key">, </span>
+						<a href="{getUrl('act', 'dispHiswikiContentList', 'search_target', 'tag', 'search_keyword', $val->tag)}" class="tagLv10"|cond="$val->count>9&&$val->count<20">{$val->tag}</a>
+					</block>
 				</p>
 			</div>
 		</div>

@@ -1,4 +1,5 @@
 <?php if(!defined("__XE__"))exit;?><!--지희 히스토리 목록들을 본다-->
+<!-- 현희 -->
 <!--#Meta:modules/hiswiki/skins/default/js/MyMethodCall.js--><?php $__tmp=array('modules/hiswiki/skins/default/js/MyMethodCall.js','','','');Context::loadFile($__tmp,'','','');unset($__tmp); ?>
 <!--#Meta:modules/hiswiki/skins/default/css/hiswiki.css--><?php $__tmp=array('modules/hiswiki/skins/default/css/hiswiki.css','','','');Context::loadFile($__tmp,'','','');unset($__tmp); ?>
 <!--#Meta:modules/hiswiki/skins/default/css/hiswiki_common.css--><?php $__tmp=array('modules/hiswiki/skins/default/css/hiswiki_common.css','','','');Context::loadFile($__tmp,'','','');unset($__tmp); ?>
@@ -22,11 +23,11 @@ div.clear {
 }
 .hwBlock {
 	margin: 5px 2px 5px 2px;
-	padding: 4px 10px 16px 17px;
+	padding: 3px 20px 12px 18px;
 	font-size: 100%;
 	vertical-align: baseline;
-	background-color: whitesmoke;
-	border: 2px dotted rgb(209, 209, 209);
+	background-image: url("<?php echo geturl() ?>modules/hiswiki/skins/default/img/rockywall.png");
+	border: 1px dotted rgb(209, 209, 209);
 }
 .tag {
 	margin: 3px 5px 3px -30px;
@@ -51,6 +52,7 @@ div.clear {
 	align:right;
 }
 </style>
+<?php $__tpl=TemplateHandler::getInstance();echo $__tpl->compile('modules/hiswiki/skins/default','header.html') ?>
 <div class="versions">
 	<?php if(!count($__Context->hiswikiHistory->data)){ ?>
 		<h2>히스토리가 존재하지 않는 문서입니다</h2>

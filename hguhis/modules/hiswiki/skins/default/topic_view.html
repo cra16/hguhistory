@@ -44,13 +44,14 @@ div.clear {
 
 
 
+
+<include target="header.html" />
 <load target="css/hiswiki.css" />
+
+
 <div id="topic_view">
-	<div class = header>
-		<include target="header.html" />
-	</div>
 	<hr style="color:black" height="2px">
-	</br>
+	<br />
 	<div class="document_view">
 		<!--올라온 글의 내용을 본다-->
 		<div>
@@ -71,38 +72,31 @@ div.clear {
 			</div>
 			<div class="hwContent">{$document->getContent(false,false,false,false,false)}</div>
 		</div>
-		</br>
+		<br />
 
 		<hr style="color:black" height="1px">
 
 		{@ $tag_list = $document->get('tag_list') }
-		<!--@if(count($tag_list))-->
-		<div class="tag">
+		<div class="tag" cond="$tag_list">
 			<ul>
 				<li>
-				<img src="./img/Tag_icon.png" alt="{$lang->tag}" width="20" height="15" class="tagIcon" /></li>
-				<!--@for($i=0;$i<count($tag_list);$i++)-->
-				{@ $tag = $tag_list[$i]; }
-				<a href="{getUrl('search_target','tag','search_keyword',$tag,'document_srl','')}"
-					rel="tag">{htmlspecialchars($tag)}</a><!--@if($i<count($tag_list)-1)-->,&nbsp;<!--@end-->
-				<!--@end-->
+					<img src="./img/Tag_icon.png" alt="{$lang->tag}" width="20" height="15" class="tagIcon" />
+				</li>
+				<li loop="$tag_list=>$key,$val">
+					<block cond="$key">,</block>
+					<a href="{getUrl('act', 'dispHiswikiContentList', 'search_target', 'tag', 'search_keyword', $val)}" rel="tag">
+						{htmlspecialchars($val)}
+					</a>
+				</li>
 			</ul>
 			<div class="clear"></div>
 		</div>
-		<!--@end-->
 
 		<div class="btnArea">
 			<a class="btn" href="{getUrl('act','dispHiswikiHistoryView','document_srl',$document->document_srl,'')}">히스토리</a>
-			<a class="btn" href="{getUrl('document_srl','')}">목록
-			</a>
-        	<!--@if($document->isEditable())-->
-			<a class="btn"
-				href="{getUrl('act','dispHiswikiTopicWrite','document_srl',$document->document_srl,'')}">수정
-			</a>
-			<a class="btn"
-				href="{getUrl('act','dispHiswikiTopicDelete','document_srl',$document->document_srl,'')}">삭제
-			</a>
-				<!--@end-->
+			<a class="btn" href="{getUrl('document_srl','')}">목록</a>
+			<a cond="$document->isEditable()" class="btn" href="{getUrl('act','dispHiswikiTopicWrite','document_srl',$document->document_srl,'')}">수정</a>
+			<a cond="$document->isEditable()" class="btn" href="{getUrl('act','dispHiswikiTopicDelete','document_srl',$document->document_srl,'')}">삭제</a>
 		</div>
 	</div>
 </div>

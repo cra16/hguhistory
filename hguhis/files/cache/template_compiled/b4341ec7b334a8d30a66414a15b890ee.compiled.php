@@ -32,13 +32,11 @@ div.clear {
 .s-e_date {margin: 7px 5px 5px 4px;font-size:10pt;}
 .hwContent{padding: 10px 15px 5px 15px;font-size: 10pt;align:left;}
 </style>
+<?php $__tpl=TemplateHandler::getInstance();echo $__tpl->compile('modules/hiswiki/skins/default','header.html') ?>
 <!--#Meta:modules/hiswiki/skins/default/css/hiswiki.css--><?php $__tmp=array('modules/hiswiki/skins/default/css/hiswiki.css','','','');Context::loadFile($__tmp,'','','');unset($__tmp); ?>
 <div id="topic_view">
-	<div class = header>
-		<?php $__tpl=TemplateHandler::getInstance();echo $__tpl->compile('modules/hiswiki/skins/default','header.html') ?>
-	</div>
 	<hr style="color:black" height="2px">
-	</br>
+	<br />
 	<div class="document_view">
 		<!--올라온 글의 내용을 본다-->
 		<div>
@@ -59,7 +57,7 @@ div.clear {
 			</div>
 			<div class="hwContent"><?php echo $__Context->document->getContent(false,false,false,false,false) ?></div>
 		</div>
-		</br>
+		<br />
 		<hr style="color:black" height="1px">
 		<?php  $__Context->tag_list = $__Context->document->get('tag_list')  ?>
 		<?php if($__Context->tag_list){ ?><div class="tag">
@@ -78,16 +76,9 @@ div.clear {
 		</div><?php } ?>
 		<div class="btnArea">
 			<a class="btn" href="<?php echo getUrl('act','dispHiswikiHistoryView','document_srl',$__Context->document->document_srl,'') ?>">히스토리</a>
-			<a class="btn" href="<?php echo getUrl('document_srl','') ?>">목록
-			</a>
-        	<?php if($__Context->document->isEditable()){ ?>
-			<a class="btn"
-				href="<?php echo getUrl('act','dispHiswikiTopicWrite','document_srl',$__Context->document->document_srl,'') ?>">수정
-			</a>
-			<a class="btn"
-				href="<?php echo getUrl('act','dispHiswikiTopicDelete','document_srl',$__Context->document->document_srl,'') ?>">삭제
-			</a>
-				<?php } ?>
+			<a class="btn" href="<?php echo getUrl('document_srl','') ?>">목록</a>
+			<?php if($__Context->document->isEditable()){ ?><a class="btn" href="<?php echo getUrl('act','dispHiswikiTopicWrite','document_srl',$__Context->document->document_srl,'') ?>">수정</a><?php } ?>
+			<?php if($__Context->document->isEditable()){ ?><a class="btn" href="<?php echo getUrl('act','dispHiswikiTopicDelete','document_srl',$__Context->document->document_srl,'') ?>">삭제</a><?php } ?>
 		</div>
 	</div>
 </div>

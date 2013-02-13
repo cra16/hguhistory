@@ -5,6 +5,7 @@
 	}
 	div.hiswiki_category ul.category_path li {
 		list-style:none;
+		margin-left:10px;
 	}
 	div.hiswiki_category ul.category_path li.fl {
 		float:left;
@@ -68,6 +69,9 @@
 			<li class="fr" id="see_all_category">
 				<a href="#category_list" class="see_all_category">카테고리 전체보기</a>
 				<img src="/git/hguhistory/hguhis/modules/hiswiki/skins/default/img/dummy.gif" class="see_all_category" />
+			</li>
+			<li class="fr">
+				<a href="<?php echo getUrl('act', 'dispHiswikiFrontPage') ?>">메인</a>
 			</li>
 		</ul>
 		<div class="clear"></div>

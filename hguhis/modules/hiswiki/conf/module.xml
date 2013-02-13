@@ -42,6 +42,7 @@
         <action name="dispHiswikiAdminTopicDelete" type="view" standalone="true" />
         <action name="procHiswikiAdminTopicDelete" type="controller" standalone="true" />
         <action name="dispHiswikiTopicDelete" type="view" standalone="true" />
+        <action name="procHiswikiTopicDelete" type="controller" standalone="true" />
         <action name="dispHiswikiTopicList" type="view" standalone="true" />
         <action name="dispHiswikiTopicView" type="view" standalone="true" index="true" />
         <action name="procHiswikiTopicView" type="controller" standalone="true" />        

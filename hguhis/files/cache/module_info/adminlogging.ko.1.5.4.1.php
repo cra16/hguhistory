@@ -1,0 +1,1 @@
+<?php if(!defined("__ZBXE__")) exit();$info->default_index_act = '';$info->setup_index_act='';$info->admin_index_act = '';?>

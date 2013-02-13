@@ -224,10 +224,63 @@ class hiswikiController extends hiswiki {
 	
 	/**
 	 * @author 지희
+	 * @param $document_srl
+	 * @brief document_srl만으로 extravars를 지울수 있도록 만든다.
+	 */
+	function deleteHiswikiExtraVars($document_srl){
+		$obj->document_srl = $document_srl;
+		if(!$obj->document_srl) return new Object(-1,'error');
+		$output = executeQuery('hiswiki.deleteHiswikiExtraVars', $obj);
+		return $output;
+	}
+	
+	/**
+	 * @author 지희
+	 * @param $document_srl
+	 * @brief hiswikidoc 안에 있는내용을 지운다
+	 */
+	function deleteHiswikiDoc($document_srl){
+		$obj->document_srl=$document_srl;
+		if(!$obj->document_srl) return new Object(-1,'error');
+		$output = executeQuery('hiswiki.deleteHiswikiDoc',$obj);
+		return $output;
+	}
+	
+	/**
+	 * @author 지희
+	 * @param $document_srl
+	 * @brief hiswikitrace 를 지운다
+	 */
+	function deleteHiswikiTrace($document_srl){
+		$obj->document_srl=$document_srl;
+		if(!$obj->document_srl) return new Object(-1,'error');
+		$output = executeQuery('hiswiki.deleteHiswikiTrace',$obj);
+		return $output;
+	}
+	
+	/**
+	 * @author 지희
 	 * @brief 문서를 삭제한다
 	 */
-	function _deleteHiswikiDoc(){
-		
+	function procHiswikiTopicDelete(){
+		$obj->document_srl = Context::get('document_srl');
+		if (!$obj->document_srl) return new Object(-1,'error');
+		//controller 불러옴
+		$oDocumentController=&getController('document');
+		//모든 document_srl을 불러옴s
+		$oHiswikiModel=&getModel('hiswiki');
+		$HiswikiTrace=$oHiswikiModel->getHiswikiTrace($obj->document_srl);
+		//현재문서 삭제
+		$oDocumentController->deleteDocument($obj->document_srl,false,false,null);
+		$this->deleteHiswikiDoc($obj->document_srl);
+		$this->deleteHiswikiExtraVars($obj->document_srl);
+		//trace가 존재하면 모두 지운다
+		foreach($HiswikiTrace->data as $vars){
+			$oDocumentController->deleteDocument($vars->document_srl,false,false,null);
+			$this->deleteHiswikiDoc($vars->document_srl);
+			$this->deleteHiswikiExtraVars($vars->document_srl);
+			$this->deleteHiswikiTrace($vars->document_srl);
+		}
 	}
 }
 ?>

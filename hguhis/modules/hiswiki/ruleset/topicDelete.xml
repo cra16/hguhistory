@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--지희-->
+<ruleset version="1.0.0">
+    <customrules>
+    </customrules>
+    <fields>
+		<field name="document_srl" required="true" rule="number" />
+    </fields>
+</ruleset>

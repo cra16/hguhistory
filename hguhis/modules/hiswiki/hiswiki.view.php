@@ -485,6 +485,26 @@ class hiswikiView extends hiswiki {
 		Context::set('origin',$trace_srl);
 		$this->setTemplateFile('topic_history');
 	}
+	/**
+	 * @function dispHiswikiTopicDelete
+	 * @author 지희
+	 * @문서를 지우는 페이지다
+	 */
+	function dispHiswikiTopicDelete(){
+		$document_srl = Context::get('document_srl');
+		if(!$document_srl){
+			return new Object(-1,'msg_invalid_request');
+		}
+		//hiswiki model을 가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		$trace_srl = $document_srl;
+		$hiswikiHistory = $oHiswikiModel->getHiswikiTrace($trace_srl);
+		$hiswikiDoc = $oHiswikiModel->getHiswikiDoc($trace_srl);
+		//변수선언
+		Context::set('hiswikiHistory',$hiswikiHistory);
+		Context::set('origin',$hiswikiDoc);
+		$this->setTemplateFile('topic_delete');
+	}
 
 	/**
 	 * @function dispHiswikiTopicList

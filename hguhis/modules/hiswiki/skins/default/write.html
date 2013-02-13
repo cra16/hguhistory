@@ -41,8 +41,8 @@ var autoLinkPack = {
 	<div class="date">
 		<span>
 			<span>시작연도</span> 
-			<input type="hidden" name="start_date" class="start_date" value="{zdate($extra_vars[1]->value.'000000','Y-m-d')}"|cond="$topic_info->data[0]->start_date" />
-			<input type="text" class="cal startDate" value="{zdate($extra_vars[1]->value.'000000','Y-m-d')}"|cond="$topic_info->data[0]->start_date"/>
+			<input type="hidden" name="start_date" class="start_date" value="{zdate($extra_vars[1]->value.'000000','Y-m-d')}"|cond="$extra_vars[1]->value" />
+			<input type="text" class="cal startDate" value="{zdate($extra_vars[1]->value.'000000','Y-m-d')}"|cond="$extra_vars[1]->value"/>
 			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</span>
 		
@@ -50,8 +50,8 @@ var autoLinkPack = {
 		
 		<span>
 			<span>종료연도</span> 
-			<input type="hidden" name="end_date" class="end_date" value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$topic_info->data[0]->end_date" />
-			<input type="text" class="cal endDate"  value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$topic_info->data[0]->end_date" />
+			<input type="hidden" name="end_date" class="end_date" value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$extra_vars[2]->value" />
+			<input type="text" class="cal endDate"  value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$extra_vars[2]->value" />
 			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</span>
 		<script type="text/javascript">

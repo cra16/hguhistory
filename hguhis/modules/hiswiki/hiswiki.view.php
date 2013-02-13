@@ -446,7 +446,11 @@ class hiswikiView extends hiswiki {
 			return;
 		}
 		$page = Context::get('page');
-		
+		$oDocumentModel=getModel('document');
+		$document=$oDocumentModel->getDocument($document_srl);
+		if(!$document->get('document_srl')){
+			return new Object(-1,'msg_invalid_request');
+		}
 		// document model을 가져옴
 		$oDocumentModel = &getModel('document');
 		$document = $oDocumentModel->getDocument($document_srl);
@@ -493,6 +497,11 @@ class hiswikiView extends hiswiki {
 	function dispHiswikiTopicDelete(){
 		$document_srl = Context::get('document_srl');
 		if(!$document_srl){
+			return new Object(-1,'msg_invalid_request');
+		}
+		$oDocumentModel=getModel('document');
+		$document=$oDocumentModel->getDocument($document_srl);
+		if(!$document->get('document_srl')){
 			return new Object(-1,'msg_invalid_request');
 		}
 		//hiswiki model을 가져옴

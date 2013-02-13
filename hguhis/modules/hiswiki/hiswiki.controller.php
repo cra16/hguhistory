@@ -271,15 +271,21 @@ class hiswikiController extends hiswiki {
 		$oHiswikiModel=&getModel('hiswiki');
 		$HiswikiTrace=$oHiswikiModel->getHiswikiTrace($obj->document_srl);
 		//현재문서 삭제
-		$oDocumentController->deleteDocument($obj->document_srl,false,false,null);
-		$this->deleteHiswikiDoc($obj->document_srl);
-		$this->deleteHiswikiExtraVars($obj->document_srl);
+		$output=$oDocumentController->deleteDocument($obj->document_srl,false,false,null);
+		$output=$this->deleteHiswikiDoc($obj->document_srl);
+		$output=$this->deleteHiswikiExtraVars($obj->document_srl);
+		if(!$output->toBool()) return $output;
 		//trace가 존재하면 모두 지운다
 		foreach($HiswikiTrace->data as $vars){
-			$oDocumentController->deleteDocument($vars->document_srl,false,false,null);
-			$this->deleteHiswikiDoc($vars->document_srl);
-			$this->deleteHiswikiExtraVars($vars->document_srl);
-			$this->deleteHiswikiTrace($vars->document_srl);
+			$output=$oDocumentController->deleteDocument($vars->document_srl,false,false,null);
+			$output=$this->deleteHiswikiDoc($vars->document_srl);
+			$output=$this->deleteHiswikiExtraVars($vars->document_srl);
+			$output=$this->deleteHiswikiTrace($vars->document_srl);
+		}
+		if (!$output->toBool()) {
+			$this->setRedirectUrl(Context::get('error_return_url'));
+		} else {
+			$this->setRedirectUrl(Context::get('success_return_url'));
 		}
 	}
 }

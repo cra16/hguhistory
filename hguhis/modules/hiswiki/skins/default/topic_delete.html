@@ -39,6 +39,8 @@ align:right;
 		<form ruleset="topicDelete" action="./" method="get">
 			<input type="hidden" name="document_srl" value="{$origin->data[0]->document_srl}" />
 			<input type="hidden" name="act" value="procHiswikiTopicDelete" />
+			<input type="hidden" name="success_return_url" value="{getUrl('act','dispHiswikiFrontPage')}" />
+			<input type="hidden" name="error_return_url" value="{getUrl('act','procHiswikiTopicDelete')}" />			
 			<span class="btn"><input type="submit" value="삭제" /></span>
 			<span class="btn"><a href="{getUrl('act','')}">취소</a></span>
 		</form>		

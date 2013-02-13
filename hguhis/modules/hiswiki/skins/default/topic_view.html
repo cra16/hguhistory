@@ -24,8 +24,8 @@ div.clear {
 }
 
 .hwBlock {
-	margin: 5px 2px 5px 2px;
-	padding: 3px 20px 12px 18px;
+	margin: 0px 2px 0px 2px;
+	padding: 15px 10px 15px 15px;
 	font-size: 100%;
 	vertical-align: baseline;
 	background-image: url("{geturl()}modules/hiswiki/skins/default/img/rockywall.png");
@@ -39,6 +39,8 @@ div.clear {
 .s-e_date {margin:5px 5px 5px 4px;font-size:10pt;color:#808080;}
 
 .hwContent{padding: 10px 15px 5px 15px;font-size: 10pt;align:left;}
+
+.hrClass{dotted;}
 </style>
 
 
@@ -63,7 +65,8 @@ div.clear {
 			<span cond="$extra_vars[2]->value">End Date:</span> 
 			<span cond="$extra_vars[2]->value">{zdate($extra_vars[2]->value."000000",'Y-m-d')}</span>
 		</div>
-		</div>			
+		</div>
+		<br/><div border="1px dotted"></div>		
 			<div class="hwRegdate" align="right">
 				<span>글쓴이: {$document->getNickName()}&nbsp;|</span>
 				<span></span><span>등록일:

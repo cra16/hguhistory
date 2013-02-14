@@ -51,7 +51,7 @@
 			<div class="summary">{$document->getSummary()}</div>
 			<div class="info">
 				<span class="regdate">작성일 {$document->getRegdate('Y.m.d')}</span>
-				<span class="author">| 작성자 {$document->getNickName()}</span>
+				<span class="author">| 책임자 {$extra_vars[3]->value}</span>
 				<span class="view_count">| 조회수 {$document->get('readed_count')}</span> 
 				<span class="tag">| 태그 {$document->get('tags')}</span>
 			</div>					

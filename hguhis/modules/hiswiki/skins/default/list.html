@@ -59,17 +59,19 @@ a:hover {color:#A9A9A9;}
 			<tr class="listHeading">
 				<th class="num" width="10%">번호</th>
 				<th class="title" width="50%">제목</th>
-				<th class="regdate" width="15%">작성일</th>
+				<th class="regdate" width="15%">책임자</th>
 				<th class="nickName" width="15%">글쓴이</th>
 				<th class="readCount" width="10%">조회</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr class="document_list" loop="$document_list=>$key, $val">
+				{@$oDocumentModel=&getModel('document')}
+				{@$extra_vars=$oDocumentModel->getExtravars($val->get('module_srl'),$val->get('document_srl'))}
 				<td class="num alignCenter">{$key}</td>
 				<td class="title"><a href="{$val->getPermanentUrl()}">{$val->getTitle()}</a></td>
 				<td class="regdate alignCenter">{$val->getRegdate('Y.m.d')}</td>
-				<td class="nickName alignCenter member_{$val->get('member_srl')}">{$val->getNickName()}</td>
+				<td class="nickName alignCenter member_{$val->get('member_srl')}">{$extra_vars[3]->value}</td>
 				<td class="readCount alignCenter">{$val->get('readed_count')}</td>
 			</tr>
 		</tbody>

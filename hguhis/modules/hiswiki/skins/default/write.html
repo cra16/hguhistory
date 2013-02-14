@@ -54,6 +54,9 @@ var autoLinkPack = {
 			<input type="text" class="cal endDate"  value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$extra_vars[2]->value" />
 			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</span>
+		<span>책임자</span>
+		<input type="text" name="p_charge" class="p_charge" value="{$extra_vars[3]->value}"/>
+		<script type="text/javascript">
 		<script type="text/javascript">
 			(function($) {
 				$(function() {

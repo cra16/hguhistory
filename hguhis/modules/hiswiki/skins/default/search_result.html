@@ -57,13 +57,15 @@ a:hover {color:#A9A9A9;}
 
 <div class="outerDiv">
 	<div class="ResultDiv">
-		<h3 class="ResultHeading">표제어 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}" class="btn fontPt">더보기</a></h3>		
+		<h3 class="ResultHeading">표제어 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}" class="btn fontPt">더보기</a></h3>	
 			<div class="ResultViewDiv" loop="$search_results_title=>$val">
+				{@$oDocumentModel=&getModel('document')}
+				{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}	
 				<h3 class="hwTitle"><a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getTitle()}</a></h3>
 				<div class="hwContent"><a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getSummary()}</a></div>
 				<div class="updateInfo">
 					<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
-					<span class="nickName member_{$val->get('member_srl')}">| 작성자 {$val->getNickName()}</span>
+					<span class="nickName member_{$val->get('member_srl')}">| 책임자 {$extra_vars[3]->value}</span>
 					<span class="readCount">| 조회수 {$val->get('readed_count')}</span> 
 					<span class="tag">| 태그 {$val->get('tags')}</span>
 				</div>
@@ -72,12 +74,14 @@ a:hover {color:#A9A9A9;}
 	<div class="ResultDiv">
 		<h3 class="ResultHeading">내용 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'content')}" class="btn fontPt">더보기</a></h3>
 		<div class="ResultViewDiv" loop="$search_results_content=>$val">
+			{@$oDocumentModel=&getModel('document')}
+			{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}				
 			<a class="documentLink" href="{$val->getPermanentUrl()}">
 				<h3 class="hwTitle">{$val->getTitle()}</h3>
 				<div class="hwContent">{$val->getSummary()}</div>
 			<div class="updateInfo">
 				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
-				<span class="nickName">| 작성자 {$val->getNickName()}</span> 
+				<span class="nickName">| 책임자 {$extra_vars[3]->value}</span> 
 				<span class="readCount">| 조회수 {$val->get('readed_count')}</span> 
 				<span class="tag">| 태그 {$val->get('tags')}</span>
 			</div></a>
@@ -86,12 +90,14 @@ a:hover {color:#A9A9A9;}
 	<div class="ResultDiv">
 		<h3 class="ResultHeading">태그 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'tag')}" class="btn fontPt">더보기</a></h3>
 		<div class="ResultViewDiv" loop="$search_results_tags=>$val">
+			{@$oDocumentModel=&getModel('document')}
+			{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}				
 			<a class="documentLink" href="{$val->getPermanentUrl()}">
 				<h3 class="hwTitle">{$val->getTitle()}</h3>
 				<div class="hwContent">{$val->getSummary()}</div>
 			<div class="updateInfo">
 				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
-				<span class="nickName">| 작성자 {$val->getNickName()}</span> 
+				<span class="nickName">| 책임자 {$extra_vars[3]->value}</span> 
 				<span class="readCount">| 조회수 {$val->get('readed_count')}</span> 
 				<span class="tag">| 태그 {$val->get('tags')}</span>
 			</div></a>

@@ -439,8 +439,8 @@ class hiswikiView extends hiswiki {
 	 * @modifier 지희
 	 */
 	function dispHiswikiTopicView(){
-
 		$document_srl = Context::get('document_srl');
+		debugPrint($document_srl);
 		if(!$document_srl){
 			$this->dispHiswikiFrontPage();
 			return;
@@ -504,6 +504,7 @@ class hiswikiView extends hiswiki {
 		if(!$document->get('document_srl')){
 			return new Object(-1,'msg_invalid_request');
 		}
+		$extra_vars=$oDocumentModel->getExtraVars($this->module_srl,$document_srl);
 		//hiswiki model을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
 		$trace_srl = $document_srl;
@@ -512,6 +513,7 @@ class hiswikiView extends hiswiki {
 		//변수선언
 		Context::set('hiswikiHistory',$hiswikiHistory);
 		Context::set('origin',$hiswikiDoc);
+		Context::set('extra_vars',$extra_vars);
 		$this->setTemplateFile('topic_delete');
 	}
 

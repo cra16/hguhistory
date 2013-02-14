@@ -67,7 +67,7 @@ class hiswikiController extends hiswiki {
 		//if(!$this->grant->write_document) return new argsect(-1, 'msg_not_permitted');
 		//$logged_info = Context::get('logged_info');
 
-		$vars = Context::gets('category_srl','content', 'title','module_srl','start_date','end_date','tags','document_srl','version');
+		$vars = Context::gets('category_srl','content', 'title','module_srl','start_date','end_date','p_charge','tags','document_srl','version');
 		$args=$vars;
 		$oDocumentController = &getController('document');
 		$oDocumentModel = &getModel('document');
@@ -80,6 +80,7 @@ class hiswikiController extends hiswiki {
 		}else{
 			$vars->extra_vars1 = $vars->start_date;
 			$vars->extra_vars2 = $vars->end_date;
+			$vars->extra_vars3 = $vars->p_charge;
 			
 			//제목중복방지
 			$oHiswikiModel = &getModel('hiswiki');
@@ -132,7 +133,7 @@ class hiswikiController extends hiswiki {
 	 */
 	function _copyHiswikiDoc($args){
 		//만일 문서가 들어오지 않으면 하지않는다
-		$vars = Context::gets('regdate','content', 'title','module_srl','start_date','end_date','tags','document_srl','version','trace_srl');
+		$vars = Context::gets('regdate','content', 'title','module_srl','start_date','end_date','p_charge','tags','document_srl','version','trace_srl');
 		if (!$args->document_srl) return new Object(-1,'error');
 		
 		//모델 불러옴		
@@ -145,6 +146,7 @@ class hiswikiController extends hiswiki {
 		$vars->tags = $oDocument->get('tags');
 		$vars->start_date = $oExtraVars[1]->value;
 		$vars->end_date = $oExtraVars[2]->value;
+		$vars->p_charge = $oExtraVars[3]->value;
 		$vars->reg_date = $oDocument->getRegdateTime();
 		
 		//hiswiki모델가져옴
@@ -161,6 +163,7 @@ class hiswikiController extends hiswiki {
 		$output = $oDocumentController->insertDocument($vars);		
 		$oDocumentController->insertDocumentExtraVar($vars->module_srl, $vars->document_srl, 1, $vars->start_date, 'start_date', Context::getLangType());
 		$oDocumentController->insertDocumentExtraVar($vars->module_srl, $vars->document_srl, 2, $vars->end_date, 'end_date', Context::getLangType());
+		$oDocumentController->insertDocumentExtraVar($vars->module_srl, $vars->document_srl, 3, $vars->p_charge, 'p_charge', Context::getLangType());
 		
 		//hiswiki_trace에 저장한다
 		$output = executeQuery('hiswiki.insertHiswikiTrace', $vars);
@@ -205,6 +208,7 @@ class hiswikiController extends hiswiki {
 		// Insert extra variables if the document successfully inserted.
 		$oDocumentController->insertDocumentExtraVar($args->module_srl, $args->document_srl, 1, $args->start_date, 'start_date', Context::getLangType());
 		$oDocumentController->insertDocumentExtraVar($args->module_srl, $args->document_srl, 2, $args->end_date, 'end_date', Context::getLangType());
+		$oDocumentController->insertDocumentExtraVar($args->module_srl, $args->document_srl, 3, $args->p_charge, 'p_charge', Context::getLangType());
 		return $output;		
 		
 	}

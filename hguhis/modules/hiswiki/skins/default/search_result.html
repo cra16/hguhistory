@@ -57,8 +57,7 @@ a:hover {color:#A9A9A9;}
 
 <div class="outerDiv">
 	<div class="ResultDiv">
-		<h3 class="ResultHeading">표제어 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}" class="btn fontPt">더보기</a></h3>
-						
+		<h3 class="ResultHeading">표제어 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}" class="btn fontPt">더보기</a></h3>		
 			<div class="ResultViewDiv" loop="$search_results_title=>$val">
 				<h3 class="hwTitle"><a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getTitle()}</a></h3>
 				<div class="hwContent"><a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getSummary()}</a></div>
@@ -85,7 +84,7 @@ a:hover {color:#A9A9A9;}
 		</div>
 	</div>
 	<div class="ResultDiv">
-		<h3 class="ResultHeading"><h3>태그 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'tag')}" class="btn fontPt">더보기</a></h3>
+		<h3 class="ResultHeading">태그 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'tag')}" class="btn fontPt">더보기</a></h3>
 		<div class="ResultViewDiv" loop="$search_results_tags=>$val">
 			<a class="documentLink" href="{$val->getPermanentUrl()}">
 				<h3 class="hwTitle">{$val->getTitle()}</h3>

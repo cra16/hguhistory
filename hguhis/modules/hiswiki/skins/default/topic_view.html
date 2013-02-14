@@ -1,5 +1,5 @@
 <!--지희 글의 내용을 본다-->
-<!-- 현희 -->
+<!--현희 -->
 <style>
 
 
@@ -32,7 +32,7 @@ div.clear {
 	border: 1px dotted rgb(209, 209, 209);
 }
 
-.tag{margin: 3px 5px 3px -30px;}
+.tag{margin: 3px 5px 3px -30px;list-style-type:none;}
 .a:link{font-color:rgb(0, 0, 255);text-decoration:none;}
 .tagIcon{padding:0px 3px 0px 0px;}
 
@@ -41,6 +41,9 @@ div.clear {
 .hwContent{padding: 10px 15px 5px 15px;font-size: 10pt;align:left;}
 
 .hrClass{dotted;}
+
+
+.listNone{list-style-type:none;}
 </style>
 
 
@@ -80,16 +83,12 @@ div.clear {
 
 		{@ $tag_list = $document->get('tag_list') }
 		<div class="tag" cond="$tag_list">
-			<ul>
-				<li>
-					<img src="./img/Tag_icon.png" alt="{$lang->tag}" width="20" height="15" class="tagIcon" />
-				</li>
-				<li loop="$tag_list=>$key,$val">
-					<block cond="$key">,</block>
-					<a href="{getUrl('act', 'dispHiswikiContentList', 'search_target', 'tag', 'search_keyword', $val)}" rel="tag">
-						{htmlspecialchars($val)}
-					</a>
-				</li>
+			<ul class="listNone">
+				<li><img src="./img/Tag_icon.png" alt="{$lang->tag}" width="20"
+					height="15" class="tagIcon" /></li>
+				<li loop="$tag_list=>$key,$val"><block cond="$key">,</block> <a
+					href="{getUrl('act', 'dispHiswikiContentList', 'search_target', 'tag', 'search_keyword', $val)}"
+					rel="tag"> {htmlspecialchars($val)} </a></li>
 			</ul>
 			<div class="clear"></div>
 		</div>

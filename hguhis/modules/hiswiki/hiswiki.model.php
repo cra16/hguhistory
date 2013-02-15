@@ -118,8 +118,36 @@ class hiswikiModel extends hiswiki {
 		return $output;
 	}
 	
+	/**
+	 * @function getHiswikiYearViewList
+	 * @author 인호
+	 * @brief 연도별 보기 목록 페이지를 위한 DB 쿼리
+	 */
 	function getHiswikiYearViewList() {
-		
+		$date = Context::get('date');
+		$result = $this->_getHiswikiYearViewList($date);
+		$this->add('result', $result);
+	}
+	
+	/**
+	 * @function _getHiswikiYearViewList
+	 * @author 인호
+	 * @param int date
+	 * @brief $this->getHiswikiYearViewList() 의 help function
+	 */
+	function _getHiswikiYearViewList($date) {
+		// DB에서 연도 목록을 불러온다. (동적 조회)
+		$args->var_idx = 1;
+		$args->startDate = $date;//Context::get("startDate");
+		//$args->endDate = 30000000;//Context::get("endDate");
+		$output = executeQueryArray('hiswiki.getYearList', $args);
+		$result = array();
+		foreach ($output->data as $key => $val) {
+			$result[$key] = $val->value;
+		}
+		sort($result);
+		debugPrint($result);
+		return $result;
 	}
 }
 ?>

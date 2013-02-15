@@ -48,6 +48,7 @@
         <action name="procHiswikiTopicView" type="controller" standalone="true" />        
         <action name="getHiswikiSearchKeyword" type="model" standalone="true" />
         <action name="getHiswikiTitle" type="model" standalone="true" />
+        <action name="getHiswikiYearViewList" type="model" standalone="true" />
     </actions>
 	<menus>
 	</menus>

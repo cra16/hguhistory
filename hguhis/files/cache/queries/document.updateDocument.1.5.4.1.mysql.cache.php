@@ -179,9 +179,9 @@ new Table('`xe_documents`', '`documents`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`document_srl`',$document_srl31_argument,"equal")))
+new ConditionWithArgument('`document_srl`',$document_srl31_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

@@ -73,7 +73,7 @@ new ConditionWithArgument('`documents`.`module_srl`',$module_srl1_argument,"in")
 ,new ConditionWithoutArgument('`documents`.`document_srl`','`tags`.`document_srl`',"equal", 'and')
 ,new ConditionWithArgument('`documents`.`category_srl`',$category_srl3_argument,"in", 'and')
 ,new ConditionWithArgument('`documents`.`member_srl`',$member_srl4_argument,"equal", 'and')
-,new ConditionWithArgument('`tags`.`tag`',$s_tags5_argument,"like", 'and')))
+,new ConditionWithArgument('`tags`.`tag`',$s_tags5_argument,"like", 'and')))
 ));
 $query->setGroups(array(
 '`documents`.`document_srl`' ));

@@ -55,8 +55,9 @@
 #front_page .fr {
 	float:right;
 }
-a:link {text-decoration:none;color:#0000FF;}
-a:visited {color:#8B008B;}
+a:link {text-decoration:none;color:rgb(11, 11, 224);}
+a:visited {color:rgb(56, 56, 56);}
+a:hover {text-decoration:underline;}
 </style>
 <?php if($__Context->XE_VALIDATOR_MESSAGE){ ?><div class="message <?php echo $__Context->XE_VALIDATOR_MESSAGE_TYPE ?>">
 	<p><?php echo $__Context->XE_VALIDATOR_MESSAGE ?></p>

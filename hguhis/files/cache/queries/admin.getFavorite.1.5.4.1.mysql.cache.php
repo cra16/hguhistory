@@ -36,9 +36,9 @@ $query->setConditions(array(
 new ConditionGroup(array(
 new ConditionWithArgument('`admin_favorite_srl`',$favorite_srl1_argument,"equal")
 ,new ConditionWithArgument('`site_srl`',$site_srl2_argument,"equal", 'and')
-,new ConditionWithArgument('`module`',$module3_argument,"equal", 'and')))
+,new ConditionWithArgument('`module`',$module3_argument,"equal", 'and')))
 ));
-$query->setGroups(array());
+$query->setGroups(array());
 $query->setOrder(array(
 new OrderByColumn(${'sort_index4_argument'}, "desc")
 ));

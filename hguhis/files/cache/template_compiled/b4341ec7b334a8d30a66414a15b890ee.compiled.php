@@ -1,5 +1,5 @@
 <?php if(!defined("__XE__"))exit;?><!--지희 글의 내용을 본다-->
-<!-- 현희 -->
+<!--현희 -->
 <style>
 div.document_view li {
 	position:relative;
@@ -18,18 +18,20 @@ div.clear {
 	margin: 8px 3px 0px 3px;
 }
 .hwBlock {
-	margin: 5px 2px 5px 2px;
-	padding: 3px 20px 12px 18px;
+	margin: 0px 2px 0px 2px;
+	padding: 15px 10px 15px 15px;
 	font-size: 100%;
 	vertical-align: baseline;
 	background-image: url("<?php echo geturl() ?>modules/hiswiki/skins/default/img/rockywall.png");
 	border: 1px dotted rgb(209, 209, 209);
 }
-.tag{margin: 3px 5px 3px -30px;}
+.tag{margin: 3px 5px 3px -30px;list-style-type:none;}
 .a:link{font-color:rgb(0, 0, 255);text-decoration:none;}
 .tagIcon{padding:0px 3px 0px 0px;}
 .s-e_date {margin:5px 5px 5px 4px;font-size:10pt;color:#808080;}
 .hwContent{padding: 10px 15px 5px 15px;font-size: 10pt;align:left;}
+.hrClass{dotted;}
+.listNone{list-style-type:none;}
 </style>
 <?php $__tpl=TemplateHandler::getInstance();echo $__tpl->compile('modules/hiswiki/skins/default','header.html') ?>
 <!--#Meta:modules/hiswiki/skins/default/css/hiswiki.css--><?php $__tmp=array('modules/hiswiki/skins/default/css/hiswiki.css','','','');Context::loadFile($__tmp,'','','');unset($__tmp); ?>
@@ -48,9 +50,10 @@ div.clear {
 			<?php if($__Context->extra_vars[2]->value){ ?><span>End Date:</span><?php } ?> 
 			<?php if($__Context->extra_vars[2]->value){ ?><span><?php echo zdate($__Context->extra_vars[2]->value."000000",'Y-m-d') ?></span><?php } ?>
 		</div>
-		</div>			
+		</div>
+		<br/><div border="1px dotted"></div>		
 			<div class="hwRegdate" align="right">
-				<span>글쓴이: <?php echo $__Context->document->getNickName() ?>&nbsp;|</span>
+				<span>책임자: <?php echo $__Context->extra_vars[3]->value ?>&nbsp;|</span>
 				<span></span><span>등록일:
 					<?php echo $__Context->document->getRegdate() ?></span>
 			</div>
@@ -60,16 +63,12 @@ div.clear {
 		<hr style="color:black" height="1px">
 		<?php  $__Context->tag_list = $__Context->document->get('tag_list')  ?>
 		<?php if($__Context->tag_list){ ?><div class="tag">
-			<ul>
-				<li>
-					<img src="/git/hguhistory/hguhis/modules/hiswiki/skins/default/img/Tag_icon.png" alt="<?php echo $__Context->lang->tag ?>" width="20" height="15" class="tagIcon" />
-				</li>
-				<?php if($__Context->tag_list&&count($__Context->tag_list))foreach($__Context->tag_list as $__Context->key=>$__Context->val){ ?><li>
-					<?php if($__Context->key){ ?>,<?php } ?>
-					<a href="<?php echo getUrl('act', 'dispHiswikiContentList', 'search_target', 'tag', 'search_keyword', $__Context->val) ?>" rel="tag">
-						<?php echo htmlspecialchars($__Context->val) ?>
-					</a>
-				</li><?php } ?>
+			<ul class="listNone">
+				<li><img src="/git/hguhistory/hguhis/modules/hiswiki/skins/default/img/Tag_icon.png" alt="<?php echo $__Context->lang->tag ?>" width="20"
+					height="15" class="tagIcon" /></li>
+				<?php if($__Context->tag_list&&count($__Context->tag_list))foreach($__Context->tag_list as $__Context->key=>$__Context->val){ ?><li><?php if($__Context->key){ ?>,<?php } ?> <a
+					href="<?php echo getUrl('act', 'dispHiswikiContentList', 'search_target', 'tag', 'search_keyword', $__Context->val) ?>"
+					rel="tag"> <?php echo htmlspecialchars($__Context->val) ?> </a></li><?php } ?>
 			</ul>
 			<div class="clear"></div>
 		</div><?php } ?>

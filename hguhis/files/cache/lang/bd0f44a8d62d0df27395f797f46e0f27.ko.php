@@ -19,4 +19,3 @@ $lang->no_trackbacks='엮인글이 없습니다.';
 $lang->trackback_manager='선택한 엮인글 관리';
 $lang->selected_trackback='선택한 엮인글';
 $lang->site='사이트';
-$lang->msg_trackback_send_failed='엮인글 발송을 실패하였습니다.';

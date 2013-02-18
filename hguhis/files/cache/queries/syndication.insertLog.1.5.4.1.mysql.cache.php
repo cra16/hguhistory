@@ -46,8 +46,8 @@ new InsertExpression('`log_srl`', ${'log_srl13_argument'})
 $query->setTables(array(
 new Table('`xe_syndication_logs`', '`syndication_logs`')
 ));
-$query->setConditions(array());
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setConditions(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

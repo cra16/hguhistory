@@ -35,8 +35,8 @@ new InsertExpression('`admin_favorite_srl`', ${'adminFavoriteSrl5_argument'})
 $query->setTables(array(
 new Table('`xe_admin_favorite`', '`admin_favorite`')
 ));
-$query->setConditions(array());
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setConditions(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

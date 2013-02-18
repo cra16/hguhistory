@@ -28,9 +28,9 @@ new Table('`xe_modules`', '`modules`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithoutArgument('`module`',"'hiswiki'","equal")))
+new ConditionWithoutArgument('`module`',"'hiswiki'","equal")))
 ));
-$query->setGroups(array());
+$query->setGroups(array());
 $query->setOrder(array(
 new OrderByColumn(${'sort_index1_argument'}, "desc")
 ));

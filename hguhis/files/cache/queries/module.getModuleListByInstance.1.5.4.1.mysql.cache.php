@@ -19,10 +19,10 @@ new Table('`xe_modules`', '`modules`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`site_srl`',$site_srl5_argument,"equal")))
+new ConditionWithArgument('`site_srl`',$site_srl5_argument,"equal")))
 ));
 $query->setGroups(array(
 '`module`' ));
-$query->setOrder(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

@@ -42,9 +42,9 @@ $query->setConditions(array(
 new ConditionGroup(array(
 new ConditionWithArgument('`sites`.`site_srl`',$site_srl1_argument,"equal")
 ,new ConditionWithArgument('`sites`.`domain`',$site_keyword2_argument,"equal", 'and')
-,new ConditionWithoutArgument('`sites`.`site_srl`','`modules`.`site_srl`',"equal", 'and')))
+,new ConditionWithoutArgument('`sites`.`site_srl`','`modules`.`site_srl`',"equal", 'and')))
 ));
-$query->setGroups(array());
+$query->setGroups(array());
 $query->setOrder(array(
 new OrderByColumn(${'sort_index13_argument'}, "asc")
 ,new OrderByColumn(${'sort_index24_argument'}, "asc")

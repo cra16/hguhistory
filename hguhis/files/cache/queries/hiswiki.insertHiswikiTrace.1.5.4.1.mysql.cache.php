@@ -37,8 +37,8 @@ new InsertExpression('`document_srl`', ${'document_srl1_argument'})
 $query->setTables(array(
 new Table('`xe_hiswiki_trace`', '`hiswiki_trace`')
 ));
-$query->setConditions(array());
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setConditions(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

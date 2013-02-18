@@ -4,11 +4,11 @@ $query->setQueryId("getSiteInfo");
 $query->setAction("select");
 $query->setPriority("");
 
-${'site_srl1_argument'} = new ConditionArgument('site_srl', $args->site_srl, 'equal');
-${'site_srl1_argument'}->checkNotNull();
-${'site_srl1_argument'}->createConditionValue();
-if(!${'site_srl1_argument'}->isValid()) return ${'site_srl1_argument'}->getErrorMessage();
-if(${'site_srl1_argument'} !== null) ${'site_srl1_argument'}->setColumnType('number');
+${'site_srl99_argument'} = new ConditionArgument('site_srl', $args->site_srl, 'equal');
+${'site_srl99_argument'}->checkNotNull();
+${'site_srl99_argument'}->createConditionValue();
+if(!${'site_srl99_argument'}->isValid()) return ${'site_srl99_argument'}->getErrorMessage();
+if(${'site_srl99_argument'} !== null) ${'site_srl99_argument'}->setColumnType('number');
 
 $query->setColumns(array(
 new SelectExpression('`modules`.`site_srl`', '`module_site_srl`')
@@ -40,14 +40,14 @@ $query->setTables(array(
 new Table('`xe_sites`', '`sites`')
 ,new JoinTable('`xe_modules`', '`modules`', "left join", array(
 new ConditionGroup(array(
-new ConditionWithoutArgument('`modules`.`module_srl`','`sites`.`index_module_srl`',"equal")))
+new ConditionWithoutArgument('`modules`.`module_srl`','`sites`.`index_module_srl`',"equal")))
 ))
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`sites`.`site_srl`',$site_srl1_argument,"equal")))
+new ConditionWithArgument('`sites`.`site_srl`',$site_srl99_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

@@ -51,8 +51,8 @@ new InsertExpression('`module_srl`', ${'module_srl1_argument'})
 $query->setTables(array(
 new Table('`xe_editor_autosave`', '`editor_autosave`')
 ));
-$query->setConditions(array());
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setConditions(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

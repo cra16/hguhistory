@@ -18,9 +18,9 @@ new Table('`xe_hiswiki_doc`', '`hiswiki_doc`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`topic`',$topic1_argument,"equal")))
+new ConditionWithArgument('`topic`',$topic1_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

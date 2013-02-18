@@ -72,7 +72,7 @@ $lang->ssl_options=array();
 $lang->ssl_options['none']='사용 안함';
 $lang->ssl_options['optional']='선택적으로';
 $lang->ssl_options['always']='항상 사용';
-$lang->about_use_ssl='\'선택적으로\'는 회원가입, 정보수정 등의 지정된 동작(action)에서 보안접속(SSL)을 사용합니다.<br /> \'항상 사용\'은 모든 서비스에 SSL을 사용 합니다.<br /><span style="color:red">SSL 환경이 갖춰지지 않은 상태에서 SSL을 사용할 경우 접속이 되지 않을 수 있으니 주의하시기 바랍니다.</span>';
+$lang->about_use_ssl='\'선택적으로\'는 회원가입, 정보수정 등의 지정된 동작(action)에서 보안접속(SSL)을 사용합니다.<br /> \'항상 사용\'은 모든 서비스에 SSL을 사용 합니다.';
 $lang->server_ports='서버 포트 지정';
 $lang->about_server_ports='HTTP는 80, HTTPS는 443 이 아닌, 다른 포트를 사용할 경우에 포트를 지정해 주어야 합니다.';
 $lang->use_db_session='인증 세션 DB 사용';

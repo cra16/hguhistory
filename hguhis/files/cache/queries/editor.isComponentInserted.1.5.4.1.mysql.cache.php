@@ -4,11 +4,11 @@ $query->setQueryId("isComponentInserted");
 $query->setAction("select");
 $query->setPriority("");
 
-${'component_name64_argument'} = new ConditionArgument('component_name', $args->component_name, 'equal');
-${'component_name64_argument'}->checkNotNull();
-${'component_name64_argument'}->createConditionValue();
-if(!${'component_name64_argument'}->isValid()) return ${'component_name64_argument'}->getErrorMessage();
-if(${'component_name64_argument'} !== null) ${'component_name64_argument'}->setColumnType('varchar');
+${'component_name118_argument'} = new ConditionArgument('component_name', $args->component_name, 'equal');
+${'component_name118_argument'}->checkNotNull();
+${'component_name118_argument'}->createConditionValue();
+if(!${'component_name118_argument'}->isValid()) return ${'component_name118_argument'}->getErrorMessage();
+if(${'component_name118_argument'} !== null) ${'component_name118_argument'}->setColumnType('varchar');
 
 $query->setColumns(array(
 new SelectExpression('count(*)', '`count`')
@@ -18,9 +18,9 @@ new Table('`xe_editor_components`', '`editor_components`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`component_name`',$component_name64_argument,"equal")))
+new ConditionWithArgument('`component_name`',$component_name118_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

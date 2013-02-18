@@ -18,9 +18,9 @@ new Table('`xe_autoinstall_packages`', '`autoinstall_packages`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`path`',$path1_argument,"equal")))
+new ConditionWithArgument('`path`',$path1_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

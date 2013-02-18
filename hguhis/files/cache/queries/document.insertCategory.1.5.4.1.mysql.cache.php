@@ -85,8 +85,8 @@ new InsertExpression('`category_srl`', ${'category_srl1_argument'})
 $query->setTables(array(
 new Table('`xe_document_categories`', '`document_categories`')
 ));
-$query->setConditions(array());
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setConditions(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

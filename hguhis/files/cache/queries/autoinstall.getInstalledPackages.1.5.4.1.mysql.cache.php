@@ -21,9 +21,9 @@ new Table('`xe_ai_installed_packages`', '`installed`')
 $query->setConditions(array(
 new ConditionGroup(array(
 new ConditionWithArgument('`installed`.`package_srl`',$package_list2_argument,"in")
-,new ConditionWithoutArgument('`installed`.`package_srl`','`package`.`package_srl`',"equal", 'and')))
+,new ConditionWithoutArgument('`installed`.`package_srl`','`package`.`package_srl`',"equal", 'and')))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

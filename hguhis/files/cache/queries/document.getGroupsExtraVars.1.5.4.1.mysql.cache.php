@@ -40,7 +40,7 @@ $query->setConditions(array(
 new ConditionGroup(array(
 new ConditionWithArgument('`module_srl`',$module_srl1_argument,"equal")
 ,new ConditionWithArgument('`var_idx`',$var_idx2_argument,"notin", 'and')
-,new ConditionWithArgument('`eid`',$eid3_argument,"equal", 'and')))
+,new ConditionWithArgument('`eid`',$eid3_argument,"equal", 'and')))
 ));
 $query->setGroups(array(
 '`module_srl`' ,'`var_idx`' ,'`eid`' ));

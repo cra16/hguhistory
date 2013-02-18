@@ -26,8 +26,8 @@ new StarExpression()
 $query->setTables(array(
 new Table('`xe_autoinstall_packages`', '`packages`')
 ));
-$query->setConditions(array());
-$query->setGroups(array());
+$query->setConditions(array());
+$query->setGroups(array());
 $query->setOrder(array(
 new OrderByColumn(${'sort_index3_argument'}, "desc")
 ));

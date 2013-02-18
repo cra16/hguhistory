@@ -32,9 +32,9 @@ $query->setConditions(array(
 new ConditionGroup(array(
 new ConditionWithArgument('`history_srl`',$history_srl5_argument,"equal")
 ,new ConditionWithArgument('`document_srl`',$document_srl6_argument,"equal", 'and')
-,new ConditionWithArgument('`module_srl`',$module_srl7_argument,"equal", 'and')))
+,new ConditionWithArgument('`module_srl`',$module_srl7_argument,"equal", 'and')))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

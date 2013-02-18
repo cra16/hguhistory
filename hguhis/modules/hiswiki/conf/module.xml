@@ -49,6 +49,7 @@
         <action name="getHiswikiSearchKeyword" type="model" standalone="true" />
         <action name="getHiswikiTitle" type="model" standalone="true" />
         <action name="getHiswikiYearViewList" type="model" standalone="true" />
+        <action name="getHiswikiAuthor" type="model" standalone="true" />
     </actions>
 	<menus>
 	</menus>

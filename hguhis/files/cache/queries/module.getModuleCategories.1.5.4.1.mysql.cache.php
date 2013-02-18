@@ -22,9 +22,9 @@ new Table('`xe_module_categories`', '`module_categories`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`module_category_srl`',$moduleCategorySrl5_argument,"in")))
+new ConditionWithArgument('`module_category_srl`',$moduleCategorySrl5_argument,"in")))
 ));
-$query->setGroups(array());
+$query->setGroups(array());
 $query->setOrder(array(
 new OrderByColumn(${'sort_index6_argument'}, "asc")
 ));

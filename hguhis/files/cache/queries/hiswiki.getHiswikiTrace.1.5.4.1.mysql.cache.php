@@ -19,9 +19,9 @@ new Table('`xe_hiswiki_trace`', '`hiswiki_trace`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`trace_srl`',$trace_srl1_argument,"equal")))
+new ConditionWithArgument('`trace_srl`',$trace_srl1_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

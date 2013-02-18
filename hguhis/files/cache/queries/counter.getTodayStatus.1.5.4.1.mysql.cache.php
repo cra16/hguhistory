@@ -4,11 +4,11 @@ $query->setQueryId("getTodayStatus");
 $query->setAction("select");
 $query->setPriority("");
 
-${'regdate10_argument'} = new ConditionArgument('regdate', $args->regdate, 'equal');
-${'regdate10_argument'}->checkNotNull();
-${'regdate10_argument'}->createConditionValue();
-if(!${'regdate10_argument'}->isValid()) return ${'regdate10_argument'}->getErrorMessage();
-if(${'regdate10_argument'} !== null) ${'regdate10_argument'}->setColumnType('number');
+${'regdate6_argument'} = new ConditionArgument('regdate', $args->regdate, 'equal');
+${'regdate6_argument'}->checkNotNull();
+${'regdate6_argument'}->createConditionValue();
+if(!${'regdate6_argument'}->isValid()) return ${'regdate6_argument'}->getErrorMessage();
+if(${'regdate6_argument'} !== null) ${'regdate6_argument'}->setColumnType('number');
 
 $query->setColumns(array(
 new SelectExpression('count(*)', '`count`')
@@ -18,9 +18,9 @@ new Table('`xe_counter_status`', '`counter_status`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`regdate`',$regdate10_argument,"equal")))
+new ConditionWithArgument('`regdate`',$regdate6_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

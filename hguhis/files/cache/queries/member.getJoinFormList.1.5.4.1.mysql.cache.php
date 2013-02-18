@@ -4,9 +4,9 @@ $query->setQueryId("getJoinFormList");
 $query->setAction("select");
 $query->setPriority("");
 
-${'sort_index1_argument'} = new Argument('sort_index', $args->{'sort_index'});
-${'sort_index1_argument'}->ensureDefaultValue('list_order');
-if(!${'sort_index1_argument'}->isValid()) return ${'sort_index1_argument'}->getErrorMessage();
+${'sort_index30_argument'} = new Argument('sort_index', $args->{'sort_index'});
+${'sort_index30_argument'}->ensureDefaultValue('list_order');
+if(!${'sort_index30_argument'}->isValid()) return ${'sort_index30_argument'}->getErrorMessage();
 
 $query->setColumns(array(
 new StarExpression()
@@ -14,10 +14,10 @@ new StarExpression()
 $query->setTables(array(
 new Table('`xe_member_join_form`', '`member_join_form`')
 ));
-$query->setConditions(array());
-$query->setGroups(array());
+$query->setConditions(array());
+$query->setGroups(array());
 $query->setOrder(array(
-new OrderByColumn(${'sort_index1_argument'}, "asc")
+new OrderByColumn(${'sort_index30_argument'}, "asc")
 ));
 $query->setLimit();
 return $query; ?>

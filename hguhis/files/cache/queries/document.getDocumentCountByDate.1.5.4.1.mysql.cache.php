@@ -4,23 +4,23 @@ $query->setQueryId("getDocumentCountByDate");
 $query->setAction("select");
 $query->setPriority("");
 if(isset($args->moduleSrlList)) {
-${'moduleSrlList8_argument'} = new ConditionArgument('moduleSrlList', $args->moduleSrlList, 'in');
-${'moduleSrlList8_argument'}->createConditionValue();
-if(!${'moduleSrlList8_argument'}->isValid()) return ${'moduleSrlList8_argument'}->getErrorMessage();
+${'moduleSrlList30_argument'} = new ConditionArgument('moduleSrlList', $args->moduleSrlList, 'in');
+${'moduleSrlList30_argument'}->createConditionValue();
+if(!${'moduleSrlList30_argument'}->isValid()) return ${'moduleSrlList30_argument'}->getErrorMessage();
 } else
-${'moduleSrlList8_argument'} = null;if(${'moduleSrlList8_argument'} !== null) ${'moduleSrlList8_argument'}->setColumnType('number');
+${'moduleSrlList30_argument'} = null;if(${'moduleSrlList30_argument'} !== null) ${'moduleSrlList30_argument'}->setColumnType('number');
 if(isset($args->regDate)) {
-${'regDate9_argument'} = new ConditionArgument('regDate', $args->regDate, 'like_prefix');
-${'regDate9_argument'}->createConditionValue();
-if(!${'regDate9_argument'}->isValid()) return ${'regDate9_argument'}->getErrorMessage();
+${'regDate31_argument'} = new ConditionArgument('regDate', $args->regDate, 'like_prefix');
+${'regDate31_argument'}->createConditionValue();
+if(!${'regDate31_argument'}->isValid()) return ${'regDate31_argument'}->getErrorMessage();
 } else
-${'regDate9_argument'} = null;if(${'regDate9_argument'} !== null) ${'regDate9_argument'}->setColumnType('date');
+${'regDate31_argument'} = null;if(${'regDate31_argument'} !== null) ${'regDate31_argument'}->setColumnType('date');
 if(isset($args->statusList)) {
-${'statusList10_argument'} = new ConditionArgument('statusList', $args->statusList, 'in');
-${'statusList10_argument'}->createConditionValue();
-if(!${'statusList10_argument'}->isValid()) return ${'statusList10_argument'}->getErrorMessage();
+${'statusList32_argument'} = new ConditionArgument('statusList', $args->statusList, 'in');
+${'statusList32_argument'}->createConditionValue();
+if(!${'statusList32_argument'}->isValid()) return ${'statusList32_argument'}->getErrorMessage();
 } else
-${'statusList10_argument'} = null;if(${'statusList10_argument'} !== null) ${'statusList10_argument'}->setColumnType('varchar');
+${'statusList32_argument'} = null;if(${'statusList32_argument'} !== null) ${'statusList32_argument'}->setColumnType('varchar');
 
 $query->setColumns(array(
 new SelectExpression('count(*)', '`count`')
@@ -30,11 +30,11 @@ new Table('`xe_documents`', '`documents`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`module_srl`',$moduleSrlList8_argument,"in")
-,new ConditionWithArgument('`regdate`',$regDate9_argument,"like_prefix", 'and')
-,new ConditionWithArgument('`status`',$statusList10_argument,"in", 'and')))
+new ConditionWithArgument('`module_srl`',$moduleSrlList30_argument,"in")
+,new ConditionWithArgument('`regdate`',$regDate31_argument,"like_prefix", 'and')
+,new ConditionWithArgument('`status`',$statusList32_argument,"in", 'and')))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

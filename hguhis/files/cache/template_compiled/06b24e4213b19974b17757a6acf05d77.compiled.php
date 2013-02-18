@@ -49,6 +49,8 @@ var autoLinkPack = {
 			<input type="text" class="cal endDate" <?php if($__Context->extra_vars[2]->value){ ?> value="<?php echo zdate($__Context->extra_vars[2]->value.'000000','Y-m-d') ?>"<?php } ?> />
 			<input type="button" name="delete_button" value="삭제" class="del_date">
 		</span>
+		<span>책임자</span>
+		<input type="text" name="p_charge" class="p_charge" value="<?php echo $__Context->extra_vars[3]->value ?>"/>
 		<script type="text/javascript">
 			(function($) {
 				$(function() {
@@ -56,7 +58,7 @@ var autoLinkPack = {
 						changeMonth : true,
 						changeYear : true,
 						gotoCurrent : false,
-						yearRange : '1900:+5',
+						yearRange : '1994:+5',
 						dateFormat : 'yy-mm-dd',
 						onSelect : function() {
 							$(this).prev('input[type="hidden"]').val(this.value.replace(/-/g, ""))

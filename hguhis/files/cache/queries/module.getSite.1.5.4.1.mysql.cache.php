@@ -18,9 +18,9 @@ new Table('`xe_sites`', '`sites`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`site_srl`',$site_srl1_argument,"equal")))
+new ConditionWithArgument('`site_srl`',$site_srl1_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

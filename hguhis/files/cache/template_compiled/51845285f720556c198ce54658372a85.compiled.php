@@ -46,17 +46,19 @@ a:hover {color:#A9A9A9;}
 			<tr class="listHeading">
 				<th class="num" width="10%">번호</th>
 				<th class="title" width="50%">제목</th>
-				<th class="regdate" width="15%">작성일</th>
+				<th class="regdate" width="15%">책임자</th>
 				<th class="nickName" width="15%">글쓴이</th>
 				<th class="readCount" width="10%">조회</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php if($__Context->document_list&&count($__Context->document_list))foreach($__Context->document_list as $__Context->key=>$__Context->val){ ?><tr class="document_list">
+				<?php $__Context->oDocumentModel=&getModel('document') ?>
+				<?php $__Context->extra_vars=$__Context->oDocumentModel->getExtravars($__Context->val->get('module_srl'),$__Context->val->get('document_srl')) ?>
 				<td class="num alignCenter"><?php echo $__Context->key ?></td>
 				<td class="title"><a href="<?php echo $__Context->val->getPermanentUrl() ?>"><?php echo $__Context->val->getTitle() ?></a></td>
 				<td class="regdate alignCenter"><?php echo $__Context->val->getRegdate('Y.m.d') ?></td>
-				<td class="nickName alignCenter member_<?php echo $__Context->val->get('member_srl') ?>"><?php echo $__Context->val->getNickName() ?></td>
+				<td class="nickName alignCenter member_<?php echo $__Context->val->get('member_srl') ?>"><?php echo $__Context->extra_vars[3]->value ?></td>
 				<td class="readCount alignCenter"><?php echo $__Context->val->get('readed_count') ?></td>
 			</tr><?php } ?>
 		</tbody>

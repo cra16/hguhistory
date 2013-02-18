@@ -44,7 +44,6 @@ jQuery(function($) {
 	}
 	
 	$(document).ready(function() {
-		// 
 		// 검색을 하면 몇 초 간격 뒤에 검색 실행
 		$('#hiswiki_search_keyword').keyup(function() {
 			clearTimeout(t);

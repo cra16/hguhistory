@@ -23,9 +23,9 @@ new Table('`xe_document_categories`', '`document_categories`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`module_srl`',$module_srl1_argument,"equal")))
+new ConditionWithArgument('`module_srl`',$module_srl1_argument,"equal")))
 ));
-$query->setGroups(array());
+$query->setGroups(array());
 $query->setOrder(array(
 new OrderByColumn(${'sort_index2_argument'}, "asc")
 ));

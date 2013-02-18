@@ -88,7 +88,7 @@ div.clear {
 				</div>
 				</div>			
 					<div class="hwRegdate" align="right">
-						<span>글쓴이: <?php echo $__Context->document->getNickName() ?>&nbsp;|</span>
+						<span>책임자: <?php echo $__Context->extra_vars[2]->value ?>&nbsp;|</span>
 						<span></span><span>등록일:
 							<?php echo $__Context->document->getRegdate() ?></span>
 					</div>

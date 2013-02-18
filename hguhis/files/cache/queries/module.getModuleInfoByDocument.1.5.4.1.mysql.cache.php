@@ -20,9 +20,9 @@ new Table('`xe_modules`', '`modules`')
 $query->setConditions(array(
 new ConditionGroup(array(
 new ConditionWithArgument('`documents`.`document_srl`',$document_srl1_argument,"equal")
-,new ConditionWithoutArgument('`modules`.`module_srl`','`documents`.`module_srl`',"equal", 'and')))
+,new ConditionWithoutArgument('`modules`.`module_srl`','`documents`.`module_srl`',"equal", 'and')))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

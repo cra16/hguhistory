@@ -35,9 +35,9 @@ new Table('`xe_hiswiki_doc`', '`hiswiki_doc`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`topic`',$topic1_argument,"like")))
+new ConditionWithArgument('`topic`',$topic1_argument,"like")))
 ));
-$query->setGroups(array());
+$query->setGroups(array());
 $query->setOrder(array(
 new OrderByColumn(${'sort_index2_argument'}, "desc")
 ));

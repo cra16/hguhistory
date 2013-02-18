@@ -4,29 +4,29 @@ $query->setQueryId("updateCounterPageview");
 $query->setAction("update");
 $query->setPriority("");
 
-${'pageview14_argument'} = new Argument('pageview', null);
-${'pageview14_argument'}->setColumnOperation('+');
-${'pageview14_argument'}->ensureDefaultValue(1);
-if(!${'pageview14_argument'}->isValid()) return ${'pageview14_argument'}->getErrorMessage();
-if(${'pageview14_argument'} !== null) ${'pageview14_argument'}->setColumnType('number');
+${'pageview4_argument'} = new Argument('pageview', null);
+${'pageview4_argument'}->setColumnOperation('+');
+${'pageview4_argument'}->ensureDefaultValue(1);
+if(!${'pageview4_argument'}->isValid()) return ${'pageview4_argument'}->getErrorMessage();
+if(${'pageview4_argument'} !== null) ${'pageview4_argument'}->setColumnType('number');
 
-${'regdate15_argument'} = new ConditionArgument('regdate', $args->regdate, 'equal');
-${'regdate15_argument'}->checkNotNull();
-${'regdate15_argument'}->createConditionValue();
-if(!${'regdate15_argument'}->isValid()) return ${'regdate15_argument'}->getErrorMessage();
-if(${'regdate15_argument'} !== null) ${'regdate15_argument'}->setColumnType('number');
+${'regdate5_argument'} = new ConditionArgument('regdate', $args->regdate, 'equal');
+${'regdate5_argument'}->checkNotNull();
+${'regdate5_argument'}->createConditionValue();
+if(!${'regdate5_argument'}->isValid()) return ${'regdate5_argument'}->getErrorMessage();
+if(${'regdate5_argument'} !== null) ${'regdate5_argument'}->setColumnType('number');
 
 $query->setColumns(array(
-new UpdateExpression('`pageview`', ${'pageview14_argument'})
+new UpdateExpression('`pageview`', ${'pageview4_argument'})
 ));
 $query->setTables(array(
 new Table('`xe_counter_status`', '`counter_status`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`regdate`',$regdate15_argument,"equal")))
+new ConditionWithArgument('`regdate`',$regdate5_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

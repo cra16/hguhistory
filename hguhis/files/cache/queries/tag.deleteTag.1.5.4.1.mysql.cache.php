@@ -4,21 +4,21 @@ $query->setQueryId("deleteTag");
 $query->setAction("delete");
 $query->setPriority("");
 
-${'document_srl56_argument'} = new ConditionArgument('document_srl', $args->document_srl, 'equal');
-${'document_srl56_argument'}->checkFilter('number');
-${'document_srl56_argument'}->checkNotNull();
-${'document_srl56_argument'}->createConditionValue();
-if(!${'document_srl56_argument'}->isValid()) return ${'document_srl56_argument'}->getErrorMessage();
-if(${'document_srl56_argument'} !== null) ${'document_srl56_argument'}->setColumnType('number');
+${'document_srl251_argument'} = new ConditionArgument('document_srl', $args->document_srl, 'equal');
+${'document_srl251_argument'}->checkFilter('number');
+${'document_srl251_argument'}->checkNotNull();
+${'document_srl251_argument'}->createConditionValue();
+if(!${'document_srl251_argument'}->isValid()) return ${'document_srl251_argument'}->getErrorMessage();
+if(${'document_srl251_argument'} !== null) ${'document_srl251_argument'}->setColumnType('number');
 
 $query->setTables(array(
 new Table('`xe_tags`', '`tags`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`document_srl`',$document_srl56_argument,"equal")))
+new ConditionWithArgument('`document_srl`',$document_srl251_argument,"equal")))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

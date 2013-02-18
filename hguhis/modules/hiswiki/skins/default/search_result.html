@@ -11,7 +11,10 @@
 	margin: 13px 11px 12px 2px;
 }
 
-.fontPt{margin:0 0 0 8px;font-size:10pt;}
+.fontPt {
+	margin: 0 0 0 8px;
+	font-size: 10pt;
+}
 
 .outerDiv .ResultViewDiv {
 	margin: 2px 5px 4px 5px;
@@ -20,15 +23,16 @@
 	font-size: 100%;
 	font-family: 돋움, dotum, sans-serif;
 	vertical-align: baseline;
-	background-image: url("{geturl()}modules/hiswiki/skins/default/img/ecailles.png");
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/ecailles.png");
 	border: 1px dotted rgb(202, 202, 202);
 }
 
 .ResultViewDiv:hover {
-	background-image: url("{geturl()}modules/hiswiki/skins/default/img/pw_maze_white.png");
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/pw_maze_white.png");
 	cursor: pointer;
 }
-
 
 .documentLink {
 	text-decoration: none;
@@ -36,72 +40,128 @@
 
 .hwTitle {
 	font-size: 12pt;
-	font-style: bold; 
+	font-style: bold;
 	margin: 9px 6px 5px 0px;
 }
 
-.hwContent .ResultContent{font}
+.hwContent .ResultContent {font
+	
+}
 
+.hwContent {
+	font-size: 11pt;
+	padding-bottom: 4px;
+}
 
+.updateInfo {
+	font-size: 9pt;
+	color: #808080;
+	padding: 1px 0 0 1px;
+}
 
-.hwContent{font-size: 11pt;padding-bottom: 4px;}
+a:link {
+	text-decoration: none;
+	color: black;
+}
 
-.updateInfo {font-size: 9pt;color:#808080;padding:1px 0 0 1px;}
+a:visited {
+	color: rgb(73, 73, 73);
+}
 
-a:link {text-decoration:none;color:black;}
-a:visited {color:rgb(73, 73, 73);}
-a:hover {color:#A9A9A9;}
+a:hover {
+	color: #A9A9A9;
+}
 
-.addBtn {margin: 7px 5px -4px 6px;}
+.addBtn {
+	margin: 7px 5px -4px 6px;
+}
 </style>
 
 <div class="outerDiv">
 	<div class="ResultDiv">
-		<h3 class="ResultHeading">표제어 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}" class="btn fontPt">더보기</a></h3>	
-			<div class="ResultViewDiv" loop="$search_results_title=>$val">
-				{@$oDocumentModel=&getModel('document')}
-				{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}	
-				<h3 class="hwTitle"><a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getTitle()}</a></h3>
-				<div class="hwContent"><a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getSummary()}</a></div>
-				<div class="updateInfo">
-					<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
-					<span class="nickName member_{$val->get('member_srl')}">| 책임자 {$extra_vars[3]->value}</span>
-					<span class="readCount">| 조회수 {$val->get('readed_count')}</span> 
-					<span class="tag">| 태그 {$val->get('tags')}</span>
-				</div>
-			</div>
-	</div>
-	<div class="ResultDiv">
-		<h3 class="ResultHeading">내용 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'content')}" class="btn fontPt">더보기</a></h3>
-		<div class="ResultViewDiv" loop="$search_results_content=>$val">
+		<h3 class="ResultHeading">
+			표제어 검색 결과<a
+				href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}"
+				class="btn fontPt" id="buttonTitle">더보기</a>
+		</h3>
+		<div class="ResultViewDiv" loop="$search_results_title=>$val" id="msg1">
 			{@$oDocumentModel=&getModel('document')}
-			{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}				
-			<a class="documentLink" href="{$val->getPermanentUrl()}">
-				<h3 class="hwTitle">{$val->getTitle()}</h3>
-				<div class="hwContent">{$val->getSummary()}</div>
+			{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}
+			<h3 class="hwTitle">
+				<a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getTitle()}</a>
+			</h3>
+			<div class="hwContent">
+				<a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getSummary()}</a>
+			</div>
 			<div class="updateInfo">
-				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
-				<span class="nickName">| 책임자 {$extra_vars[3]->value}</span> 
-				<span class="readCount">| 조회수 {$val->get('readed_count')}</span> 
-				<span class="tag">| 태그 {$val->get('tags')}</span>
-			</div></a>
+				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> <span
+					class="nickName member_{$val->get('member_srl')}">| 책임자
+					{$extra_vars[3]->value}</span> <span class="readCount">| 조회수
+					{$val->get('readed_count')}</span> <span class="tag">| 태그
+					{$val->get('tags')}</span>
+			</div>
 		</div>
 	</div>
 	<div class="ResultDiv">
-		<h3 class="ResultHeading">태그 검색 결과<a href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'tag')}" class="btn fontPt">더보기</a></h3>
-		<div class="ResultViewDiv" loop="$search_results_tags=>$val">
+		<h3 class="ResultHeading">
+			내용 검색 결과<a
+				href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'content')}"
+				class="btn fontPt" id="buttonContent">더보기</a>
+		</h3>
+		<div class="ResultViewDiv" loop="$search_results_content=>$val" id="msg2">
 			{@$oDocumentModel=&getModel('document')}
-			{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}				
+			{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}
 			<a class="documentLink" href="{$val->getPermanentUrl()}">
 				<h3 class="hwTitle">{$val->getTitle()}</h3>
 				<div class="hwContent">{$val->getSummary()}</div>
-			<div class="updateInfo">
-				<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span>
-				<span class="nickName">| 책임자 {$extra_vars[3]->value}</span> 
-				<span class="readCount">| 조회수 {$val->get('readed_count')}</span> 
-				<span class="tag">| 태그 {$val->get('tags')}</span>
-			</div></a>
+				<div class="updateInfo">
+					<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> <span
+						class="nickName">| 책임자 {$extra_vars[3]->value}</span> <span
+						class="readCount">| 조회수 {$val->get('readed_count')}</span> <span
+						class="tag">| 태그 {$val->get('tags')}</span>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="ResultDiv">
+		<h3 class="ResultHeading">태그 검색 결과<a
+				href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'tag')}"
+				class="btn fontPt" id="buttonTag">더보기</a>
+		</h3>
+		<div class="ResultViewDiv" loop="$search_results_tags=>$val" id="msg3">
+			{@$oDocumentModel=&getModel('document')}
+			{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}
+			<a class="documentLink" href="{$val->getPermanentUrl()}">
+				<h3 class="hwTitle">{$val->getTitle()}</h3>
+				<div class="hwContent">{$val->getSummary()}</div>
+				<div class="updateInfo">
+					<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> <span
+						class="nickName">| 책임자 {$extra_vars[3]->value}</span> <span
+						class="readCount">| 조회수 {$val->get('readed_count')}</span> <span
+						class="tag">| 태그 {$val->get('tags')}</span>
+				</div>
+			</a>
 		</div>
 	</div>
 </div>
 <include target="footer.html" />
+
+<script type="text/javascript">
+	jQuery(function($) {
+		$(document).ready(function() {
+			var $tmp1 = '{$msg_no_result_title}';
+			var $tmp2 = '{$msg_no_result_content}';
+			var tmp3 = '{$msg_no_result_tag}';
+			if ($tmp1) {
+				$('#buttonTitle').hide();
+			}
+			if ($tmp2) {
+				$('#buttonContent').hide();
+			}
+			if (tmp3) {
+				$('#buttonTag').hide();
+				$(tmp3).appendTo('#msg3').show();
+			}
+		});
+	});
+</script>

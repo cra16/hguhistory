@@ -38,9 +38,9 @@ $query->setConditions(array(
 new ConditionGroup(array(
 new ConditionWithArgument('`site_srl`',$site_srl1_argument,"equal")
 ,new ConditionWithArgument('`layout_type`',$layout_type2_argument,"equal", 'and')
-,new ConditionWithArgument('`layout`',$layout3_argument,"equal", 'and')))
+,new ConditionWithArgument('`layout`',$layout3_argument,"equal", 'and')))
 ));
-$query->setGroups(array());
+$query->setGroups(array());
 $query->setOrder(array(
 new OrderByColumn(${'sort_index4_argument'}, "desc")
 ));

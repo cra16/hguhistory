@@ -25,9 +25,9 @@ new Table('`xe_admin_favorite`', '`admin_favorite`')
 $query->setConditions(array(
 new ConditionGroup(array(
 new ConditionWithArgument('`site_srl`',$site_srl1_argument,"equal")
-,new ConditionWithArgument('`module`',$module2_argument,"equal", 'and')))
+,new ConditionWithArgument('`module`',$module2_argument,"equal", 'and')))
 ));
-$query->setGroups(array());
-$query->setOrder(array());
+$query->setGroups(array());
+$query->setOrder(array());
 $query->setLimit();
 return $query; ?>

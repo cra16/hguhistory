@@ -11,8 +11,80 @@ $oMemberModel = &getModel('member');
 }
 -->
 
+<<<<<<< HEAD
 <div id="hiswiki_sr" class="outerDiv">
+=======
+.ResultHeading {
+	font-size: 13pt;
+	margin: 13px 11px 12px 2px;
+}
+
+.fontPt {
+	margin: 0 0 0 8px;
+	font-size: 10pt;
+}
+
+.outerDiv .ResultViewDiv {
+	margin: 2px 5px 4px 5px;
+	padding: 11px 21px 19px 21px;
+	font-weight: inherit;
+	font-size: 100%;
+	font-family: 돋움, dotum, sans-serif;
+	vertical-align: baseline;
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/ecailles.png");
+	border: 1px dotted rgb(202, 202, 202);
+}
+
+.ResultViewDiv:hover {
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/pw_maze_white.png");
+	cursor: pointer;
+}
+
+.documentLink {
+	text-decoration: none;
+}
+
+.hwTitle {
+	font-size: 12pt;
+	font-style: bold;
+	margin: 9px 6px 5px 0px;
+}
+
+.hwContent {
+	font-size: 11pt;
+	padding-bottom: 4px;
+}
+
+.updateInfo {
+	font-size: 9pt;
+	color: #808080;
+	padding: 1px 0 0 1px;
+}
+
+a:link {
+	text-decoration: none;
+	color: black;
+}
+
+a:visited {
+	color: rgb(73, 73, 73);
+}
+
+a:hover {
+	color: #A9A9A9;
+}
+
+.addBtn {
+	margin: 7px 5px -4px 6px;
+}
+</style>
+
+<div class="outerDiv">
+>>>>>>> refs/remotes/origin/hguhis
 	<div class="ResultDiv">
+<<<<<<< HEAD
 		<h3 class="ResultHeading fl">표제어 검색 결과</h3>
 		<a class="btn fontPt fr padding_right" href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}">더보기</a>
 		<div class="clear"></div>	
@@ -29,16 +101,44 @@ $oMemberModel = &getModel('member');
 			</h3>
 			<div class="hwContent">
 				<a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getSummary()}</a>
+=======
+		<h3 class="ResultHeading">
+			표제어 검색 결과<a
+				href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'title')}"
+				class="btn fontPt" id="buttonTitle">더보기</a>
+		</h3>
+		<div id="msg1">
+			<div class="ResultViewDiv" loop="$search_results_title=>$val">
+				{@$oDocumentModel=&getModel('document')}
+				{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}
+				<h3 class="hwTitle">
+					<a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getTitle()}</a>
+				</h3>
+				<div class="hwContent">
+					<a class="documentLink" href="{$val->getPermanentUrl()}">{$val->getSummary()}</a>
+				</div>
+				<div class="updateInfo">
+					<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> <span
+						class="nickName member_{$val->get('member_srl')}">| 책임자
+						{$extra_vars[3]->value}</span> <span class="readCount">| 조회수
+						{$val->get('readed_count')}</span> <span class="tag">| 태그
+						{$val->get('tags')}</span>
+				</div>
+>>>>>>> refs/remotes/origin/hguhis
 			</div>
+<<<<<<< HEAD
 			<div class="updateInfo">
 				<span class="regdate" title="{$val->getRegdate('H:i:s')}">문서 작성일 {$val->getRegdate('Y.m.d')}</span>
 				<span class="nickName member_{$val->get('member_srl')}">| 책임자 <a href="{getUrl('', 'act', 'dispMemberInfo', 'member_srl', $extra_vars[3]->member_srl)}" class="member_{$extra_vars[3]->member_srl}">{$extra_vars[3]->nick_name}</a></span>
 				<span class="readCount">| 조회수 {$val->get('readed_count')}</span> 
 				<span class="tag">| 태그 {$val->get('tags')}</span>
 			</div>
+=======
+>>>>>>> refs/remotes/origin/hguhis
 		</div>
 	</div>
 	<div class="ResultDiv">
+<<<<<<< HEAD
 		<h3 class="ResultHeading fl">내용 검색 결과</h3>
 		<a class="btn fontPt fr padding_right" href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'content')}">더보기</a>
 		<div class="clear"></div>
@@ -87,9 +187,139 @@ $oMemberModel = &getModel('member');
 				<span class="nickName">| 책임자 <a href="{getUrl('', 'act', 'dispMemberInfo', 'member_srl', $extra_vars[3]->member_srl)}" class="member_{$extra_vars[3]->member_srl}">{$extra_vars[3]->nick_name}</a></span> 
 				<span class="readCount">| 조회수 {$val->get('readed_count')}</span> 
 				<span class="tag">| 태그 {$val->get('tags')}</span>
+=======
+		<h3 class="ResultHeading">
+			내용 검색 결과<a
+				href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'content')}"
+				class="btn fontPt" id="buttonContent">더보기</a>
+		</h3>
+		<div id="msg2">
+			<div class="ResultViewDiv" loop="$search_results_content=>$val">
+				{@$oDocumentModel=&getModel('document')}
+				{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}
+				<a class="documentLink" href="{$val->getPermanentUrl()}">
+					<h3 class="hwTitle">{$val->getTitle()}</h3>
+					<div class="hwContent">{$val->getSummary()}</div>
+					<div class="updateInfo">
+						<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> <span
+							class="nickName">| 책임자 {$extra_vars[3]->value}</span> <span
+							class="readCount">| 조회수 {$val->get('readed_count')}</span> <span
+							class="tag">| 태그 {$val->get('tags')}</span>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="ResultDiv">
+		<h3 class="ResultHeading">
+			태그 검색 결과<a
+				href="{getUrl('act', 'dispHiswikiContentList', 'search_keyword', $search_keyword, 'search_target', 'tag')}"
+				class="btn fontPt" id="buttonTag">더보기</a>
+		</h3>
+		<div id="msg3">
+			<div class="ResultViewDiv" loop="$search_results_tags=>$val">
+				{@$oDocumentModel=&getModel('document')}
+				{@$extra_vars=$oDocumentModel->getExtravars($val->module_srl,$val->document_srl)}
+				<a class="documentLink" href="{$val->getPermanentUrl()}">
+					<h3 class="hwTitle">{$val->getTitle()}</h3>
+					<div class="hwContent">{$val->getSummary()}</div>
+					<div class="updateInfo">
+						<span class="regdate">작성일 {$val->getRegdate('Y.m.d')}</span> <span
+							class="nickName">| 책임자 {$extra_vars[3]->value}</span> <span
+							class="readCount">| 조회수 {$val->get('readed_count')}</span> <span
+							class="tag">| 태그 {$val->get('tags')}</span>
+					</div>
+				</a>
+>>>>>>> refs/remotes/origin/hguhis
 			</div>
 		</div>
 	</div>
 </div>
 <include target="footer.html" />
+<<<<<<< HEAD
 </div>
+=======
+
+<script type="text/javascript">
+	jQuery(function($) {
+		/**
+		 * @function createElement
+		 * @author 바람꽃(wndflwr@gmail.com)
+		 * @param tag : string : DOM 객체의 태그 이름. 비어있을 경우 빈 div 엘리먼트를 리턴한다.
+		 * @param options : object : DOM 객체의 여러가지 옵션들을 지정한다.
+		 * @param options.id : string : DOM 객체의 id
+		 * @param options.cls : [string | array] : DOM 객체의 class를 설정할 수 있다. 여러개의 class를 가지고 있다면 array로 넘기면 됨.
+		 * @param options.text : string : DOM 객체의 text
+		 * @param options.attr : object : DOM 객체의 속성을 지정할 수 있다.
+		 * @param options.css : object : DOM 객체의 style을 지정할 수 있다.
+		 * @returns jQuery DOM object
+		 */
+		function createElement(tag, options) {
+			if (!tag)
+				return $('<div />');
+			var $elem = $('<' + tag + '/>');
+			if (options) {
+				if (options.id)
+					$elem.attr('id', options.id);
+				if (options.cls) {
+					if (typeof options.cls == 'null'
+							|| typeof options.cls == 'undefined') {
+						// do nothing
+					} else if (typeof options.cls == 'string') {
+						$elem.addClass(options.cls);
+					} else if (typeof options.cls == 'object') {
+						for ( var i in options.cls) {
+							$elem.addClass(options.cls[i]);
+						}
+					}
+				}
+				if (options.text)
+					$elem.text(options.text);
+				if (typeof options.attr != 'null'
+						&& typeof options.attr == 'object') {
+					for ( var i in options.attr) {
+						$elem.attr(i, options.attr[i]);
+					}
+				}
+				if (typeof options.css != 'null'
+						&& typeof options.css == 'object') {
+					for ( var i in options.css) {
+						$elem.css(i, options.css[i]);
+					}
+				}
+			}
+			return $elem;
+		}
+
+		$(document).ready(function() {
+			var tmp1 = '{$msg_no_result_title}';
+			var tmp2 = '{$msg_no_result_content}';
+			var tmp3 = '{$msg_no_result_tag}';
+			console.log(tmp1);
+			console.log(tmp2);
+			console.log(tmp3);
+			if (tmp1) {
+				$('#buttonTitle').hide();
+				$('#msg1').append(createElement('div', {
+					cls : 'msg_no_result',
+					text : tmp1
+				}));
+			}
+			if (tmp2) {
+				$('#buttonContent').hide();
+				$('#msg2').append(createElement('div', {
+					cls : 'msg_no_result',
+					text : tmp2
+				}));
+			}
+			if (tmp3) {
+				$('#buttonTag').hide();
+				$('#msg3').append(createElement('div', {
+					cls : 'msg_no_result',
+					text : tmp3
+				}));
+			}
+		});
+	});
+</script>
+>>>>>>> refs/remotes/origin/hguhis

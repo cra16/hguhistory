@@ -181,8 +181,66 @@ class hiswikiModel extends hiswiki {
 		return executeQueryArray('hiswiki.getMemberLists', $args);
 	}
 	
+	/**
+	 * @function getHiswikiYearViewList
+	 * @author 인호
+	 * @brief 연도별 보기 목록 페이지를 위한 DB 쿼리
+	 */
 	function getHiswikiYearViewList() {
+		$args->start_date = Context::get('start_date');
+		$args->end_date = Context::get('end_date');
+		$args->module_srl = Context::get('module_srl');
+		$result = $this->_getHiswikiYearViewList($args);
+		$this->add('result', $result);
+	}
+	
+	/**
+	 * @function _getHiswikiYearViewList
+	 * @author 인호
+	 * @param int date
+	 * @brief $this->getHiswikiYearViewList() 의 help function
+	 */
+	function _getHiswikiYearViewList($param) {
+		// DB에서 연도 목록을 불러온다. (동적 조회)
+		$args->var_idx_1 = 1;
+		$args->var_idx_2 = 2;
+		$args->startDate = $param->start_date;
+		$args->endDate = $param->end_date;
+		$args->module_srl = $param->module_srl;
+		$output = executeQueryArray('hiswiki.getYearList', $args);
 		
+		$result = array();
+		$oDocumentModel = &getModel('document');
+		foreach ($output->data as $key => $val) {
+			$tmp = $oDocumentModel->getDocument($val->document_srl);
+			$result[$key]->date = $val->value;
+			$result[$key]->var_idx = $val->var_idx;
+			$result[$key]->document_srl = $val->document_srl;
+			$result[$key]->permanent_url = $tmp->getPermanentUrl();
+			$result[$key]->summary = $tmp->getSummary(80, '...');
+			//$result[$key]->author = $tmp->getNickName();
+			$result[$key]->regDate = $tmp->getRegdate('Y.m.d');
+			$result[$key]->title = $tmp->getTitle();
+		}
+		return $result;
+	}
+	
+	/**
+	 * @function getHiswikiAuthor
+	 * @author 인호
+	 * @brief 위키 문서의 책임자를  DB에서 조회한다.
+	 */
+	function getHiswikiAuthor() {
+		$args->module_srl = Context::get('module_srl');
+		$args->document_srl = Context::get('document_srl');
+		$args->var_idx = 3;
+		$output = executeQueryArray('hiswiki.getAuthor', $args);
+		
+		$result = array();
+		foreach ($output->data as $key => $val) {
+			$result[$key]->author = $val->value;
+		}
+		$this->add('result', $result);
 	}
 }
 ?>

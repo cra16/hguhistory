@@ -1,73 +1,255 @@
 <include target="header.html" />
+<load target="js/jquery.copycss.js" />
 
 <style type="text/css">
-	.div {
-		border: red solid 1px;
-	}
-	#mainDiv {
-		width: 100%;
-	}
-	#yearDiv, #monthDiv {
-		width: 20%;
-		float: left;
-	}
-	.yearButton, .monthButton{
-		margin: 10px;
-		vertical-align: center;
-		text-align: center;
-		font-weight: bolder;
-		font-size: 20px;
-		text-shadow: white 1px 1px;
-		height: 50px;
-		width: 90%;
-		-moz-border-radius: 5px;
-		border-radius: 5px;
-		background-image: url("http://colourlovers.com.s3.amazonaws.com/images/patterns/360/360248.png");
-	}
-	#contentDiv {
-		width: 60%;
-		float: right;
-	}
+body {
+	font-family: Segoe UI, 맑은 고딕;
+}
+
+.div {
+	border: red solid 1px;
+}
+
+#mainDiv {
+	width: 100%;
+	height: inherit;
+}
+
+#yearDiv,#monthDiv,#contentDiv {
+	width: 20%;
+	float: left;
+	height: 400px;
+	overflow-x: hidden;
+	overflow: auto;
+	margin: 5px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	border: 1px #542437 solid;
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/satinweave.png");
+}
+
+#yearDiv, #monthDiv {
+	display: none;
+}
+
+.monthButton,.yearButton {
+	margin: 10px;
+	line-height: 40px;
+	text-align: center;
+	font-weight: bolder;
+	font-size: 20px;
+	text-shadow: white 1px 1px;
+	height: 40px;
+	width: 80%;
+	border: 2px grey solid;
+	box-shadow: 2px 2px 1px #888888;
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/3268386.png");
+}
+
+.yearButton,.monthButton {
+	display: none;
+}
+
+.yearButton:hover,.monthButton:hover {
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/3268388.jpg");
+}
+
+.yearButton:active,.monthButton:active {
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/3268387.jpg");
+}
+
+#contentDiv {
+	width: 50%;
+	float: left;
+	display: none;
+}
+
+.contentTemplate {
+	display: none;
+}
+
+.contentList {
+	margin: 10px;
+	padding: 10px;
+	border: 2px solid gray;
+	background-color: white;
+}
+
+.contentList:hover {
+	background-image:
+		url("{geturl()}modules/hiswiki/skins/default/img/pw_maze_white.png");
+}
+
+.dateTemplate {
+	font-style: italic;
+}
+
+.titleTemplate {
+	font-weight: bold;
+}
+
+.contentInfoDiv {
+	font-size: 8px;
+}
+
+.summary {
+	
+}
+
+a:link {text-decoration:none;color:black;}
+a:visited {color:rgb(73, 73, 73);}
+a:hover {color:#A9A9A9;}
+
+/* 스크롤바 스타일링 */
+::-webkit-scrollbar {
+	width: 5px;
+} /* this targets the default scrollbar (compulsory) */
+::-webkit-scrollbar-track {
+	background-color: #ffffff;
+}
+/* the new scrollbar will have a flat appearance with the set background color */
+::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.2);
+} /* this will style the thumb, ignoring the track */
+::-webkit-scrollbar-button {
+	background-color: #00;
+}
+/* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+::-webkit-scrollbar-corner {
+	background-color: black;
+}
+/* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+/* 스크롤바 스타일링 끝 */
 </style>
 
 <div id="mainDiv">
-	<div id="yearDiv">
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
-		<div class="yearButton">1994년</div>
+	<div id="yearDiv" align="center">
+		<div class="yearButton" id="{$i}" loop="$i=1900;$i<=2100;$i++">{$i}년</div>
 	</div>
-	<div id="monthDiv">
-		<div class="monthButton">1월</div>
-		<div class="monthButton">1월</div>
-		<div class="monthButton">1월</div>
-		<div class="monthButton">1월</div>
-		<div class="monthButton">1월</div>
-		<div class="monthButton">1월</div>
-		<div class="monthButton">1월</div>
-		<div class="monthButton">1월</div>	
+	<div id="monthDiv" align="center">
+		<div class="monthButton" id="{$i}" loop="$i=1;$i<=12;$i++">{$i}월</div>
 	</div>
-	<div id="contentDiv"></div>
+	<div id="contentDiv">
+		<div class="contentTemplate">
+			<a class="contentLink" href="">
+				<div class="dateTemplate"></div>
+				<div class="titleTemplate"></div>
+				<div class="contentInfoDiv">
+					<span>책임자: </span> <span class="authorTemplate"></span> <span> / 작성일:</span>
+					<span class="regDateTemplate"></span>
+				</div>
+				<div class="summary"></div>
+			</a>
+		</div>
+	</div>
 </div>
 <include target="footer.html" />
 
 <script type="text/javascript">
-	
+	jQuery(function($) {
+		function getYearList(args_start, args_end, selector) {
+			var mc = new MyMethodCall('hiswiki', 'getHiswikiYearViewList');
+			
+			mc.addElement('start_date', args_start);
+			mc.addElement('end_date', args_end);
+			mc.addElement('module_srl', {$module_info->module_srl});
+			
+			mc.callAjax(function(data) {
+				
+				var template = $('.contentList');
+				template.remove();
+				
+				$(data).find('item').each(function() {
+					switch (selector) 
+					{
+					case 1:
+						for(var j=1900;j<=2100;j++) {
+							if(j==parseInt($(this).find('date').text()/10000)) {
+								$('#'+j).fadeIn();
+							}
+						}
+						break;
+					case 2:
+						for(var i=1;i<=12;i++) {
+							var tmp = $(this).find('date').text();
+							var tmpSlice = tmp.slice(4, 6);
+							if(i==parseInt(tmpSlice))
+								$('#'+i).fadeIn();
+						}
+						break;
+					case 3:
+						var document_srl = $(this).find('document_srl').text();
+						
+						var authorMC = new MyMethodCall('hiswiki', 'getHiswikiAuthor');
+						authorMC.addElement('module_srl', {$module_info->module_srl});
+						authorMC.addElement('document_srl', document_srl);
+						
+						var title = $(this).find('title').text();
+						var var_idx = parseInt($(this).find('var_idx').text());
+						var permanent_url = $(this).find('permanent_url').text();
+						var summary = $(this).find('summary').text();
+						
+						var regDate = $(this).find('regDate').text();
+						
+						var date = String($(this).find('date').text());
+						
+						var year = date.substr(0, 4);
+						var month = date.substr(4, 2);
+						var day = date.substr(6, 2);
+						
+						var $tmp = $('div.contentTemplate').clone();
+						$tmp.removeClass('contentTemplate').addClass('contentList').fadeIn();
+						$tmp.find('.titleTemplate').html(title);
+						authorMC.callAjax(function(data){
+							var author = $(data).find('author').text();
+							$tmp.find('.authorTemplate').html(author);
+						});
+						
+						$tmp.find('.regDateTemplate').html(regDate);
+						$tmp.find('.summary').html(summary);
+						$tmp.find('.contentLink').attr('href', permanent_url);
+						if(var_idx == 1)
+							$tmp.find('.dateTemplate').html(year + "년 " + month + "월 " + day + "일에 시작한 문서입니다.");
+						else if(var_idx == 2)
+							$tmp.find('.dateTemplate').html(year + "년 " + month + "월 " + day + "일에 끝나는 문서입니다.");
+						
+						$tmp.appendTo('#contentDiv');
+						break;
+					}
+				});
+			});
+		}
+
+		$(document).ready(function() {
+			//DB 조회 후 연도 목록 가져오기
+			var currentYearId = 0;
+			$('#yearDiv').slideDown();
+			getYearList(19000101, 21001231, 1);
+			$('div.yearButton').click(function() {
+				
+				$('.monthButton').hide();
+				$('#monthDiv').fadeIn();
+				$('#contentDiv').fadeOut();
+				
+				currentYearId = $(this).attr('id');
+				var monthStart = parseInt(currentYearId * 10000 + 101);
+				var monthEnd = parseInt(currentYearId * 10000 + 1231);
+				getYearList(monthStart, monthEnd, 2);
+			});
+			$('div.monthButton').click(function() {
+				
+				$('#contentDiv').fadeIn();
+				
+				var currentMonthId = $(this).attr('id');
+				var dateStart = parseInt(currentYearId * 10000 + currentMonthId * 100 + 1);
+				var dateEnd = parseInt(currentYearId * 10000 + currentMonthId * 100 + 31)
+				getYearList(dateStart, dateEnd, 3);
+			});
+		});
+	});
 </script>
+

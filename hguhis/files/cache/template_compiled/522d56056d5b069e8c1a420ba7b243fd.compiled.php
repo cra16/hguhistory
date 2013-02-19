@@ -33,3 +33,4 @@ $__tpl=TemplateHandler::getInstance();echo $__tpl->compile('modules/hiswiki/skin
 		</div>
 	</form>
 </div>
+<?php $__tpl=TemplateHandler::getInstance();echo $__tpl->compile('modules/hiswiki/skins/default','footer.html') ?>

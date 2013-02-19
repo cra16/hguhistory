@@ -16,4 +16,7 @@
     
     <!--// reg_date: 등록 날짜. -->
     <column name="reg_date" type="date" index="idx_start_date" />
+    
+    <!--// modified_content: 변경 내용 -->
+    <column name="modified_content" type="varchar" size="250" notnull="notnull" />
 </table>

@@ -4,32 +4,32 @@ $query->setQueryId("deleteSavedDoc");
 $query->setAction("delete");
 $query->setPriority("");
 if(isset($args->module_srl)) {
-${'module_srl46_argument'} = new ConditionArgument('module_srl', $args->module_srl, 'equal');
-${'module_srl46_argument'}->createConditionValue();
-if(!${'module_srl46_argument'}->isValid()) return ${'module_srl46_argument'}->getErrorMessage();
+${'module_srl1_argument'} = new ConditionArgument('module_srl', $args->module_srl, 'equal');
+${'module_srl1_argument'}->createConditionValue();
+if(!${'module_srl1_argument'}->isValid()) return ${'module_srl1_argument'}->getErrorMessage();
 } else
-${'module_srl46_argument'} = null;if(${'module_srl46_argument'} !== null) ${'module_srl46_argument'}->setColumnType('number');
+${'module_srl1_argument'} = null;if(${'module_srl1_argument'} !== null) ${'module_srl1_argument'}->setColumnType('number');
 if(isset($args->member_srl)) {
-${'member_srl47_argument'} = new ConditionArgument('member_srl', $args->member_srl, 'equal');
-${'member_srl47_argument'}->createConditionValue();
-if(!${'member_srl47_argument'}->isValid()) return ${'member_srl47_argument'}->getErrorMessage();
+${'member_srl2_argument'} = new ConditionArgument('member_srl', $args->member_srl, 'equal');
+${'member_srl2_argument'}->createConditionValue();
+if(!${'member_srl2_argument'}->isValid()) return ${'member_srl2_argument'}->getErrorMessage();
 } else
-${'member_srl47_argument'} = null;if(${'member_srl47_argument'} !== null) ${'member_srl47_argument'}->setColumnType('number');
+${'member_srl2_argument'} = null;if(${'member_srl2_argument'} !== null) ${'member_srl2_argument'}->setColumnType('number');
 if(isset($args->ipaddress)) {
-${'ipaddress48_argument'} = new ConditionArgument('ipaddress', $args->ipaddress, 'equal');
-${'ipaddress48_argument'}->createConditionValue();
-if(!${'ipaddress48_argument'}->isValid()) return ${'ipaddress48_argument'}->getErrorMessage();
+${'ipaddress3_argument'} = new ConditionArgument('ipaddress', $args->ipaddress, 'equal');
+${'ipaddress3_argument'}->createConditionValue();
+if(!${'ipaddress3_argument'}->isValid()) return ${'ipaddress3_argument'}->getErrorMessage();
 } else
-${'ipaddress48_argument'} = null;if(${'ipaddress48_argument'} !== null) ${'ipaddress48_argument'}->setColumnType('varchar');
+${'ipaddress3_argument'} = null;if(${'ipaddress3_argument'} !== null) ${'ipaddress3_argument'}->setColumnType('varchar');
 
 $query->setTables(array(
 new Table('`xe_editor_autosave`', '`editor_autosave`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`module_srl`',$module_srl46_argument,"equal")
-,new ConditionWithArgument('`member_srl`',$member_srl47_argument,"equal", 'and')
-,new ConditionWithArgument('`ipaddress`',$ipaddress48_argument,"equal", 'and')))
+new ConditionWithArgument('`module_srl`',$module_srl1_argument,"equal")
+,new ConditionWithArgument('`member_srl`',$member_srl2_argument,"equal", 'and')
+,new ConditionWithArgument('`ipaddress`',$ipaddress3_argument,"equal", 'and')))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

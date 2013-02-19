@@ -4,11 +4,11 @@ $query->setQueryId("getMenuByTitle");
 $query->setAction("select");
 $query->setPriority("");
 
-${'title18_argument'} = new ConditionArgument('title', $args->title, 'equal');
-${'title18_argument'}->checkNotNull();
-${'title18_argument'}->createConditionValue();
-if(!${'title18_argument'}->isValid()) return ${'title18_argument'}->getErrorMessage();
-if(${'title18_argument'} !== null) ${'title18_argument'}->setColumnType('varchar');
+${'title16_argument'} = new ConditionArgument('title', $args->title, 'equal');
+${'title16_argument'}->checkNotNull();
+${'title16_argument'}->createConditionValue();
+if(!${'title16_argument'}->isValid()) return ${'title16_argument'}->getErrorMessage();
+if(${'title16_argument'} !== null) ${'title16_argument'}->setColumnType('varchar');
 
 $query->setColumns(array(
 new StarExpression()
@@ -18,7 +18,7 @@ new Table('`xe_menu`', '`menu`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`title`',$title18_argument,"equal")))
+new ConditionWithArgument('`title`',$title16_argument,"equal")))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

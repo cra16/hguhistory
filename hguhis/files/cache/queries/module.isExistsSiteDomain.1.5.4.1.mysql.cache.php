@@ -4,11 +4,11 @@ $query->setQueryId("isExistsSiteDomain");
 $query->setAction("select");
 $query->setPriority("");
 
-${'domain5_argument'} = new ConditionArgument('domain', $args->domain, 'equal');
-${'domain5_argument'}->checkNotNull();
-${'domain5_argument'}->createConditionValue();
-if(!${'domain5_argument'}->isValid()) return ${'domain5_argument'}->getErrorMessage();
-if(${'domain5_argument'} !== null) ${'domain5_argument'}->setColumnType('varchar');
+${'domain1_argument'} = new ConditionArgument('domain', $args->domain, 'equal');
+${'domain1_argument'}->checkNotNull();
+${'domain1_argument'}->createConditionValue();
+if(!${'domain1_argument'}->isValid()) return ${'domain1_argument'}->getErrorMessage();
+if(${'domain1_argument'} !== null) ${'domain1_argument'}->setColumnType('varchar');
 
 $query->setColumns(array(
 new SelectExpression('count(*)', '`count`')
@@ -18,7 +18,7 @@ new Table('`xe_sites`', '`sites`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`domain`',$domain5_argument,"equal")))
+new ConditionWithArgument('`domain`',$domain1_argument,"equal")))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

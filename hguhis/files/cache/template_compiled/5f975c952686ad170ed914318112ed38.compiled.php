@@ -37,7 +37,7 @@
         <td>
             <select name="layout_srl">
 	            <option value="0"><?php echo $__Context->lang->notuse ?></option>
-	            <?php if($__Context->layout_list&&count($__Context->layout_list))foreach($__Context->layout_list as $__Context->key=>$__Context->val){ ?><option value="<?php echo $__Context->val->layout_srl ?>"<?php if($__Context->module_info->layout_srl==$__Context->val->layout_srl){ ?> selected="selected"<?php } ?>><?php echo $__Context->val->title ?> ($val->layout)</option><?php } ?>
+	            <?php if($__Context->layout_list&&count($__Context->layout_list))foreach($__Context->layout_list as $__Context->key=>$__Context->val){ ?><option value="<?php echo $__Context->val->layout_srl ?>"<?php if($__Context->module_info->layout_srl==$__Context->val->layout_srl){ ?> selected="selected"<?php } ?>><?php echo $__Context->val->title ?> (<?php echo $__Context->val->layout ?>)</option><?php } ?>
             </select>
             <p><?php echo $__Context->lang->about_layout ?></p>
         </td>
@@ -84,10 +84,41 @@
     				<?php if($__Context->module_list&&count($__Context->module_list))foreach($__Context->module_list as $__Context->key=>$__Context->val){;
 if($__Context->key!='page'&&$__Context->key!='hiswiki'){ ?><option value="<?php echo $__Context->key ?>"><?php echo $__Context->val->title ?></option><?php }} ?>
     			</select>
+    			<input type="hidden" name="pre" value="<?php echo $__Context->module_info->link_board ?>" />
     			<select class="select_module_list" name="link_board">
     			</select>
     		</p>
     		<p>요청 게시판을 연동시키실 수 있으십니다. 먼저 board, bodex, beluxe 등의 모듈을 사용하여 게시판을 생성해 연결해 주세요..</p>
+    	</td>
+    </tr>
+    
+    
+    <tr>
+    	<th scope="row"><div>공지 게시판 연동</div></th>
+    	<td>
+	    	<p>
+    			<select class="module_list">
+    				<?php if($__Context->module_list&&count($__Context->module_list))foreach($__Context->module_list as $__Context->key=>$__Context->val){;
+if($__Context->key!='page'&&$__Context->key!='hiswiki'){ ?><option value="<?php echo $__Context->key ?>"><?php echo $__Context->val->title ?></option><?php }} ?>
+    			</select>
+    			<input type="hidden" name="pre" value="<?php echo $__Context->module_info->notice_board ?>" />
+    			<select class="select_module_list" name="notice_board">
+    			</select>
+    		</p>
+    		<p>공지 게시판을 연동시키실 수 있으십니다. 먼저 board, bodex, beluxe 등의 모듈을 사용하여 게시판을 생성해 연결해 주세요..</p>
+    	</td>
+    </tr>
+    
+    
+    <tr>
+    	<th scope="row"><div>인기 태그 위치 설정</div></th>
+    	<td>
+	    	<p>
+	    		인기 태그는 footer.html에서 불러와 javascript를 사용해 위치를 위젯 위치로 배치하는 방식을 택합니다.<br/>
+	    		인기 태그 위젯이 위치할 컨테이너 엘리먼트의 class 또는 id 를 지정해 주세요.<br/>
+	    		class 일 경우 . id일 경우 # 를 이용한 jQuery 선택자를 사용합니다. (예: .columnLeft)
+	    	</p>
+    		<input type="text" class="inputTypeText w200" name="tag_list_pos" value="<?php echo $__Context->module_info->tag_list_pos ?>" />
     	</td>
     </tr>
     

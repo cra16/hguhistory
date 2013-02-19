@@ -108,14 +108,77 @@ class hiswikiModel extends hiswiki {
 	/**
 	 * @function getHiswikiExtraVars
 	 * @author 지희
+	 * @modifier 바람꽃(wndflwr@gmail.com)
 	 * @param $document_srl
 	 * @brief extravars 불러오기
 	 **/
-	function getHiswikiExtraVars($document_srl){
+	function getHiswikiExtraVars($module_srl, $document_srl){
 		if(!document_srl) return new Object(-1);
 		$args->document_srl = $document_srl;
 		$output = executeQueryArray('hiswiki.getHiswikiExtraVars',$args);
-		return $output;
+		$result = array();
+		foreach ($output->data as $val) {
+			// 조금 억지 끼가 있어도...;;;
+			$ev = new ExtraItem($val->module_srl, $val->var_idx, '', '', '', '',
+			'Y', 'Y', $val->value, $val->eid);
+			$result[$val->var_idx] = $ev;
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * @function doSummary
+	 * 요약해줌
+	 **/
+	function doSummary($content, $str_size = 50, $tail = '...') {
+		$content = preg_replace('!(<br[\s]*/{0,1}>[\s]*)+!is', ' ', $content);
+		$content = str_replace(array('</p>', '</div>', '</li>'), ' ', $content);
+		$content = preg_replace('!<([^>]*?)>!is','', $content);
+		$content = str_replace(array('&lt;','&quot;','&nbsp;'), array('<','"',' '), $content);
+		$content = preg_replace('/ ( +)/is', ' ', $content);
+		$content = trim(cut_str($content, $str_size, $tail));
+		$content = str_replace(array('<','"'),array('&lt;','&quot;'), $content);
+		return $content;
+	}
+	
+	/**
+	 * @function getExtraVars
+	 * @author 바람꽃 (wndflwr@gmail.com)
+	 * @param integer $document_srl
+	 * @brief extra_vars를 구해온다.
+	 * @return Array of ExtraItem 
+	 */
+	function getExtraVars($document_srl) {
+		$extra_arr = array();
+		
+		return $extra_arr;
+	}
+	
+	/**
+	 * @function getHiswikiMemberList
+	 * @author 바람꽃(wndflwr@gmail.com)
+	 * @brief user_id, 이름, email 주소 등으로 검색해서 책임자의 정보를 불러온다.
+	 */
+	function getHiswikiMemberList() {
+		$output = $this->_getHiswikiMemberList(Context::get('search_keyword'));
+		if (!$output->toBool()) {
+			$this->setError($output->error);
+			$this->setMessage($output->message);
+			return;
+		}
+		$this->add('result', $output->data);
+	}
+	/**
+	 * @function _getHiswikiMemberList
+	 * @author 바람꽃(wndflwr@gmail.com)
+	 * @param $search_keyword : string 검색어. 스페이스 케릭터는 '%'로 대체된다.
+	 * @brief helper function of getHiswikiMemberList
+	 */
+	function _getHiswikiMemberList($search_keyword) {
+		$search_keyword = trim($search_keyword);
+		$args->search_keyword = '%'.$search_keyword.'%';
+		return executeQueryArray('hiswiki.getMemberLists', $args);
 	}
 	
 	function getHiswikiYearViewList() {

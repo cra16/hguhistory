@@ -4,11 +4,11 @@ $query->setQueryId("getInstalledPackages");
 $query->setAction("select");
 $query->setPriority("");
 
-${'package_list2_argument'} = new ConditionArgument('package_list', $args->package_list, 'in');
-${'package_list2_argument'}->checkNotNull();
-${'package_list2_argument'}->createConditionValue();
-if(!${'package_list2_argument'}->isValid()) return ${'package_list2_argument'}->getErrorMessage();
-if(${'package_list2_argument'} !== null) ${'package_list2_argument'}->setColumnType('number');
+${'package_list10_argument'} = new ConditionArgument('package_list', $args->package_list, 'in');
+${'package_list10_argument'}->checkNotNull();
+${'package_list10_argument'}->createConditionValue();
+if(!${'package_list10_argument'}->isValid()) return ${'package_list10_argument'}->getErrorMessage();
+if(${'package_list10_argument'} !== null) ${'package_list10_argument'}->setColumnType('number');
 
 $query->setColumns(array(
 new SelectExpression('`installed`.*')
@@ -20,7 +20,7 @@ new Table('`xe_ai_installed_packages`', '`installed`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`installed`.`package_srl`',$package_list2_argument,"in")
+new ConditionWithArgument('`installed`.`package_srl`',$package_list10_argument,"in")
 ,new ConditionWithoutArgument('`installed`.`package_srl`','`package`.`package_srl`',"equal", 'and')))
 ));
 $query->setGroups(array());

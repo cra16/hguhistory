@@ -29,6 +29,7 @@ class hiswikiController extends hiswiki {
 		// 필요한 데이터만 받기
 		$args = Context::gets('content', 'module_srl', 'mid', 'module_srl', 'front_page_srl');
 		$args->title = $this->module_info->browser_title;
+		$args->module_srl = 0;
 		
 		// documentModel와 documentController를 사용하여 입력 또는 수정하기
 		$oDocumentModel = &getModel('document');
@@ -61,26 +62,32 @@ class hiswikiController extends hiswiki {
 	 * @author 현희
 	 **/
 	function procHiswikiTopicWrite() {
-	
-		// check grant
-		//if($this->module_info->module != "hiswiki") return new argsect(-1, "msg_invalid_request");
-		//if(!$this->grant->write_document) return new argsect(-1, 'msg_not_permitted');
-		//$logged_info = Context::get('logged_info');
-
-		$vars = Context::gets('category_srl','content', 'title','module_srl','start_date','end_date','p_charge','tags','document_srl','version');
-		$args=$vars;
+		// 이 함수 내 전역변수
+		$document_srl;
+		
+		// 권한 또는 올바른 접근인지 확인
+		if ($this->module_info->module != "hiswiki") return new Object(-1, "msg_invalid_request");
+		if (!$this->grant->write) return new Object(-1, 'msg_not_permitted');
+		// 필요 변수 받기
+		$vars = Context::gets('category_srl', 'content', 'title', 'module_srl',
+			'start_date', 'end_date', 'p_charge', 'tags', 'document_srl', 'version',
+			'modified_content');
+		$document_srl = $vars->document_srl;
+		$args = $vars;
 		$oDocumentController = &getController('document');
 		$oDocumentModel = &getModel('document');
 		$oDocument = $oDocumentModel->getDocument($vars->document_srl);
-		
+		// 존재하는 문서라면 복사
 		if($oDocument->isExists()){
 			$output = $this->_copyHiswikiDoc($args);
 			$output = $oDocumentController->updateDocument($oDocument,$vars);
 			$output = $this->_updateHiswikiDoc($vars);
-		}else{
-			$vars->extra_vars1 = $vars->start_date;
-			$vars->extra_vars2 = $vars->end_date;
-			$vars->extra_vars3 = $vars->p_charge;
+		}
+		// 새로운 문서라면 삽입
+		else {
+			$vars->extra_vars1 = str_replace('-', '', $vars->start_date);
+			$vars->extra_vars2 = str_replace('-', '', $vars->end_date);
+			$vars->extra_vars3 = trim($vars->p_charge);
 			
 			//제목중복방지
 			$oHiswikiModel = &getModel('hiswiki');
@@ -92,13 +99,18 @@ class hiswikiController extends hiswiki {
 			}
 			
 			$output = $oDocumentController->insertDocument($vars);
+			$document_srl = $output->get('document_srl');
 			$vars->document_srl = $output->get('document_srl');
 			$output = $this->_insertHiswikiDoc($vars);
 		}
+		// 실패시 redirect url
 		if (!$output->toBool()) {
 			$this->setRedirectUrl(Context::get('error_return_url'));
-		} else {
-			$this->setRedirectUrl(Context::get('success_return_url'));
+		}
+		// 성공시 작성된 문서로 이동
+		else {
+			$redirect_url = getUrl('', 'document_srl', $document_srl);
+			$this->setRedirectUrl($redirect_url);
 		}
 	}
 	/**
@@ -133,13 +145,18 @@ class hiswikiController extends hiswiki {
 	 */
 	function _copyHiswikiDoc($args){
 		//만일 문서가 들어오지 않으면 하지않는다
-		$vars = Context::gets('regdate','content', 'title','module_srl','start_date','end_date','p_charge','tags','document_srl','version','trace_srl');
+		$vars = Context::gets('regdate', 'content', 'title', 'module_srl',
+			'start_date', 'end_date', 'p_charge', 'tags', 'document_srl', 'version',
+			'trace_srl', 'modified_content');
 		if (!$args->document_srl) return new Object(-1,'error');
 		
 		//모델 불러옴		
 		$oDocumentModel = &getModel('document');
+		//hiswiki모델가져옴
+		$oHiswikiModel = &getModel('hiswiki');
+		
 		$oDocument = $oDocumentModel->getDocument($args->document_srl);
-		$oExtraVars = $oDocumentModel->getExtraVars($args->module_srl, $args->document_srl);
+		$oExtraVars = $oHiswikiModel->getHiswikiExtraVars($args->module_srl, $args->document_srl);
 		$vars->trace_srl = $args->document_srl;
 		$vars->content = $oDocument->getContent(false,false,false,false,false);
 		$vars->title = $oDocument->getTitle();
@@ -147,10 +164,9 @@ class hiswikiController extends hiswiki {
 		$vars->start_date = $oExtraVars[1]->value;
 		$vars->end_date = $oExtraVars[2]->value;
 		$vars->p_charge = $oExtraVars[3]->value;
-		$vars->reg_date = $oDocument->getRegdateTime();
+		$vars->modified_content = htmlspecialchars($vars->modified_content);
 		
-		//hiswiki모델가져옴
-		$oHiswikiModel = &getModel('hiswiki');
+		
 		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($args->document_srl);
 		$vars->version = $hiswiki_doc->data[0]->version;		
 		
@@ -164,7 +180,6 @@ class hiswikiController extends hiswiki {
 		$oDocumentController->insertDocumentExtraVar($vars->module_srl, $vars->document_srl, 1, $vars->start_date, 'start_date', Context::getLangType());
 		$oDocumentController->insertDocumentExtraVar($vars->module_srl, $vars->document_srl, 2, $vars->end_date, 'end_date', Context::getLangType());
 		$oDocumentController->insertDocumentExtraVar($vars->module_srl, $vars->document_srl, 3, $vars->p_charge, 'p_charge', Context::getLangType());
-		
 		//hiswiki_trace에 저장한다
 		$output = executeQuery('hiswiki.insertHiswikiTrace', $vars);
 		if(!$output->toBool()) {

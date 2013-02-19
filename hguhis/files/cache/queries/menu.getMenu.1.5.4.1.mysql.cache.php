@@ -4,12 +4,12 @@ $query->setQueryId("getMenu");
 $query->setAction("select");
 $query->setPriority("");
 
-${'menu_srl83_argument'} = new ConditionArgument('menu_srl', $args->menu_srl, 'equal');
-${'menu_srl83_argument'}->checkFilter('number');
-${'menu_srl83_argument'}->checkNotNull();
-${'menu_srl83_argument'}->createConditionValue();
-if(!${'menu_srl83_argument'}->isValid()) return ${'menu_srl83_argument'}->getErrorMessage();
-if(${'menu_srl83_argument'} !== null) ${'menu_srl83_argument'}->setColumnType('number');
+${'menu_srl17_argument'} = new ConditionArgument('menu_srl', $args->menu_srl, 'equal');
+${'menu_srl17_argument'}->checkFilter('number');
+${'menu_srl17_argument'}->checkNotNull();
+${'menu_srl17_argument'}->createConditionValue();
+if(!${'menu_srl17_argument'}->isValid()) return ${'menu_srl17_argument'}->getErrorMessage();
+if(${'menu_srl17_argument'} !== null) ${'menu_srl17_argument'}->setColumnType('number');
 
 $query->setColumns(array(
 new StarExpression()
@@ -19,7 +19,7 @@ new Table('`xe_menu`', '`menu`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`menu_srl`',$menu_srl83_argument,"equal")))
+new ConditionWithArgument('`menu_srl`',$menu_srl17_argument,"equal")))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

@@ -5,6 +5,8 @@
     <fields>
 		<field name="category_srl" required="true" rule="number" />
 		<field name="title" required="true" />
-		<field name="p_charge" required="true" value="책임자"/>
+		<field name="p_charge" required="true" rule="number" value="책임자" />
+		<field name="modified_content" length=":250" value="변경 내역" />
+		<field name="content" required="true" />
     </fields>
 </ruleset>

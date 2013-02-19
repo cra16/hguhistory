@@ -4,27 +4,27 @@ $query->setQueryId("updateCounterPageview");
 $query->setAction("update");
 $query->setPriority("");
 
-${'pageview14_argument'} = new Argument('pageview', null);
-${'pageview14_argument'}->setColumnOperation('+');
-${'pageview14_argument'}->ensureDefaultValue(1);
-if(!${'pageview14_argument'}->isValid()) return ${'pageview14_argument'}->getErrorMessage();
-if(${'pageview14_argument'} !== null) ${'pageview14_argument'}->setColumnType('number');
+${'pageview12_argument'} = new Argument('pageview', null);
+${'pageview12_argument'}->setColumnOperation('+');
+${'pageview12_argument'}->ensureDefaultValue(1);
+if(!${'pageview12_argument'}->isValid()) return ${'pageview12_argument'}->getErrorMessage();
+if(${'pageview12_argument'} !== null) ${'pageview12_argument'}->setColumnType('number');
 
-${'regdate15_argument'} = new ConditionArgument('regdate', $args->regdate, 'equal');
-${'regdate15_argument'}->checkNotNull();
-${'regdate15_argument'}->createConditionValue();
-if(!${'regdate15_argument'}->isValid()) return ${'regdate15_argument'}->getErrorMessage();
-if(${'regdate15_argument'} !== null) ${'regdate15_argument'}->setColumnType('number');
+${'regdate13_argument'} = new ConditionArgument('regdate', $args->regdate, 'equal');
+${'regdate13_argument'}->checkNotNull();
+${'regdate13_argument'}->createConditionValue();
+if(!${'regdate13_argument'}->isValid()) return ${'regdate13_argument'}->getErrorMessage();
+if(${'regdate13_argument'} !== null) ${'regdate13_argument'}->setColumnType('number');
 
 $query->setColumns(array(
-new UpdateExpression('`pageview`', ${'pageview14_argument'})
+new UpdateExpression('`pageview`', ${'pageview12_argument'})
 ));
 $query->setTables(array(
 new Table('`xe_counter_status`', '`counter_status`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`regdate`',$regdate15_argument,"equal")))
+new ConditionWithArgument('`regdate`',$regdate13_argument,"equal")))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

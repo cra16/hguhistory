@@ -42,6 +42,27 @@ var myEditor = null;
 		$ON_DO_BROWSER_EVENT_REG: function() {
 			// 주제 연결 기능 HOT key 등록하기
 			this.oApp.exec("REGISTER_HOTKEY", ['ctrl+j', 'LINK_TOPIC']);
+			
+			// 리스트 HOT key 등록
+			this.oApp.exec("REGISTER_HOTKEY", ['ctrl+o', "INSERTORDEREDLIST"]);
+			this.oApp.exec("REGISTER_HOTKEY", ['ctrl+p', "INSERTUNORDEREDLIST"]);
+			
+			// css 등록하기
+			this.currentIframe = $('form[editor_sequence=' + this.editor_sequence + ']').find('iframe:first').contents();
+			var tmpstr = '<link rel="stylesheet" href="' + autoLinkPack.editorCss + '" type="text/css">';
+			$(this.currentIframe).find('head').append(tmpstr);
+		},
+		
+		$ON_INSERTORDEREDLIST : function() {
+			var currentDocument = document.getElementById("editor_iframe_" + this.editor_sequence);
+			var documentObj = currentDocument.contentDocument;
+			documentObj.execCommand('insertorderedlist', false, false);
+		},
+		
+		$ON_INSERTUNORDEREDLIST : function() {
+			var currentDocument = document.getElementById("editor_iframe_" + this.editor_sequence);
+			var documentObj = currentDocument.contentDocument;
+			documentObj.execCommand('insertunorderedlist', false, false);
 		},
 		
 		// ctrl+j 눌렀을 때 선택된 단어로 쿼리해서 리스트 박스로 불러오기
@@ -74,6 +95,8 @@ var myEditor = null;
 			// 결과 출력해서 선택할 수 있도록 하기. (showResult);
 			// 결과물 선택 시 선택된 Text에 a 태그 적용
 		},
+		
+		
 		
 		// 조회된 쿼리들을 에디터 화면에 출력시키기
 		$ON_SHOW_RESULT: function(items, position) {

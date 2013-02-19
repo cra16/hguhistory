@@ -1,136 +1,133 @@
+<div class="hiswiki_container">
 <!--지희 히스토리 목록들을 본다-->
 <!-- 현희 -->
-<load target="js/MyMethodCall.js"/>
 <load target="css/hiswiki.css" />
-<load target="css/hiswiki_common.css"/>
-
-<style>
-div.document_view li {
-	list-style: none;
-	position: relative;
-	float: left;
-	padding-left: 4px;
-}
-
-div.clear {
-	clear: both;
-}
-
-.hwRegdate {
-	font-size: 9pt;
-	margin: 10px 2px 7px 0px;
-}
-
-.hwTitle {
-	font-size: 15pt;
-	margin: 8px 3px 0px 3px;
-}
-
-
-.hwBlock {
-	margin: 5px 2px 5px 2px;
-	padding: 3px 20px 12px 18px;
-	font-size: 100%;
-	vertical-align: baseline;
-	background-image: url("{geturl()}modules/hiswiki/skins/default/img/rockywall.png");
-	border: 1px dotted rgb(209, 209, 209);
-}
-
-
-.tag {
-	margin: 3px 5px 3px -30px;
-}
-
-.tag:link {
-	font-color: black;
-}
-
-.s-e_date {margin:5px 5px 5px 4px;font-size:10pt;color:#808080;}
-
-.hwContent {
-	padding: 10px 15px 5px 15px;
-	font-size: 10pt;
-	align: left;
-}
-.data_version{
-	color:blue;text-decoration:underline;cursor:pointer;
-}
-.fold{
-	color:blue;text-decoration:underline;cursor:pointer;
-	align:right;
-}
-</style>
+<load target="css/hiswiki_common.css" />
+<load target="css/topic_history.css" />
+<load target="js/topic_history.js" />
 
 <include target="header.html"/>
-<div class="versions">
-	<!--@if(!count($hiswikiHistory->data))-->
-		<h2>히스토리가 존재하지 않는 문서입니다</h2>
-	<!--@end-->	
-	<!--@if(count($hiswikiHistory->data))-->
-	<span>버젼:</span>	
-	<!--@for($i=0;$i<count($hiswikiHistory->data);$i++)-->
-		<span class="data_version" version="{$i}">{$hiswikiHistory->data[$i]->version}&nbsp;</span>
-	<!--@end-->
-	<!--@end-->
-	<br/>
-	<br/>
 
-	<hr color="black">
-	<!--@for($i=0;$i<count($hiswikiHistory->data);$i++)-->
-			{@$documentModel = &getModel('document');}
-			{@$document=$documentModel->getDocument($hiswikiHistory->data[$i]->document_srl,false)}
-			{@$hiswikiModel = &getModel('hiswiki');}
-			{@$extra_vars = $hiswikiModel->getHiswikiExtraVars($document->get('document_srl'))->data}
-	<div class="history_view" version="{$i}" style="display:none">
-		<div id="topic_view">
-			</br>
-			<div class="document_view">
-				<!--올라온 글의 내용을 본다-->
-				<div>
-				<div>
-					<h4>버젼:{$hiswikiHistory->data[$i]->version}</h4>
-				</div>
-				<div class="hwBlock">
-					<h3 class="hwTitle">{$document->getTitle()}</h3>
-				<div class="s-e_date">
-					<span cond="$extra_vars[0]->value">Start Date:</span> 
-					<span cond="$extra_vars[0]->value">{zdate($extra_vars[0]->value."000000",'Y-m-d')}</span> 
-					<span cond="$extra_vars[0]->value&&$extra_vars[1]->value">|</span> 
-					<span cond="$extra_vars[1]->value">End Date:</span> 
-					<span cond="$extra_vars[1]->value">{zdate($extra_vars[1]->value."000000",'Y-m-d')}</span>
-				</div>
-				</div>			
-					<div class="hwRegdate" align="right">
-						<span>책임자: {$extra_vars[2]->value}&nbsp;|</span>
-						<span></span><span>등록일:
-							{$document->getRegdate()}</span>
-					</div>
-					<div class="hwContent">{$document->getContent(false,false,false,false,false)}</div>
-				</div>
-				</br>
-				<div class="fold" version="{$i}" align="right">접기</div>		
-				<hr style="color:black" height="1px">
-			</div>
-		</div>
-	</div>
-	<!--@end-->
+<div id="hiswiki_version" class="versions">
+	<block cond="!count($hiswikiHistory->data)">
+		<h2>히스토리가 존재하지 않는 문서입니다</h2>
+	</block>
+	<block cond="count($hiswikiHistory->data)">
+		<!--// 필요 객체들 선언 -->
+		<!--
+		{@
+		$oDocumentModel = &getModel('document');
+		$oMemberModel = &getModel('member');
+		$oHiswikiModel = &getModel('hiswiki');
+		}
+		-->
+		<table class="contentList">
+			<thead>
+				<tr>
+					<th>&nbsp;</th>
+					<th>문서번호</th>
+					<th class="title">변경 내역</th>
+					<th>문서 버전</th>
+					<th>등록일</th>
+					<th>문서 책임자</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!--// 변경 내역은 다음 루프로 넘겨야 한다. -->
+				<!--
+				{@
+				$modified = null;
+				$modified_summ = null;
+				}
+				-->
+				<block loop="$hiswikiHistory->data=>$val">
+				<!--// 나머지 정보 불러오기 -->
+				<!--
+				{@
+				$hiswikiDoc = $oHiswikiModel->getHiswikiDoc($val->trace_srl);
+				$extra_vars = $oHiswikiModel->getHiswikiExtraVars($hiswikiDoc->data[0]->module_srl, $hiswikiDoc->data[0]->document_srl);
+				$extra_vars[3] = $oMemberModel->getMemberInfoByMemberSrl($extra_vars[3]->value, 0, array('member_srl', 'user_id', 'user_name', 'nick_name', 'email_address'));
+				}
+				-->
+				<tr class="oldver">
+					<td>
+						<span>&nbsp;</span>
+					</td>
+					<td>{$val->document_srl}</td>
+					<td class="title">
+						<a cond="!$modified" class="see_more first" href="./">
+							최초 문서입니다.
+						</a>
+						<a cond="$modified" class="see_more" href="./">
+							{$modified_summ}
+						</a>
+					</td>
+					<td>{$val->version}</td>
+					<td title="{zdate($val->reg_date, 'H:i:s')}">{zdate($val->reg_date, 'Y-m-d')}</td>
+					<td>
+						<a href="{getUrl('', 'act', 'dispMemberInfo', 'member_srl', $extra_vars[3]->member_srl)}" class="member_{$extra_vars[3]->member_srl}">{$extra_vars[3]->nick_name}</a>
+					</td>
+					<td>
+						<a href="{getUrl('', 'act', 'dispHiswikiTopicView', 'document_srl', $val->document_srl, 'module_srl', $hiswikiDoc->data[0]->module_srl, 'version', $val->version)}">보기</a>
+					</td>
+				</tr>
+				<tr cond="$modified" class="see_more" style="display:none;">
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td colspan="5" class="title">
+						{$modified}
+					</td>
+				</tr>
+				<!--
+				{@
+				$modified = $val->modified_content;
+				$modified_summ = $oHiswikiModel->doSummary($modified, 40);
+				}
+					-->
+				</block>
+				<!--//최신 버전의 문서 -->
+				<tr class="newest">
+					<!--
+					{@
+					$hiswikiDoc = $oHiswikiModel->getHiswikiDoc($document_srl);
+					$document = $oDocumentModel->getDocument($document_srl);
+					$extra_vars = $oHiswikiModel->getHiswikiExtraVars($document->get('module_srl'), $document->get('document_srl'));
+					$extra_vars[3] = $oMemberModel->getMemberInfoByMemberSrl($extra_vars[3]->value, 0, array('member_srl', 'user_id', 'user_name', 'nick_name', 'email_address'));
+					}
+					-->
+					<td>&gt;&gt;</td>
+					<td>{$document->get('document_srl')}</td>
+					<td class="title">
+						<a href="./" class="fontBold see_more">
+							{$modified_summ}
+						</a>
+					</td>
+					<td>{$hiswikiDoc->data[0]->version}</td>
+					<td title="{$document->getRegdate('H:i:s')}">{$document->getRegdate('Y-m-d')}</td>
+					<td>
+						<a href="{getUrl('', 'act', 'dispMemberInfo', 'member_srl', $extra_vars[3]->member_srl)}" class="member_{$extra_vars[3]->member_srl}">{$extra_vars[3]->nick_name}</a>
+					</td>
+					<td>
+						<a href="{getUrl('', 'document_srl', $document->get('document_srl'))}">보기</a>
+					</td>
+				</tr>
+				<tr class="see_more" style="display:none;">
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td colspan="5" class="title">
+						{$modified}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</block>
 	<div align="right">
 		<a class="btn" href="{getUrl('act','dispHiswikiTopicView','document_srl',$origin,'')}">뒤로가기</a>
 	</div>
 </div>
 
 
-
-
-<script type="text/javascript">
-jQuery(function($) {
-	$(".data_version").click(function() {
-		var version = $(this).attr('version');
-		$(".history_view[version='" + version + "']").show();
-	});
-	$(".fold").click(function(){
-		var version = $(this).attr('version');
-		$(".history_view[version='" + version + "']").hide();
-	});
-});
-</script>
+<!--// footer -->
+<include target="footer.html" />
+</div>

@@ -4,27 +4,27 @@ $query->setQueryId("updatePoint");
 $query->setAction("update");
 $query->setPriority("");
 if(isset($args->point)) {
-${'point52_argument'} = new Argument('point', $args->{'point'});
-if(!${'point52_argument'}->isValid()) return ${'point52_argument'}->getErrorMessage();
+${'point36_argument'} = new Argument('point', $args->{'point'});
+if(!${'point36_argument'}->isValid()) return ${'point36_argument'}->getErrorMessage();
 } else
-${'point52_argument'} = null;if(${'point52_argument'} !== null) ${'point52_argument'}->setColumnType('number');
+${'point36_argument'} = null;if(${'point36_argument'} !== null) ${'point36_argument'}->setColumnType('number');
 
-${'member_srl53_argument'} = new ConditionArgument('member_srl', $args->member_srl, 'equal');
-${'member_srl53_argument'}->checkFilter('number');
-${'member_srl53_argument'}->checkNotNull();
-${'member_srl53_argument'}->createConditionValue();
-if(!${'member_srl53_argument'}->isValid()) return ${'member_srl53_argument'}->getErrorMessage();
-if(${'member_srl53_argument'} !== null) ${'member_srl53_argument'}->setColumnType('number');
+${'member_srl37_argument'} = new ConditionArgument('member_srl', $args->member_srl, 'equal');
+${'member_srl37_argument'}->checkFilter('number');
+${'member_srl37_argument'}->checkNotNull();
+${'member_srl37_argument'}->createConditionValue();
+if(!${'member_srl37_argument'}->isValid()) return ${'member_srl37_argument'}->getErrorMessage();
+if(${'member_srl37_argument'} !== null) ${'member_srl37_argument'}->setColumnType('number');
 
 $query->setColumns(array(
-new UpdateExpression('`point`', ${'point52_argument'})
+new UpdateExpression('`point`', ${'point36_argument'})
 ));
 $query->setTables(array(
 new Table('`xe_point`', '`point`')
 ));
 $query->setConditions(array(
 new ConditionGroup(array(
-new ConditionWithArgument('`member_srl`',$member_srl53_argument,"equal")))
+new ConditionWithArgument('`member_srl`',$member_srl37_argument,"equal")))
 ));
 $query->setGroups(array());
 $query->setOrder(array());

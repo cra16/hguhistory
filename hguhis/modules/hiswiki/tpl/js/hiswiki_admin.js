@@ -34,26 +34,35 @@ jQuery(function($) {
 	 * tpl/module_insert.html
 	 * 모듈 선택이 되었을 때, 자식 모듈들을 모두 불러온다.
 	 */
-	
-	var load_module_list = function() {
-		var params = new Array();
-		var response_tags = ['error', 'message', 'module_list'];
-		var selected_module = $('.module_list option:selected').val();
-		console.log(selected_module);
-		
+	var load_selected = function($select) {
+		var params = {};
+		var responses = ['error', 'message', 'module_list'];
+		var selected_module = $select.children('option:selected').val();
 		exec_xml('module', 'procModuleAdminGetList', params, function(ret_obj) {
 			// select_module_list 내용 다 지우기
-			$('.select_module_list').children().remove();
+			$select.siblings('.select_module_list').children().remove();
+			var pre = $select.siblings('input[name="pre"]').val();
 			var list = ret_obj.module_list[selected_module].list;
 			for (var i in list) {
 				var $option = $('<option />', {
 					value:list[i].module_srl,
 					text:list[i].browser_title
 				});
-				$('.select_module_list').append($option.clone());
+				if (pre == list[i].module_srl) {
+					$option.attr('selected', 'selected');
+				}
+				$select.siblings('.select_module_list').append($option.clone());
 			}
-		}, response_tags);
+		}, responses);
 	};
-	$('.module_list').ready(load_module_list);
-	$('.module_list').change(load_module_list);
+	var load_module_list_onload = function() {
+		$('.module_list').each(function() {
+			load_selected($(this));
+		});
+	};
+	var load_module_list_onchange = function() {
+		load_selected($(this));
+	};
+	$(document).ready(load_module_list_onload);
+	$('.module_list').change(load_module_list_onchange);
 });

@@ -1,73 +1,22 @@
 <!--//@file category_list.html -->
 <!--//@author 바람꽃(wndflwr@gmail.com) -->
 <!--//@breif 카테고리 목록들을 나타낸다. TODO 문서 내 사용된 style 과 javascript를 파일로 옮기기. -->
-<style>
-	div.hiswiki_category ul.category_path {
-		padding:0 0 0 0;
-	}
-	div.hiswiki_category ul.category_path li {
-		list-style:none;
-		margin-left:10px;
-	}
-	div.hiswiki_category ul.category_path li.fl {
-		float:left;
-	}
-	div.hiswiki_category ul.category_path li.fr {
-		float:right;
-	}
-	.clear {
-		clear:both;
-	}
-	div.hiswiki_category div.category_list {
-		margin: 10px 0px 20px 0px;
-	}
-	div.hiswiki_category div.category_list ul {
-		padding: 0 0 0 25px;
-	}
-	div.hiswiki_category div.category_list ul li {
-		list-style:none;
-		line-height:270%;
-		padding:0 0 0 30px;
-		background:#ffffff url(modules/hiswiki/skins/default/img/arrow_right.gif) no-repeat left;
-		border-bottom: 1px solid rgb(230, 230, 230);
-		margin-right: 20px;
-	} 
-	div.hiswiki_category div.category_list ul li:hover {
-		background-color:rgb(255, 255, 224);
-	}
-	div.hiswiki_category div.current_path {
-		margin: 0 0 15px 0;
-		line-height: 200%;
-	}
-	div.hiswiki_category a:link {
-		text-decoration:none;
-		color:black;
-	}
-	div.hiswiki_category a:hover {
-		text-decoration:underline;
-	}
-	div.hiswiki_category a:visited {
-		color:rgb(104, 104, 104);;
-	}
-	
-	div.hiswiki_category img.see_all_category {
-		height:13px;
-		width:13px;
-		background-color:#ffffff;
-		background-image: url(modules/hiswiki/skins/default/img/category_open.gif);
-		background-repeat: no-repeat;
-		background-position: center;
-	}
-</style>
+<load target="css/category_list.css" />
+<load target="js/category_list.js" />
 
-<div class="hiswiki_category" cond="$category_html">
+
+{@	$oHiswikiView = &getView('hiswiki');
+	$oHiswikiView->getCategoryList();
+}
+
+<div id="hiswiki_category" cond="$category_html">
 	<div class="current_path">
 		<ul class="category_path">
 			<li class="fl">
-				<a href="{getUrl('act', 'dispHiswikiContentList', 'category_srl', '0')}">전체분류</a>
+				<a href="{getUrl('', 'mid', $module_info->mid, 'act', 'dispHiswikiContentList', 'category_srl', '0')}">전체분류</a>
 			</li>
 			<li loop="$category_path=>$val" class="fl">
-				&nbsp;&gt; <a href="{getUrl('act', 'dispHiswikiContentList', 'category_srl', $val->category_srl)}">{$val->text}</a>
+				&nbsp;&gt; <a href="{getUrl('', 'act', 'dispHiswikiContentList', 'category_srl', $val->category_srl)}">{$val->text}</a>
 			</li>
 			<li class="fr" id="see_all_category">
 				<a href="#category_list" class="see_all_category">카테고리 전체보기</a>
@@ -84,22 +33,3 @@
 		{$category_html}
 	</div>
 </div>
-
-<script type="text/javascript">
-jQuery(function($) {
-	$(document).ready(function() {
-		$('#see_all_category').click(function() {
-			var $category_list = $('div.category_list');
-			if ($category_list.css('display') == 'none') {
-				$category_list.slideDown();
-				$('img.see_all_category').css('background-image', 'url(modules/hiswiki/skins/default/img/category_close.gif)');
-			}
-			else {
-				$category_list.slideUp();
-				$('img.see_all_category').css('background-image', 'url(modules/hiswiki/skins/default/img/category_open.gif)');
-			}
-			return false;
-		});
-	});
-});
-</script>

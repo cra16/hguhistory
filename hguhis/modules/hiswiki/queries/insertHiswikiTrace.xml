@@ -7,6 +7,7 @@
         <column name="document_srl" var="document_srl" filter="number" notnull="notnull" />
         <column name="trace_srl" var="trace_srl" filter="number" default="0" />
     	<column name="version" var="version" filter="number"/>
-        <column name="reg_date" var="reg_date" filter="number" default="" />
+        <column name="reg_date" var="reg_date" filter="number" default="curdate()" />
+        <column name="modified_content" var="modified_content" notnull="notnull" maxlength="250" /> 
 	</columns>
 </query>

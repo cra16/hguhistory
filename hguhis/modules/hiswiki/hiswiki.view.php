@@ -63,8 +63,6 @@ class hiswikiView extends hiswiki {
 		$obj->page_count = 20;
 		$obj->order_type = 'desc';
 
-		// 이 모듈 관리자가 설정한 대문(document 형식으로 저장되어있음) 불러오기
-
 		// 최근 등록 글 리스트 불러오기
 		$obj->sort_index = 'regdate';
 		$newestDocList = $oDocumentModel->getDocumentList($obj, false, false);
@@ -77,21 +75,24 @@ class hiswikiView extends hiswiki {
 			$popDocList[$key] = $oDocumentModel->getDocument($val->document_srl, false, false);
 		}
 		Context::set('popDocList', $popDocList);
-
-		// 인기 태그 리스트 불러오기
-		$oTagModel = &getModel('tag');
-		$obj->list_count = 50; // 몇 개를 불러오는지 결정
-		$obj->sort_index = 'count';
-		$popTagList = $oTagModel->getTagList($obj);
-		Context::set('popTagList', $popTagList->data);
-
+		
 		// 요청 게시판의 리스트 불러오기
 		// 요청 게시판의 module_srl 받아오기
 		$obj->module_srl = $this->module_info->link_board;
 		$obj->sort_index = 'regdate';
 		$requestDocList = $oDocumentModel->getDocumentList($obj);
 		Context::set('requestDocList', $requestDocList->data);
-
+		$oModuleModel = &getModel('module');
+		$requestDocListMid = $oModuleModel->getModuleInfoByModuleSrl($this->module_info->link_board);
+		Context::set('requestDocListMid', $requestDocListMid->mid);
+		
+		// 공지 게시판의 리스트 불러오기
+		$obj->module_srl = $this->module_info->notice_board;
+		$noticeDocList = $oDocumentModel->getDocumentList($obj);
+		Context::set('noticeDocList', $noticeDocList->data);
+		$noticeDocListMid = $oModuleModel->getModuleInfoByModuleSrl($this->module_info->notice_board);
+		Context::set('noticeDocListMid', $noticeDocListMid->mid);
+		
 		// 대문 내용(content) 던지기
 		$front_page_doc = $oDocumentModel->getDocument($this->module_info->front_page_srl);
 
@@ -177,7 +178,7 @@ class hiswikiView extends hiswiki {
 	private function _makeHTMLMenu($list) {
 		$str = "<ul>";
 		foreach ($list as $val) {
-			$url = getUrl('act', 'dispHiswikiContentList', 'category_srl', $val['category_srl']);
+			$url = getUrl('', 'mid', $this->module_info->mid, 'act', 'dispHiswikiContentList', 'category_srl', $val['category_srl']);
 			if ($val["category_srl"] == $this->tmp) {
 				$str .= "<li class=\"selected\"><a href=\"" . $url . "\">" . $val["text"] . "</a></li>";
 				$this->current_pointer->parent_srl = $val["parent_srl"];
@@ -267,15 +268,12 @@ class hiswikiView extends hiswiki {
 		$args->page = Context::get('page');
 		$args->sort_index = Context::get('sort_index');
 		$args->order_type = Context::get('order_type');
-
-		// 인수를 넘겨주고 문서 목록을 받아온다.
-		$output = $oDocumentModel->getDocumentList($args);
-
+		
 		// 태그로 검색하게 되면 실행
 		if ($args->search_target == 'tag') {
 			$args->tag = $args->search_keyword;
 			$args->sort_index = 'document_srl';
-				
+			
 			$output = executeQueryArray('hiswiki.getDocumentSrlByTag', $args);
 			
 			// 넘겨준 파라메터로 검색 결과 받아오기
@@ -286,14 +284,18 @@ class hiswikiView extends hiswiki {
 			}
 			// 제목으로 검색한 결과 html 파일로 넘겨주기
 			Context::set('document_list', $tagDocumentList);
-		} else {	
+		}
+		// 태그 검색이 아닐 경우
+		else {
+			// 인수를 넘겨주고 문서 목록을 받아온다.
+			$output = $oDocumentModel->getDocumentList($args);
 			// 아니면 그냥 값 전달
 			Context::set('document_list', $output->data);
 		}
-		
+		// 페이지비게이션 설정
+		Context::set('page_navigation', $output->page_navigation);
 		// 템플릿 파일 지정
 		$this->setTemplateFile('list');
-		Context::set('page_navigation', $output->page_navigation);
 	}
 
 	/**
@@ -401,7 +403,7 @@ class hiswikiView extends hiswiki {
 			$oHiswikiModel = &getModel('hiswiki');
 			$output->hiswiki = $oHiswikiModel->getHiswikiDoc($document_srl);
 			$output->document = $oDocumentModel->getDocument($document_srl);
-			$document_extra_vars = $oDocumentModel->getExtraVars($this->module_srl,$document_srl);
+			$document_extra_vars = $oHiswikiModel->getHiswikiExtraVars($this->module_srl,$document_srl);
 		}else{
 			$output->document = $oDocumentModel->getDocument();
 		}
@@ -424,8 +426,11 @@ class hiswikiView extends hiswiki {
 		Context::set('module_info',$this->module_info);
 		Context::set('topic_info',$output->hiswiki);
 		Context::set('document_info',$output->document);
+		// $document_extra_vars[3] 은 member_srl로 저장되어 있으니까 사용자 정보 다 불러오기
+		$oMemberModel = &getModel('member');
+		$document_extra_vars[3] = $oMemberModel->getMemberInfoByMemberSrl($document_extra_vars[3]->value, 0, array('member_srl', 'user_id', 'user_name', 'nick_name', 'email_address'));
 		Context::set('extra_vars',$document_extra_vars);
-		//Context::set('category_list',)
+		Context::set('module_path', $this->module_path);
 		// 내용 작성화면 템플릿 파일 지정 write.html
 		$this->setTemplateFile('write');
 	
@@ -440,29 +445,40 @@ class hiswikiView extends hiswiki {
 	 */
 	function dispHiswikiTopicView(){
 		$document_srl = Context::get('document_srl');
-		debugPrint($document_srl);
 		if(!$document_srl){
 			$this->dispHiswikiFrontPage();
 			return;
 		}
 		$page = Context::get('page');
-		$oDocumentModel=getModel('document');
-		$document=$oDocumentModel->getDocument($document_srl);
+		$oDocumentModel = getModel('document');
+		$document = $oDocumentModel->getDocument($document_srl);
 		if(!$document->get('document_srl')){
 			return new Object(-1,'msg_invalid_request');
 		}
+		// hiswiki model 을 가져옴
+		$oHiswikiModel = &getModel('hiswiki');
 		// document model을 가져옴
 		$oDocumentModel = &getModel('document');
 		$document = $oDocumentModel->getDocument($document_srl);
-		$document_extra_vars = $oDocumentModel->getExtraVars($this->module_srl,$document_srl);
-		// hiswiki model 을 가져옴
-		$oHiswikiModel = &getModel('hiswiki');
-		$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($document_srl);
+		if (!$document->isExists()) return new Object('-1', 'msg_invalid_request');
+		$document->variables['module_srl'] = abs($document->get('module_srl'));
+		// read count 하나 올린다.
+		$document->updateReadedCount();
+		// extra_vars 얻어오기
+		$document_extra_vars = $oHiswikiModel->getHiswikiExtraVars($document->get('module_srl'), $document->get('document_srl'));
+		//debugPrint($document_extra_vars);
+		if (Context::get('history_srl')) {
+			$hiswiki_doc = $oHiswikiModel->getHiswikiDoc(Context::get('history_srl'));
+		} else {
+			$hiswiki_doc = $oHiswikiModel->getHiswikiDoc($document_srl);
+		}
 		Context::set('category_srl', $document->get('category_srl'));
 		Context::set('document',$document);
 		Context::set('hiswiki_doc',$hiswiki_doc->data);
 		Context::set('module_info',$this->module_info);
-		Context::set('extra_vars',$document_extra_vars);
+		$oMemberModel = &getModel('member');
+		$document_extra_vars[3] = $oMemberModel->getMemberInfoByMemberSrl($document_extra_vars[3]->value, 0, array('member_srl', 'user_id', 'user_name', 'nick_name', 'email_address'));
+		Context::set('extra_vars', $document_extra_vars);
 		// 카테고리 리스트 불러오기
 		$this->setTemplateFile('topic_view');
 		
@@ -477,16 +493,25 @@ class hiswikiView extends hiswiki {
 		if(!$document_srl){
 			return new Object(-1, 'msg_invalid_request');
 		}
-		$page = Context::get('page');
 		//hiswiki model을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
-		$trace_srl = $document_srl;
+		
+		// 현재의 document_srl이 어느 trace_srl에 속해있는지 알아내야 한다.
+		$args->document_srl = $document_srl;
+		$trace = executeQuery('hiswiki.getTraceInfoByDocumentSrl', $args);
+		
+		if ($trace->data->trace_srl) {
+			$trace_srl = $trace->data->trace_srl;
+			Context::set('document_srl', $trace->data->trace_srl);
+		} else {
+			$trace_srl = $document_srl;
+		}
 		$hiswikiHistory = $oHiswikiModel->getHiswikiTrace($trace_srl);
 		//document model 가져옴
 		$oDocumentModel = &getModel('document');
 		//변수선언
 		Context::set('hiswikiHistory',$hiswikiHistory);
-		Context::set('origin',$trace_srl);
+		Context::set('origin', $trace_srl);
 		$this->setTemplateFile('topic_history');
 	}
 	/**
@@ -499,14 +524,15 @@ class hiswikiView extends hiswiki {
 		if(!$document_srl){
 			return new Object(-1,'msg_invalid_request');
 		}
-		$oDocumentModel=getModel('document');
-		$document=$oDocumentModel->getDocument($document_srl);
+		$oDocumentModel = getModel('document');
+		$document = $oDocumentModel->getDocument($document_srl);
 		if(!$document->get('document_srl')){
 			return new Object(-1,'msg_invalid_request');
 		}
-		$extra_vars=$oDocumentModel->getExtraVars($this->module_srl,$document_srl);
 		//hiswiki model을 가져옴
 		$oHiswikiModel = &getModel('hiswiki');
+		$extra_vars = $oHiswikiModel->getHiswikiExtraVars($this->module_srl, $document_srl);
+		//$extra_vars = $oDocumentModel->getExtraVars($this->module_srl,$document_srl);
 		$trace_srl = $document_srl;
 		$hiswikiHistory = $oHiswikiModel->getHiswikiTrace($trace_srl);
 		$hiswikiDoc = $oHiswikiModel->getHiswikiDoc($trace_srl);
@@ -525,8 +551,8 @@ class hiswikiView extends hiswiki {
 	function dispHiswikiTopicList(){
 		/*
 		 * 목록보기 권한 체크 (모든 권한은 ModuleObject에서 xml 정보와 Module_info의 grant 값을 비교하여 미리 설정하여 놓음
-		 		*if (!$this->grants->access || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
-		 		*/
+		 *if (!$this->grants->access || !$this->grant->list) return $this->dispHiswikiMessage('msg_not_permitted');
+		 */
 			
 		// module_srl 확인
 		$module_srl = Context::get('module_srl');

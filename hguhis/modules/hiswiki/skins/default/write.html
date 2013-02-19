@@ -1,104 +1,140 @@
 <!--// @author 지희 -->
 <!--// @modifier 바람꽃 (wndflwr@gmail.com): 자동링크기능 추가 -->
 <!--// datepicker javascript plugin load -->
+
+<div class="hiswiki_container">
+<!--// header -->
+<include target="header.html" />
+
+<load target="css/write.css" />
+
 <!--%load_js_plugin("ui")-->
 <!--%load_js_plugin("ui.datepicker")-->
-<load target="js/MyMethodCall.js" />
-<load target="js/CheckDuplicate.js" />
+<load target="js/write.js" />
 <load target="js/rangy-core.js" />
 <load target="js/autoLink.js" />
+
 
 <!--// 자바스크립트에서 사용할 상수(언어 등)들 선언-->
 <script type="text/javascript">
 var autoLinkPack = {
+		editorCss: "{$module_path}skins/default/css/autoLink.css",
 		dispHiswikiTopicWrite: "{getUrl('act', 'dispHiswikiTopicWrite')}",
 		no_topic_searched: '검색된 주제가 없습니다.'
 };
 </script>
 
+<h2>주제 등록</h3>
+
 <form ruleset="topicWrite" action="./" method="post" id="write">
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
 	<input type="hidden" name="document_srl" value="{$document_info->get('document_srl')}" />
 	<input type="hidden" name="content" value="{$document_info->getContentText()}"/>
 	<input type="hidden" name="act" value="procHiswikiTopicWrite" />
 	<input type="hidden" name="success_return_url" value="{getUrl('act','dispHiswikiFrontPage')}" />
-	<input type="hidden" name="error_return_url" value="{getUrl('act','procHiswikiTopicWrite')}" /> 
-	<div class="box category&title">
-		<span>카테고리</span>
-		<select name="category_srl" class="category">
-			<option value="">카테고리 선택</option>
-			<option loop="$category_list=>$val"
-				value="{$val->category_srl}"
-				selected="selected"|cond="$document_info->get('category_srl')==$val->category_srl">
-				{str_repeat("&nbsp;&nbsp;",$val->depth)} {$val->title} ({$val->document_count})			
-			</option>
-		</select>
-	</div>
-	<div class="title">
-		<span>제목 </span>
-		<input id="title" type="text" name="title" size="100%" value="{$document_info->getTitle()}"/>
-		<span style="display:none; color:red;" class="warning">존재하는 제목입니다.</span>
-	</div>
-	<div class="date">
-		<span>
-			<span>시작연도</span> 
-			<input type="hidden" name="start_date" class="start_date" value="{zdate($extra_vars[1]->value.'000000','Y-m-d')}"|cond="$extra_vars[1]->value" />
-			<input type="text" class="cal startDate" value="{zdate($extra_vars[1]->value.'000000','Y-m-d')}"|cond="$extra_vars[1]->value"/>
-			<input type="button" name="delete_button" value="삭제" class="del_date">
-		</span>
-		
-		<span>|</span>
-		
-		<span>
-			<span>종료연도</span> 
-			<input type="hidden" name="end_date" class="end_date" value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$extra_vars[2]->value" />
-			<input type="text" class="cal endDate"  value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$extra_vars[2]->value" />
-			<input type="button" name="delete_button" value="삭제" class="del_date">
-		</span>
-		<span>책임자</span>
-		<input type="text" name="p_charge" class="p_charge" value="{$extra_vars[3]->value}"/>
-		<script type="text/javascript">
-		<script type="text/javascript">
-			(function($) {
-				$(function() {
-					var option = {
-						changeMonth : true,
-						changeYear : true,
-						gotoCurrent : false,
-						yearRange : '1994:+5',
-						dateFormat : 'yy-mm-dd',
-						onSelect : function() {
-
-							$(this).prev('input[type="hidden"]').val(this.value.replace(/-/g, ""))
-						}
-					};
-					$.extend(option, $.datepicker.regional['ko']);
-					$(".cal").datepicker(option);
-				});
-			})(jQuery);
-		</script>
-	</div>
-	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	<input type="hidden" name="error_return_url" value="{getUrl('act','procHiswikiTopicWrite')}" />
 	
-	<p>단어 선택 후 Ctrl+J 를 이용하여 해당되는 주제에 빠르게 링크를 거세요.</p>
+	
+	<table class="headings width100per">
+		<tr>
+			<td class="writeCaption">카테고리 선택</td>
+			<td class="writeContent" colspan="2">
+				<select name="category_srl" class="category">
+					<option value="">카테고리 선택</option>
+					<option loop="$category_list=>$val"
+						value="{$val->category_srl}"
+						selected="selected"|cond="$document_info->get('category_srl')==$val->category_srl">
+						{str_repeat("&nbsp;&nbsp;",$val->depth)} {$val->title} ({$val->document_count})			
+					</option>
+				</select>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="writeCaption">제목(주제)</td>
+			<td class="writeContent" colspan="2">
+				<block cond="$document_info->isExists()">
+					<input class="width50per" type="text" value="{htmlspecialchars($document_info->getTitle())}" readonly="readonly" />
+					<input type="hidden" name="title" value="{$document_info->getTitle()}" />
+				</block>
+				<block cond="!$document_info->isExists()">
+					<input id="title" class="width50per" type="text" name="title" value="{htmlspecialchars($document_info->getTitle())}" />
+					<span style="display:none;" class="warning">같은 주제가 존재합니다.</span>
+				</block>
+			</td>
+		</tr>
+		
+		<!--// 문서 수정일 경우 수정 내역을 입력한다. -->
+		<tr cond="$document_info->isExists()">
+			<td class="writeCaption">변경 내역</td>
+			<td class="writeContent" colspan="2">
+				<div class="textarea_container">
+					<textarea name="modified_content" class="modified_content" rows="5"></textarea>
+				</div>
+				<p>
+					<span>주요 변경 내역을 간략히 입력해 주세요. (최대 250자)</span>
+					<span class="char_length">0</span>
+					<span> / 250</span>
+				</p>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="writeCaption">시작시</td>
+			<td class="writeContent">
+				<input type="hidden" name="start_date" class="start_date" value="{zdate($extra_vars[1]->value.'000000','Ymd')}"|cond="$extra_vars[1]->value" />
+				<input type="text" class="cal startDate width150px" value="{zdate($extra_vars[1]->value.'000000','Y-m-d')}"|cond="$extra_vars[1]->value"/>
+				<input type="button" name="delete_button" value="삭제" class="del_date">
+			</td>
+			<td class="writeDesc">시작 시간이 있을 경우 입력하세요.</td>
+		</tr>
+		
+		<tr>
+			<td class="writeCaption">종료시</td>
+			<td class="writeContent">
+				<input type="hidden" name="end_date" class="end_date" value="{zdate($extra_vars[2]->value.'000000','Ymd')}"|cond="$extra_vars[2]->value" />
+				<input type="text" class="cal endDate width150px"  value="{zdate($extra_vars[2]->value.'000000','Y-m-d')}"|cond="$extra_vars[2]->value" />
+				<input type="button" name="delete_button" value="삭제" class="del_date">
+			</td>
+			<td class="writeDesc">종료 시간이 있을 경우 입력하세요.</td>
+		</tr>
+		
+		<tr>
+			<td class="writeCaption">문서 책임자</td>
+			<td class="writeContent">
+				<input id="picInput" type="text" class="p_charge width150px" value="{htmlspecialchars($extra_vars[3]->email_address)}"/>
+				<span id="personInCharge">{$extra_vars[3]->user_name}({$extra_vars[3]->nick_name})</span>
+				<input type="hidden" name="p_charge" value="{$extra_vars[3]->member_srl}" />
+			</td>
+			<td class="writeDesc">아이디 또는 이메일 주소로 문서 책임자를 검색하여 선택합니다.</td>
+		</tr>
+		
+		<tr>
+			<td class="writeCaption">태그 검색어</td>
+			<td class="writeContent" colspan="2">
+				<input type="text" name="tags" class="tags width100per" value="{htmlspecialchars($document_info->get('tags'))}"/><br/>
+				<span>쉼표(,)로 구분하여 여러개 입력가능</span>
+			</td>
+		</tr>
+	</table>
+	
+	<h3 class="h3">문서 작성 팁</h3>
+	<ul>
+		<li>단어 선택 후 Ctrl+J 를 이용하여 해당되는 주제에 빠르게 링크를 거세요.</li>
+		<li>단어 선택 후 Ctrl+1 ~ Ctrl+6 으로 제목 강조를 할 수 있습니다.</li>
+		<li>Ctrl+O 또는 Ctrl+P 를 사용하여 리스트를 사용할 수 있습니다.</li>
+		<li>들여쓰기와 내어쓰기는 Ctrl+Shift+Left 와 Ctrl+Shift+Right를 사용합니다.</li>
+		<li>태그를 사용하시면 검색이나 분류시 더 편리하게 할 수 있습니다.</li>
+	</ul>
 	
 	<div class="editor">{$document_info->getEditor()}</div>
-	<div class="tag_box">
-		태그검색어 입력 <input type="text" name="tags" class="tags" value="{htmlspecialchars($document_info->get('tags'))}"/> 쉼표(,)로 구분하여 여러개 입력가능 </div>
-	<br/>
+	
 	<div class="submit_btn">
-		<input type="submit" class="submit"/>
+		<input type="submit" class="btn fr submit"/>
+		<div class="clear"></div>
 	</div>
 </form>
 
-<style>
-#topicResultBox {
-	background-color:white;
-	border:1px solid balck;
-	position:absolute;
-}
-#topicResultBox ul {
-	list-style:none;
-	padding:0 0 0 0;
-	margin:0 0 0 0;
-}
-</style>
+<!--// footer -->
+<include target="footer.html" />
+</div>

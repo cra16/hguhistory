@@ -4,8 +4,8 @@
 <load target="css/hiswiki_common.css" />
 
 <load target="js/MyMethodCall.js" />
-{@	$oHiswikiView = &getView('hiswiki');
-	$oHiswikiView->getCategoryList();
-}
-<include target="search_box.html" />
-<include target="category_list.html" />
+
+<block cond="$act!=dispHiswikiTopicWrite">
+	<include target="search_box.html" />
+	<include target="category_list.html" />
+</block>

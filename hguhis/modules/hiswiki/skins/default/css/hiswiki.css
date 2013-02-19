@@ -1,38 +1,5 @@
 @CHARSET "UTF-8";
 <!--현희-->
-#front_page div {
-	border: 1px solid black;
-	float: left;
-}
-
-#front_page {
-	width: 100%;
-	float: 1eft;
-}
-
-#front_page .block {
-	overflow: hidden;
-	width: 100%;
-	float: left;
-}
-
-#front_page .button_ara {
-	text-align: right;
-}
-
-#front_page .lists .list {
-	width: 49%;
-	height: 200px;
-	margin: 0px;
-	verflow: hidden;
-	border-width: 0px 1px 1px 0px;
-	border-style: solid;
-	border-color: rgb(195, 195, 195);
-	background-image: none;
-	background-color: transparent;
-	float: left;
-}
-
 #write_page .write {
 	
 	width:100%;
